@@ -2,14 +2,18 @@
 <html lang="ku" dir="rtl" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0B0B0C" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>سەرتراشخانا بژار</title>
+
+  <!-- هەموو فۆنتێن کوردی (Badini / Sorani) یێن گونجای بۆ هەموو مۆبایلان (iPhone و Android) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Noto+Naskh+Arabic:wght@500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -28,8 +32,8 @@
             muted: '#94918B',
           },
           fontFamily: {
-            serif: ['"Amiri"', 'serif'],
-            sans: ['"Cairo"', 'sans-serif'],
+            serif: ['"Noto Naskh Arabic"', '"Vazirmatn"', '"Geeza Pro"', 'serif'],
+            sans: ['"Vazirmatn"', '"Noto Sans Arabic"', '"Geeza Pro"', 'sans-serif'],
             signature: ['"Cormorant Garamond"', 'serif'],
           },
         }
@@ -45,25 +49,36 @@
     html {
       -webkit-text-size-adjust: 100%;
       scroll-behavior: smooth;
+      font-family: 'Vazirmatn', 'Noto Sans Arabic', 'Geeza Pro', system-ui, -apple-system, sans-serif;
     }
 
     body {
       background-color: #0B0B0C;
       color: #F4F1EA;
-      font-family: 'Cairo', sans-serif;
+      font-family: 'Vazirmatn', 'Noto Sans Arabic', 'Geeza Pro', system-ui, -apple-system, sans-serif;
       overflow-x: hidden;
       width: 100%;
       padding-bottom: env(safe-area-inset-bottom);
-      text-rendering: optimizeSpeed;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .font-serif {
+      font-family: 'Noto Naskh Arabic', 'Vazirmatn', 'Geeza Pro', serif !important;
+    }
+
+    .font-sans {
+      font-family: 'Vazirmatn', 'Noto Sans Arabic', 'Geeza Pro', sans-serif !important;
     }
 
     a, button, input, select {
       touch-action: manipulation;
+      font-family: inherit;
     }
 
     input, select, textarea {
       font-size: 16px !important;
+      font-family: 'Vazirmatn', 'Noto Sans Arabic', sans-serif !important;
     }
 
     ::selection {
@@ -235,7 +250,7 @@
         <span class="text-xs sm:text-sm text-gold-light font-medium">سەرتراشخانا بژار</span>
       </div>
 
-      <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[1.15] text-ivory mb-5 sm:mb-6">
+      <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[1.2] text-ivory mb-5 sm:mb-6">
         بڕینا بێ کێماسی<br />
         <span class="gold-gradient-text">ستایلێ هەردەمی</span>
       </h1>
@@ -388,7 +403,7 @@
 
             <div>
               <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-                <label for="timeInput" class="block text-sm text-gold font-semibold">سوپاس بۆ تە</label>
+                <label for="timeInput" class="block text-sm text-gold font-semibold">دەمژمێرێ هەلبژێرە</label>
                 <span class="text-xs text-muted">ژ مۆبایلێ دەمژمێرێ هەلبژێرە</span>
               </div>
               <input
