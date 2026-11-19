@@ -63,6 +63,13 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
+    /* دەمێ پێنگاڤا ٢ یا ژڤانی چالاک دبیت، پەڕە سابت دبیت دا نەلڤیت */
+    body.booking-locked {
+      overflow: hidden !important;
+      height: 100svh;
+      touch-action: none;
+    }
+
     .font-serif {
       font-family: 'Noto Naskh Arabic', 'Vazirmatn', 'Geeza Pro', serif !important;
     }
@@ -164,6 +171,41 @@
       }
     }
 
+    /* ئەنیمەیشنا 60fps یا مەقەسا ڤەدبیت و دگریت ل شوینا بارکرنێ */
+    .scissor-blade-top {
+      transform-origin: 12px 12px;
+      will-change: transform;
+      animation: scissorSnipTop 0.36s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+    }
+    .scissor-blade-bottom {
+      transform-origin: 12px 12px;
+      will-change: transform;
+      animation: scissorSnipBottom 0.36s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+    }
+
+    @keyframes scissorSnipTop {
+      0% { transform: rotate(-20deg) translateZ(0); }
+      100% { transform: rotate(12deg) translateZ(0); }
+    }
+    @keyframes scissorSnipBottom {
+      0% { transform: rotate(20deg) translateZ(0); }
+      100% { transform: rotate(-12deg) translateZ(0); }
+    }
+
+    /* قەبارێ سابت بۆ بەشێ ژڤانی دەمێ دچیتە پێنگاڤا دەمژمێرێ */
+    .booking-section-fixed {
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 45 !important;
+      background-color: #0B0B0C !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 1rem !important;
+      overflow-y: auto !important;
+      overscroll-behavior: contain;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .reveal {
         opacity: 1 !important;
@@ -174,6 +216,26 @@
   </style>
 </head>
 <body class="antialiased">
+
+  <!-- شاشا مەقەسا ب 60fps (ل شوینا بارکرنێ / Yükleniyor) -->
+  <div id="scissorsLoaderOverlay" class="hidden fixed inset-0 z-[70] bg-obsidian/85 backdrop-blur-md flex flex-col items-center justify-center gap-4 pointer-events-auto">
+    <div class="w-20 h-20 rounded-full border border-gold/40 bg-charcoal/95 flex items-center justify-center shadow-2xl">
+      <svg class="w-11 h-11 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <!-- تیخا سەری یا مەقەسێ -->
+        <g class="scissor-blade-top">
+          <circle cx="6" cy="6" r="2.8" />
+          <line x1="8.2" y1="8.2" x2="20" y2="20" />
+        </g>
+        <!-- تیخا بنێ یا مەقەسێ -->
+        <g class="scissor-blade-bottom">
+          <circle cx="6" cy="18" r="2.8" />
+          <line x1="8.2" y1="15.8" x2="20" y2="4" />
+        </g>
+        <!-- برغیێ ناڤەڕاستێ -->
+        <circle cx="12" cy="12" r="1.1" fill="currentColor" />
+      </svg>
+    </div>
+  </div>
 
   <!-- پاشبنەمایا Blur دەمێ لیستا مۆبایلێ ڤەدبیت -->
   <div id="mobileMenuBackdrop" class="hidden fixed inset-0 z-40 bg-obsidian/70 backdrop-blur-md transition-opacity duration-300 md:hidden"></div>
@@ -305,9 +367,9 @@
   </section>
 
   <!-- سیستەمێ ژڤانێ ئۆنلاین ب پێنگاڤان -->
-  <section id="randevu" class="py-20 sm:py-24 md:py-32 bg-obsidian relative border-t border-white/5">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 md:px-10">
-      <div class="text-center mb-10 sm:mb-12 reveal">
+  <section id="randevu" class="py-20 sm:py-24 md:py-32 bg-obsidian relative border-t border-white/5 transition-all duration-200">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 md:px-10 w-full">
+      <div id="bookingSectionHeader" class="text-center mb-10 sm:mb-12 reveal">
         <div class="inline-flex items-center justify-center gap-2 mb-2">
           <svg class="w-4 h-4 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <circle cx="6" cy="6" r="3" />
@@ -388,7 +450,7 @@
             </button>
           </div>
 
-          <!-- پێنگاڤا ٢: هەلبژارتنا دەمژمێرێ، ناڤ/مۆبایل و تەمام / هنارتن -->
+          <!-- پێنگاڤا ٢: هەلبژارتنا دەمژمێرێ، ناڤ/مۆبایل و تەمام / هنارتن (سابت دمینیت) -->
           <div id="step2Container" class="hidden space-y-6 sm:space-y-7">
             <div class="flex items-center justify-between bg-obsidian/90 border border-gold/25 px-4 sm:px-5 py-3.5">
               <div class="text-sm text-ivory">
@@ -453,14 +515,14 @@
             <button
               type="submit"
               id="submitBookingBtn"
-              class="w-full py-4 sm:py-5 bg-gold text-obsidian text-base font-bold hover:bg-gold-light active:scale-[0.99] transition-all duration-200"
+              class="w-full py-4 sm:py-5 bg-gold text-obsidian text-base font-bold hover:bg-gold-light active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-2"
             >
-              تەمام / هنارتن
+              <span>تەمام / هنارتن</span>
             </button>
           </div>
         </form>
 
-        <!-- شاشا پشتڕاستکرنا ژڤانی -->
+        <!-- شاشا پشتڕاستکرنا ژڤانی (سابت دمینیت هەتا وەرگرتنا ژڤانەکێ نوو) -->
         <div id="bookingConfirmation" class="hidden text-center py-6 sm:py-8 space-y-6">
           <div class="w-16 h-16 mx-auto border border-gold flex items-center justify-center text-gold">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
@@ -594,8 +656,14 @@
               <option value="ژێهات">ژێهات</option>
             </select>
           </div>
-          <button type="button" id="refreshSheetBtn" class="px-4 py-3 border border-gold/40 bg-obsidian text-gold text-xs sm:text-sm font-semibold hover:bg-gold hover:text-obsidian active:scale-95 transition-all shrink-0">
-            نویژەنکرن ↻
+          <button type="button" id="refreshSheetBtn" class="px-4 py-3 border border-gold/40 bg-obsidian text-gold text-xs sm:text-sm font-semibold hover:bg-gold hover:text-obsidian active:scale-95 transition-all shrink-0 flex items-center justify-center gap-2">
+            <span>نویژەنکرن</span>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="6" cy="6" r="2.8" />
+              <circle cx="6" cy="18" r="2.8" />
+              <line x1="8.2" y1="8.2" x2="20" y2="20" />
+              <line x1="8.2" y1="15.8" x2="20" y2="4" />
+            </svg>
           </button>
         </div>
 
@@ -614,6 +682,14 @@
 
     let allBookings = [];
     const hasGoogleSheet = GOOGLE_SHEET_URL && GOOGLE_SHEET_URL.startsWith('https://');
+
+    const scissorsLoaderOverlay = document.getElementById('scissorsLoaderOverlay');
+    function showScissorsLoader() {
+      scissorsLoaderOverlay.classList.remove('hidden');
+    }
+    function hideScissorsLoader() {
+      scissorsLoaderOverlay.classList.add('hidden');
+    }
 
     function loadLocalBookings() {
       try {
@@ -711,6 +787,8 @@
       revealEls.forEach(el => el.classList.add('visible'));
     }
 
+    const randevuSection = document.getElementById('randevu');
+    const bookingSectionHeader = document.getElementById('bookingSectionHeader');
     const barberButtons = document.querySelectorAll('.barber-option');
     const barberInput = document.getElementById('barberInput');
     const dateInput = document.getElementById('dateInput');
@@ -726,6 +804,21 @@
     const stepCircle2 = document.getElementById('stepCircle2');
     const step2BarberLabel = document.getElementById('step2BarberLabel');
     const step2DateLabel = document.getElementById('step2DateLabel');
+
+    // قفلکرن و بەردانا پەڕەی (سابتکرنا بەشێ ژڤانی)
+    function lockBookingView() {
+      document.body.classList.add('booking-locked');
+      randevuSection.classList.add('booking-section-fixed');
+      bookingSectionHeader.classList.add('mb-4', 'sm:mb-6');
+      bookingSectionHeader.classList.remove('mb-10', 'sm:mb-12');
+    }
+
+    function unlockBookingView() {
+      document.body.classList.remove('booking-locked');
+      randevuSection.classList.remove('booking-section-fixed');
+      bookingSectionHeader.classList.remove('mb-4', 'sm:mb-6');
+      bookingSectionHeader.classList.add('mb-10', 'sm:mb-12');
+    }
 
     function timeToMinutes(timeStr) {
       if (!timeStr || !timeStr.includes(':')) return null;
@@ -846,7 +939,12 @@
       stepCircle2.classList.remove('border-white/20', 'text-muted');
       stepCircle2.classList.add('bg-gold', 'text-obsidian', 'border-gold');
 
+      // سابتکرنا شاشا هەلبژارتنا دەمژمێرێ دا نەلڤیت
+      lockBookingView();
+
+      showScissorsLoader();
       await syncFromGoogleSheet();
+      hideScissorsLoader();
       validateSelectedSlot();
     }
 
@@ -858,6 +956,9 @@
       stepBadge2.classList.remove('text-gold', 'font-semibold');
       stepCircle2.classList.add('border-white/20', 'text-muted');
       stepCircle2.classList.remove('bg-gold', 'text-obsidian', 'border-gold');
+
+      // بەردانا سابتکرنێ دەمێ دزڤڕیتە پێنگاڤا ئێکێ
+      unlockBookingView();
     }
 
     toStep2Btn.addEventListener('click', goToStep2);
@@ -892,13 +993,13 @@
       }
 
       submitBookingBtn.disabled = true;
-      submitBookingBtn.textContent = 'تۆمار دبیت...';
+      showScissorsLoader();
 
       await syncFromGoogleSheet();
 
       if (!validateSelectedSlot()) {
+        hideScissorsLoader();
         submitBookingBtn.disabled = true;
-        submitBookingBtn.textContent = 'تەمام / هنارتن';
         slotBusyAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
       }
@@ -933,8 +1034,8 @@
         } catch (err) {}
       }
 
+      hideScissorsLoader();
       submitBookingBtn.disabled = false;
-      submitBookingBtn.textContent = 'تەمام / هنارتن';
 
       document.getElementById('confName').textContent = name;
       document.getElementById('confBarber').textContent = barber;
@@ -951,6 +1052,7 @@
 
       bookingForm.classList.add('hidden');
       bookingConfirmation.classList.remove('hidden');
+      // شاشا پشتڕاستکرنێ ژی سابت دمینیت هەتا دوگما "وەرگرتنا ژڤانەکێ نوو" دهێتە لێدان
     });
 
     document.getElementById('resetBookingBtn').addEventListener('click', () => {
@@ -958,9 +1060,10 @@
       dateInput.value = formattedToday;
       timeInput.value = '16:00';
       barberButtons[0].click();
-      goToStep1();
       bookingConfirmation.classList.add('hidden');
       bookingForm.classList.remove('hidden');
+      goToStep1();
+      randevuSection.scrollIntoView({ behavior: 'smooth' });
     });
 
     const barberPanelModal = document.getElementById('barberPanelModal');
@@ -985,7 +1088,9 @@
         panelLoginBox.classList.add('hidden');
         panelContentBox.classList.remove('hidden');
         renderPanelAppointments();
+        showScissorsLoader();
         await syncFromGoogleSheet();
+        hideScissorsLoader();
       } else {
         panelPassInput.value = '';
         panelPassError.classList.add('hidden');
@@ -997,7 +1102,9 @@
 
     function closeModal() {
       barberPanelModal.classList.add('hidden');
-      document.body.style.overflow = '';
+      if (!document.body.classList.contains('booking-locked')) {
+        document.body.style.overflow = '';
+      }
     }
 
     openBarberPanelBtn.addEventListener('click', openModal);
@@ -1013,7 +1120,9 @@
         panelLoginBox.classList.add('hidden');
         panelContentBox.classList.remove('hidden');
         renderPanelAppointments();
+        showScissorsLoader();
         await syncFromGoogleSheet();
+        hideScissorsLoader();
       } else {
         panelPassError.classList.remove('hidden');
       }
@@ -1027,9 +1136,9 @@
     panelFilterBarber.addEventListener('change', renderPanelAppointments);
 
     refreshSheetBtn.addEventListener('click', async () => {
-      refreshSheetBtn.textContent = 'نوی دبیت...';
+      showScissorsLoader();
       await syncFromGoogleSheet();
-      refreshSheetBtn.textContent = 'نویژەنکرن ↻';
+      hideScissorsLoader();
     });
 
     function renderPanelAppointments() {
