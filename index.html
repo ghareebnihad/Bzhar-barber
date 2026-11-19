@@ -1,648 +1,1086 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ku" dir="rtl" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LiveCode Export</title>
-    
-    <!-- ============================================ -->
-    <!-- CSS CODE (from the CSS editor)               -->
-    <!-- ============================================ -->
-    <style>
-:root {
-    --bg-dark: #0B0F19;
-    --text-main: #F3F4F6;
-    --text-muted: #9CA3AF;
-    --border-color: rgba(255, 255, 255, 0.08);
-    --gradient-accent: linear-gradient(135deg, #EC4899 0%, #F43F5E 100%);
-    --gradient-project: linear-gradient(135deg, #6366F1 0%, #A855F7 100%);
-    --neon-color: #A855F7;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0B0B0C" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>سەرتراشخانا بژار</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#0B0B0C',
+            charcoal: '#131316',
+            graphite: '#1C1C21',
+            gold: {
+              DEFAULT: '#C5A059',
+              light: '#DFC183',
+              dark: '#9E7D3E',
+            },
+            ivory: '#F4F1EA',
+            muted: '#94918B',
+          },
+          fontFamily: {
+            serif: ['"Amiri"', 'serif'],
+            sans: ['"Cairo"', 'sans-serif'],
+            signature: ['"Cormorant Garamond"', 'serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    -webkit-tap-highlight-color: transparent;
-}
+    html {
+      -webkit-text-size-adjust: 100%;
+      scroll-behavior: smooth;
+    }
 
-html {
-    scroll-behavior: smooth;
-}
+    body {
+      background-color: #0B0B0C;
+      color: #F4F1EA;
+      font-family: 'Cairo', sans-serif;
+      overflow-x: hidden;
+      width: 100%;
+      padding-bottom: env(safe-area-inset-bottom);
+      text-rendering: optimizeSpeed;
+      -webkit-font-smoothing: antialiased;
+    }
 
-body {
-    background-color: var(--bg-dark);
-    color: var(--text-main);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding: 24px;
-    position: relative;
-    overflow-x: hidden;
-}
+    a, button, input, select {
+      touch-action: manipulation;
+    }
 
-/* Arka Plan Glow Efektleri */
-body::before, body::after {
-    content: "";
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
-    filter: blur(150px);
-    opacity: 0.12;
-    z-index: -1;
-}
-body::before {
-    top: 5%;
-    left: 5%;
-    background: #6366F1;
-}
-body::after {
-    bottom: 10%;
-    right: 5%;
-    background: #EC4899;
-}
+    input, select, textarea {
+      font-size: 16px !important;
+    }
 
-.wrapper {
-    width: 100%;
-    max-width: 480px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+    ::selection {
+      background: #C5A059;
+      color: #0B0B0C;
+    }
 
-/* ÜST BAR */
-.user-bar {
-    width: 100%;
-    position: relative;
-    border-radius: 20px;
-    padding: 2px;
-    overflow: hidden;
-    margin-bottom: 40px;
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(168, 85, 247, 0.15);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0B0B0C;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2A2A30;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #C5A059;
+    }
 
-.user-bar::before {
-    content: '';
-    position: absolute;
-    width: 150%;
-    height: 150%;
-    background: conic-gradient(from 0deg, transparent 0%, transparent 25%, var(--neon-color) 25%, transparent 50%, transparent 75%, var(--neon-color) 75%, transparent 100%);
-    animation: rotateNeon 4s linear infinite;
-    will-change: transform;
-    z-index: 0;
-}
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #DFC183 0%, #C5A059 50%, #9E7D3E 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-.user-bar-inner {
-    width: 100%;
-    background: #0d1322;
-    backdrop-filter: blur(16px);
-    border-radius: 19px;
-    padding: 14px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-}
+    .hairline-border {
+      border: 1px solid rgba(197, 160, 89, 0.22);
+    }
 
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+    .hero-bg {
+      background-color: #0B0B0C;
+      background-image:
+        radial-gradient(circle at 25% 25%, rgba(197, 160, 89, 0.14) 0%, rgba(11, 11, 12, 0) 52%),
+        radial-gradient(circle at 80% 80%, rgba(197, 160, 89, 0.08) 0%, rgba(11, 11, 12, 0) 45%),
+        linear-gradient(180deg, rgba(11, 11, 12, 0.62) 0%, rgba(11, 11, 12, 0.92) 78%, #0B0B0C 100%),
+        url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+      transform: translateZ(0);
+    }
 
-.user-info i {
-    color: #A855F7;
-    font-size: 15px;
-    text-shadow: 0 0 8px rgba(168, 85, 247, 0.6);
-}
+    .reveal {
+      opacity: 0;
+      transform: translate3d(0, 18px, 0);
+      will-change: opacity, transform;
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      will-change: auto;
+    }
 
-.user-name {
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    background: linear-gradient(135deg, #FFF 30%, #A855F7 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
+    .gpu-card {
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+    }
 
-.nav-links {
-    display: flex;
-    gap: 15px;
-}
+    input[type="date"],
+    input[type="time"] {
+      color-scheme: dark;
+      -webkit-appearance: none;
+      appearance: none;
+      min-height: 54px;
+    }
+    input[type="date"]::-webkit-calendar-picker-indicator,
+    input[type="time"]::-webkit-calendar-picker-indicator {
+      filter: invert(72%) sepia(32%) saturate(600%) hue-rotate(5deg) brightness(95%);
+      cursor: pointer;
+    }
 
-.nav-links a {
-    color: var(--text-muted);
-    font-size: 13px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: color 0.2s;
-}
+    .cta-glow {
+      box-shadow: 0 10px 30px -8px rgba(197, 160, 89, 0.45);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .cta-glow:active {
+      transform: scale(0.98);
+    }
+    @media (hover: hover) {
+      .cta-glow:hover {
+        box-shadow: 0 16px 40px -6px rgba(197, 160, 89, 0.65);
+      }
+    }
 
-.nav-links a:hover {
-    color: #38BDF8;
-}
-
-@keyframes rotateNeon {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-/* HERO BÖLÜMÜ */
-.hero-section {
-    text-align: center;
-    margin-bottom: 45px;
-}
-
-.hero-title {
-    font-size: 30px;
-    font-weight: 700;
-    line-height: 1.35;
-    letter-spacing: -0.5px;
-    background: linear-gradient(180deg, #FFFFFF 0%, #C3C7D3 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 20px;
-}
-
-.hero-title span {
-    background: linear-gradient(135deg, #38BDF8, #A855F7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.hero-desc {
-    font-size: 14px;
-    color: var(--text-muted);
-    line-height: 1.6;
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-/* PROJELER BÖLÜMÜ (KARE / IZGARA TASARIMI) */
-.projects-section {
-    width: 100%;
-}
-
-.section-title {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    color: var(--text-main);
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.section-title i {
-    color: #A855F7;
-    font-size: 18px;
-}
-
-.projects-container {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2'li YAN YANA IZGARA */
-    gap: 16px;
-    margin-bottom: 50px;
-}
-
-.project-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    padding: 16px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    aspect-ratio: 1 / 1; /* TAM KARE ORANI */
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.project-card:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(168, 85, 247, 0.4);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-}
-
-.project-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px;
-    flex-shrink: 0;
-}
-
-/* Proje İkon Renk Temaları */
-.icon-amber {
-    background: rgba(245, 158, 11, 0.1);
-    border: 1px solid rgba(245, 158, 11, 0.2);
-    color: #f59e0b;
-}
-
-.icon-pink {
-    background: rgba(236, 72, 153, 0.1);
-    border: 1px solid rgba(236, 72, 153, 0.2);
-    color: #EC4899;
-}
-
-.icon-indigo {
-    background: rgba(99, 102, 241, 0.1);
-    border: 1px solid rgba(99, 102, 241, 0.2);
-    color: #6366F1;
-}
-
-.icon-emerald {
-    background: rgba(16, 185, 129, 0.1);
-    border: 1px solid rgba(16, 185, 129, 0.2);
-    color: #10B981;
-}
-
-.project-info {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-    margin: 8px 0;
-}
-
-.project-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text-main);
-    margin-bottom: 4px;
-}
-
-.project-desc {
-    font-size: 11px;
-    color: var(--text-muted);
-    line-height: 1.35;
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* Metni 2 satırla sınırlandırır */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.project-direct-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    color: #38BDF8;
-    font-size: 11px;
-    font-weight: 600;
-    text-decoration: none;
-    padding: 4px 8px;
-    border-radius: 8px;
-    background: rgba(56, 189, 248, 0.08);
-    transition: all 0.2s ease;
-}
-
-.project-direct-link:hover {
-    color: #FFF;
-    background: rgba(56, 189, 248, 0.25);
-}
-
-/* İLETİŞİM FORMU BÖLÜMÜ */
-.form-section {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.015);
-    border: 1px solid var(--border-color);
-    border-radius: 24px;
-    padding: 24px;
-    text-align: left;
-    margin-bottom: 30px;
-}
-
-.form-section h3 {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    color: var(--text-main);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.form-section h3 i {
-    color: #EC4899;
-}
-
-.form-group {
-    margin-bottom: 16px;
-}
-
-.form-group label {
-    display: block;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text-muted);
-    margin-bottom: 6px;
-    padding-left: 2px;
-}
-
-.form-control {
-    width: 100%;
-    padding: 14px 16px;
-    border: 1.5px solid rgba(255, 255, 255, 0.05);
-    border-radius: 14px;
-    font-size: 14px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    background: rgba(255, 255, 255, 0.03);
-    color: var(--text-main);
-    outline: none;
-    transition: all 0.3s ease;
-}
-
-.form-control::placeholder {
-    color: #4B5563;
-}
-
-.form-control:focus {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: #A855F7;
-    box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
-}
-
-textarea.form-control {
-    resize: none;
-    height: 100px;
-}
-
-.submit-btn {
-    width: 100%;
-    padding: 15px;
-    background: var(--gradient-accent);
-    color: #ffffff;
-    border: none;
-    border-radius: 14px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 5px;
-    box-shadow: 0 8px 20px rgba(236, 72, 153, 0.3);
-    transition: all 0.3s ease;
-}
-
-.submit-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 25px rgba(236, 72, 153, 0.4);
-}
-
-/* FOOTER */
-footer {
-    width: 100%;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
-
-.social-links {
-    display: flex;
-    gap: 20px;
-}
-
-.social-links a {
-    color: var(--text-muted);
-    font-size: 24px;
-    transition: all 0.2s;
-    text-decoration: none;
-}
-
-.social-links a:hover {
-    color: #EC4899;
-    transform: translateY(-2px);
-}
-
-.copyright {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #4B5563;
-}
-    </style>
-    <!-- ============================================ -->
-    
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
 </head>
-<body>
-    <!-- ============================================ -->
-    <!-- HTML CODE (from the HTML editor)             -->
-    <!-- ============================================ -->
-<!DOCTYPE html>
-<html lang="ku">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ghareeb.Web | Professional Web Developer</title>
-    
-    <!-- Fonts & Icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+<body class="antialiased">
 
-    <div class="wrapper">
-        <!-- ÜST BAR -->
-        <header class="user-bar">
-            <div class="user-bar-inner">
-                <div class="user-info">
-                    <i class="fa-solid fa-code"></i>
-                    <span class="user-name">Ghareeb.Web</span>
-                </div>
-                <nav class="nav-links">
-                    <a href="#projects">Projects</a>
-                    <a href="#contact">Contact</a>
-                </nav>
-            </div>
-        </header>
+  <!-- پاشبنەمایا Blur دەمێ لیستا مۆبایلێ ڤەدبیت -->
+  <div id="mobileMenuBackdrop" class="hidden fixed inset-0 z-40 bg-obsidian/70 backdrop-blur-md transition-opacity duration-300 md:hidden"></div>
 
-        <!-- HERO BÖLÜMÜ -->
-        <section class="hero-section">
-            <h1 class="hero-title">
-                Start with me to make your own business <span>best Website</span>
-            </h1>
-            <p class="hero-desc">
-                Specialized in digital QR menus, dynamic portfolios, and bespoke high-end web solutions.
-            </p>
-        </section>
+  <!-- سەرێ لاپەڕی (هێدەر) -->
+  <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-colors duration-300 border-b border-transparent pt-[env(safe-area-inset-top)]">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 h-16 sm:h-20 flex items-center justify-between gap-2 relative z-50">
+      <!-- لۆگۆ: مەقەس و مووس -->
+      <a href="#" class="flex items-center gap-3 sm:gap-3.5 group shrink-0">
+        <div class="w-10 h-10 sm:w-11 sm:h-11 border border-gold/60 bg-obsidian/80 flex items-center justify-center group-hover:border-gold group-hover:bg-gold/10 transition-all duration-300">
+          <svg class="w-6 h-6 sm:w-7 sm:h-7 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="6" cy="6" r="2.7" />
+            <circle cx="6" cy="18" r="2.7" />
+            <line x1="19" y1="5" x2="8" y2="16" />
+            <line x1="14" y1="14" x2="19" y2="19" />
+            <line x1="8" y1="8" x2="11.5" y2="11.5" />
+            <path d="M16.5 3.5l4 4-2.5 2.5-4-4 2.5-2.5z" />
+          </svg>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-ivory leading-none">سەرتراشخانا بژار</span>
+          <span class="text-[10px] sm:text-[11px] text-gold mt-0.5 sm:mt-1">و ستایلێ زەلامان</span>
+        </div>
+      </a>
 
-        <!-- PROJELER BÖLÜMÜ -->
-        <section class="projects-section" id="projects">
-            <div class="section-title">
-                <i class="fa-solid fa-cubes"></i> My Works & Projects
-            </div>
+      <!-- لینکێن ناڤەڕاست -->
+      <nav class="hidden md:flex items-center gap-9 text-sm text-ivory/80 font-medium">
+        <a href="#randevu" class="hover:text-gold transition-colors">ژڤانێ ئۆنلاین</a>
+        <a href="#iletisim" class="hover:text-gold transition-colors">پەیوەندی و ناڤونیشان</a>
+      </nav>
 
-            <div class="projects-container">
-                <!-- Project 1 -->
-                <article class="project-card">
-                    <div class="project-icon icon-amber">
-                        <i class="fa-solid fa-utensils"></i>
-                    </div>
-                    <div class="project-info">
-                        <h2 class="project-title">Digital Menu</h2>
-                        <p class="project-desc">Interactive and sleek digital menu solution for restaurants and cafes.</p>
-                        <a href="https://menu-gh.vercel.app" target="_blank" class="project-direct-link">
-                            https://menu-gh.vercel.app <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                        </a>
-                    </div>
-                </article>
+      <!-- سەرێ چەپێ: پەنێلێ وەستایان + ژڤان وەربگرە -->
+      <div class="flex items-center gap-2 sm:gap-3.5">
+        <button id="openBarberPanelBtn" type="button" class="px-2.5 sm:px-3.5 py-2 sm:py-2.5 border border-gold/40 bg-obsidian/90 text-gold text-xs sm:text-sm font-semibold hover:bg-gold hover:text-obsidian active:scale-95 transition-all duration-200 flex items-center gap-1.5 sm:gap-2">
+          <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+          </svg>
+          <span>ئەدمین</span>
+        </button>
 
-                <!-- Project 2 (YENİ: Sukun Cafe) -->
-                <article class="project-card">
-                    <div class="project-icon icon-pink">
-                        <i class="fa-solid fa-mug-hot"></i>
-                    </div>
-                    <div class="project-info">
-                        <h2 class="project-title">Sukun Cafe</h2>
-                        <p class="project-desc">Modern digital menu and showcase platform designed for Sukun Cafe.</p>
-                        <a href="https://sukun-cafe.vercel.app/" target="_blank" class="project-direct-link">
-                            https://sukun-cafe.vercel.app/ <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                        </a>
-                    </div>
-                </article>
+        <a href="#randevu" class="hidden sm:inline-block px-5 py-2.5 bg-gold text-obsidian text-sm font-bold hover:bg-gold-light transition-colors duration-200">
+          ژڤان وەربگرە
+        </a>
 
-                <!-- Project 3 -->
-                <article class="project-card">
-                    <div class="project-icon icon-indigo">
-                        <i class="fa-solid fa-beer-mug-empty"></i>
-                    </div>
-                    <div class="project-info">
-                        <h2 class="project-title">Boss Club Bar</h2>
-                        <p class="project-desc">Premium UI experience for a high-end club and bar management.</p>
-                        <a href="https://boss-club.vercel.app/" target="_blank" class="project-direct-link">
-                            https://boss-club.vercel.app/ <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Project 4 (YENİ: Al Eskimo) -->
-                <article class="project-card">
-                    <div class="project-icon icon-emerald">
-                        <i class="fa-solid fa-ice-cream"></i>
-                    </div>
-                    <div class="project-info">
-                        <h2 class="project-title">Al Eskimo</h2>
-                        <p class="project-desc">Custom responsive web application and digital menu for Al Eskimo.</p>
-                        <a href="https://aleskimo.vercel.app/" target="_blank" class="project-direct-link">
-                            https://aleskimo.vercel.app/ <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                        </a>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <!-- İLETİŞİM FORMU BÖLÜMÜ -->
-        <section class="form-section" id="contact">
-            <h3><i class="fa-solid fa-paper-plane"></i> Let's Connect!</h3>
-            <form id="contactForm">
-                <div class="form-group">
-                    <label for="name">Name :</label>
-                    <input type="text" id="name" class="form-control" required autocomplete="off" placeholder="Your Name">
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone No. :</label>
-                    <input type="tel" id="phone" class="form-control" required autocomplete="off" placeholder="Your Phone Number">
-                </div>
-                <div class="form-group">
-                    <label for="company">Company Name :</label>
-                    <input type="text" id="company" class="form-control" autocomplete="off" placeholder="Your Company">
-                </div>
-                <div class="form-group">
-                    <label for="note">Note :</label>
-                    <textarea id="note" class="form-control" placeholder="Write your message here..."></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Send Request</button>
-            </form>
-        </section>
-
-        <!-- FOOTER -->
-        <footer>
-            <div class="social-links">
-                <a href="https://instagram.com/ghareeb01_" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            </div>
-            <div class="copyright">
-                DEVELOPED BY GHAREEB | © 2026
-            </div>
-        </footer>
+        <button id="mobileMenuBtn" type="button" aria-label="ڤەکرنا لیستێ" class="md:hidden text-ivory p-2 focus:outline-none active:scale-95">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
+          </svg>
+        </button>
+      </div>
     </div>
 
-    <!-- Custom JS -->
-    <script src="script.js"></script>
-</body>
-</html>
-    <!-- ============================================ -->
-    
-    <!-- ============================================ -->
-    <!-- JAVASCRIPT CODE (from the JS editor)         -->
-    <!-- ============================================ -->
-    <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const contactForm = document.getElementById('contactForm');
-    const submitBtn = contactForm.querySelector('.submit-btn');
+    <!-- لیستا مۆبایلێ ب پاشبنەمایا Blur -->
+    <div id="mobileMenu" class="hidden md:hidden relative z-50 bg-charcoal/85 backdrop-blur-xl border-b border-gold/30 px-6 py-6 space-y-4 shadow-2xl">
+      <a href="#randevu" class="block py-2 text-base font-semibold text-ivory hover:text-gold transition-colors">ژڤانێ ئۆنلاین</a>
+      <a href="#iletisim" class="block py-2 text-base font-semibold text-ivory hover:text-gold transition-colors">پەیوەندی و ناڤونیشان</a>
+      <a href="#randevu" class="block w-full text-center py-3.5 bg-gold text-obsidian text-base font-bold">
+        نوکە ژڤانی وەربگرە
+      </a>
+    </div>
+  </header>
 
-    // Google Apps Script Web App URL
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxGxNLRO9YPBoh1r8OEi9a2lIf-0kS6EG5xec04PXODqbJT0N-dSqB4ENMZL1YQ40eH/exec';
+  <!-- شاشا دەستپێکێ -->
+  <section class="hero-bg min-h-[100svh] flex items-center relative pt-24 pb-14">
+    <div class="max-w-4xl mx-auto px-5 sm:px-6 md:px-10 w-full text-center">
+      <div class="inline-flex items-center gap-2.5 px-4 sm:px-5 py-2 border border-gold/35 bg-obsidian/85 mb-6 sm:mb-7">
+        <svg class="w-4 h-4 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="6" cy="6" r="3" />
+          <circle cx="6" cy="18" r="3" />
+          <line x1="20" y1="4" x2="8.12" y2="15.88" />
+          <line x1="14.47" y1="14.48" x2="20" y2="20" />
+          <line x1="8.12" y1="8.12" x2="12" y2="12" />
+        </svg>
+        <span class="text-xs sm:text-sm text-gold-light font-medium">سەرتراشخانا بژار</span>
+      </div>
 
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        // Butonu devre dışı bırak ve metni değiştir
-        submitBtn.disabled = true;
-        submitBtn.innerText = "Sending Request...";
+      <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[1.15] text-ivory mb-5 sm:mb-6">
+        بڕینا بێ کێماسی<br />
+        <span class="gold-gradient-text">ستایلێ هەردەمی</span>
+      </h1>
 
-        // Form verilerini hazırla
-        const formData = new FormData();
-        formData.append('name', document.getElementById('name').value);
-        formData.append('phone', document.getElementById('phone').value);
-        formData.append('company', document.getElementById('company').value);
-        formData.append('note', document.getElementById('note').value);
+      <p class="text-sm sm:text-lg md:text-xl text-ivory/80 max-w-xl mx-auto leading-relaxed font-light mb-9 sm:mb-11 px-2">
+        ب دیزاینا پرچا تایبەت، خزمەتگوزارییا باش، ژڤانێ خۆ د چەند چرکەیان دا تۆمار بکە.
+      </p>
 
-        // Google Sheets API isteği at
-        fetch(scriptURL, { 
-            method: 'POST', 
-            body: formData
-        })
-        .then(response => {
-            alert('Spas! Your request has been sent successfully.');
-            contactForm.reset();
-        })
-        .catch(error => {
-            console.error('Error!', error.message);
-            alert('Something went wrong. Please try again.');
-        })
-        .finally(() => {
-            submitBtn.disabled = false;
-            submitBtn.innerText = "Send Request";
+      <!-- دوگما مەزن یا وەرگرتنا ژڤانی -->
+      <div class="flex flex-col items-center justify-center gap-4 sm:gap-5">
+        <a href="#randevu" class="cta-glow group w-full max-w-[340px] sm:max-w-none sm:w-auto sm:min-w-[350px] px-8 sm:px-12 py-5 sm:py-6 bg-gold text-obsidian text-lg sm:text-xl font-bold hover:bg-gold-light inline-flex items-center justify-center gap-3 sm:gap-4">
+          <span>ژڤانی وەربگرە</span>
+          <svg class="w-5 h-5 group-hover:-translate-x-1.5 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
+          </svg>
+        </a>
+      </div>
+
+      <!-- ئایکۆنێن ئامیرێن سەرتراشخانێ: مەقەس و مووس -->
+      <div class="mt-10 sm:mt-12 flex items-center justify-center gap-8 sm:gap-12 text-gold/75">
+        <div class="flex flex-col items-center gap-1.5">
+          <div class="w-11 h-11 rounded-full border border-gold/30 bg-obsidian/75 flex items-center justify-center">
+            <svg class="w-5 h-5 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="6" cy="6" r="3" />
+              <circle cx="6" cy="18" r="3" />
+              <line x1="20" y1="4" x2="8.12" y2="15.88" />
+              <line x1="14.47" y1="14.48" x2="20" y2="20" />
+              <line x1="8.12" y1="8.12" x2="12" y2="12" />
+            </svg>
+          </div>
+          <span class="text-xs text-ivory/75">بڕینا پرچێ</span>
+        </div>
+
+        <div class="flex flex-col items-center gap-1.5">
+          <div class="w-11 h-11 rounded-full border border-gold/30 bg-obsidian/75 flex items-center justify-center">
+            <svg class="w-5 h-5 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 17L15 6l3 3L7 20H4v-3z" />
+              <path d="M15 6l3.5-2.5 2 2L18 9" />
+              <circle cx="19" cy="5.5" r="0.6" fill="currentColor" />
+            </svg>
+          </div>
+          <span class="text-xs text-ivory/75">ڕیهـ و سمبێل</span>
+        </div>
+      </div>
+
+      <!-- دەمژمێرێن کارکرنێ -->
+      <div class="mt-8 sm:mt-10 pt-6 border-t border-white/10 inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-xs sm:text-sm text-ivory/80">
+        <span class="text-gold font-semibold">دەمێن کارکرنێ:</span>
+        <span>شەمبی - پێنج شەمب</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- سیستەمێ ژڤانێ ئۆنلاین ب پێنگاڤان -->
+  <section id="randevu" class="py-20 sm:py-24 md:py-32 bg-obsidian relative border-t border-white/5">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 md:px-10">
+      <div class="text-center mb-10 sm:mb-12 reveal">
+        <div class="inline-flex items-center justify-center gap-2 mb-2">
+          <svg class="w-4 h-4 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="6" cy="6" r="3" />
+            <circle cx="6" cy="18" r="3" />
+            <line x1="20" y1="4" x2="8.12" y2="15.88" />
+            <line x1="14.47" y1="14.48" x2="20" y2="20" />
+            <line x1="8.12" y1="8.12" x2="12" y2="12" />
+          </svg>
+          <span class="text-sm text-gold font-medium">تۆمارکرن</span>
+        </div>
+        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl text-ivory font-bold mb-3">ژڤانێ ئۆنلاین</h2>
+      </div>
+
+      <div class="reveal gpu-card bg-charcoal hairline-border p-5 sm:p-7 md:p-11">
+        <!-- نیشاندەرێ پێنگاڤان -->
+        <div class="flex items-center justify-center gap-3 sm:gap-4 mb-8 pb-5 border-b border-white/10">
+          <div id="stepBadge1" class="flex items-center gap-2 text-xs sm:text-sm text-gold font-semibold">
+            <span class="w-7 h-7 rounded-full bg-gold text-obsidian flex items-center justify-center text-xs font-bold shrink-0">١</span>
+            <span>ڕێکەفت</span>
+          </div>
+          <div class="w-6 sm:w-10 h-[1px] bg-white/15"></div>
+          <div id="stepBadge2" class="flex items-center gap-2 text-xs sm:text-sm text-muted">
+            <span id="stepCircle2" class="w-7 h-7 rounded-full border border-white/20 text-muted flex items-center justify-center text-xs font-bold shrink-0">٢</span>
+            <span>دەمژمێر و پشتڕاستکرن</span>
+          </div>
+        </div>
+
+        <form id="bookingForm" class="space-y-7" novalidate>
+
+          <!-- پێنگاڤا ١: هەلبژارتنا وەستای + ڕێکەفت -->
+          <div id="step1Container" class="space-y-6 sm:space-y-7">
+            <div>
+              <label class="block text-sm text-gold font-semibold mb-3">وەستایێ خۆ هەلبژێرە</label>
+              <div class="grid grid-cols-2 gap-3 sm:gap-4" id="barberSelector">
+                <button type="button" data-barber="بژار" class="barber-option py-3.5 sm:py-4 px-4 sm:px-5 border border-gold bg-gold/10 text-ivory text-right active:scale-[0.98] transition-all flex items-center justify-between">
+                  <span class="font-serif text-2xl sm:text-3xl font-bold text-ivory">بژار</span>
+                  <svg class="w-5 h-5 text-gold shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <circle cx="6" cy="6" r="3" />
+                    <circle cx="6" cy="18" r="3" />
+                    <line x1="20" y1="4" x2="8.12" y2="15.88" />
+                    <line x1="14.47" y1="14.48" x2="20" y2="20" />
+                    <line x1="8.12" y1="8.12" x2="12" y2="12" />
+                  </svg>
+                </button>
+                <button type="button" data-barber="ژێهات" class="barber-option py-3.5 sm:py-4 px-4 sm:px-5 border border-white/10 bg-obsidian text-muted hover:border-gold/40 text-right active:scale-[0.98] transition-all flex items-center justify-between">
+                  <span class="font-serif text-2xl sm:text-3xl font-bold text-ivory">ژێهات</span>
+                  <svg class="w-5 h-5 text-gold/50 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <circle cx="6" cy="6" r="3" />
+                    <circle cx="6" cy="18" r="3" />
+                    <line x1="20" y1="4" x2="8.12" y2="15.88" />
+                    <line x1="14.47" y1="14.48" x2="20" y2="20" />
+                    <line x1="8.12" y1="8.12" x2="12" y2="12" />
+                  </svg>
+                </button>
+              </div>
+              <input type="hidden" id="barberInput" value="بژار" />
+            </div>
+
+            <div>
+              <label for="dateInput" class="block text-sm text-gold font-semibold mb-3">ڕێکەفتێ هەلبژێرە</label>
+              <input
+                type="date"
+                id="dateInput"
+                required
+                class="w-full bg-obsidian border border-white/15 focus:border-gold px-4 py-3.5 text-ivory outline-none transition-colors"
+              />
+            </div>
+
+            <button
+              type="button"
+              id="toStep2Btn"
+              class="w-full py-4 sm:py-5 bg-gold text-obsidian text-base font-bold hover:bg-gold-light active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-3"
+            >
+              <span>بەردەوام بە — دەمژمێرێ هەلبژێرە</span>
+              <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- پێنگاڤا ٢: هەلبژارتنا دەمژمێرێ، ناڤ/مۆبایل و تەمام / هنارتن -->
+          <div id="step2Container" class="hidden space-y-6 sm:space-y-7">
+            <div class="flex items-center justify-between bg-obsidian/90 border border-gold/25 px-4 sm:px-5 py-3.5">
+              <div class="text-sm text-ivory">
+                <span class="text-gold font-bold" id="step2BarberLabel">بژار</span>
+                <span class="mx-2 text-white/25">•</span>
+                <span id="step2DateLabel" class="text-ivory/90" dir="ltr">-</span>
+              </div>
+              <button type="button" id="backToStep1Btn" class="text-xs sm:text-sm text-gold hover:text-gold-light underline underline-offset-4 py-1">
+                گوهۆڕین
+              </button>
+            </div>
+
+            <div>
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                <label for="timeInput" class="block text-sm text-gold font-semibold">سوپاس بۆ تە</label>
+                <span class="text-xs text-muted">ژ مۆبایلێ دەمژمێرێ هەلبژێرە</span>
+              </div>
+              <input
+                type="time"
+                id="timeInput"
+                min="00:00"
+                max="23:59"
+                step="60"
+                required
+                class="w-full bg-obsidian border border-white/15 focus:border-gold px-4 py-3.5 text-ivory outline-none transition-colors"
+              />
+
+              <div id="slotBusyAlert" class="hidden mt-3 p-4 bg-red-950/85 border border-red-500 text-red-300 text-sm font-semibold flex items-center gap-3">
+                <svg class="w-5 h-5 text-red-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                </svg>
+                <span>بۆشایی نینە، نەفەرێ یێ هەی د ڤێ دەمژمێرێ دا</span>
+              </div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-5 sm:gap-6">
+              <div>
+                <label for="nameInput" class="block text-sm text-gold font-semibold mb-2.5">ناڤێ تە یێ تەمام</label>
+                <input
+                  type="text"
+                  id="nameInput"
+                  autocomplete="name"
+                  placeholder="ناڤێ خۆ بنڤیسە"
+                  required
+                  class="w-full bg-obsidian border border-white/15 focus:border-gold px-4 py-3.5 text-ivory placeholder:text-muted/50 outline-none transition-colors"
+                />
+              </div>
+              <div>
+                <label for="phoneInput" class="block text-sm text-gold font-semibold mb-2.5">ژمارا مۆبایلێ</label>
+                <input
+                  type="tel"
+                  id="phoneInput"
+                  inputmode="tel"
+                  autocomplete="tel"
+                  placeholder="ژمارا موبایلێ"
+                  required
+                  class="w-full bg-obsidian border border-white/15 focus:border-gold px-4 py-3.5 text-ivory placeholder:text-muted/50 outline-none transition-colors text-right"
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              id="submitBookingBtn"
+              class="w-full py-4 sm:py-5 bg-gold text-obsidian text-base font-bold hover:bg-gold-light active:scale-[0.99] transition-all duration-200"
+            >
+              تەمام / هنارتن
+            </button>
+          </div>
+        </form>
+
+        <!-- شاشا پشتڕاستکرنا ژڤانی -->
+        <div id="bookingConfirmation" class="hidden text-center py-6 sm:py-8 space-y-6">
+          <div class="w-16 h-16 mx-auto border border-gold flex items-center justify-center text-gold">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+          </div>
+          <div>
+            <span class="text-sm text-gold font-semibold">ژڤانێ تە هاتە پەسەندکرن</span>
+            <h3 class="font-serif text-3xl sm:text-4xl text-ivory font-bold mt-2">سوپاس بۆ تە، <span id="confName"></span></h3>
+            <p class="text-sm text-muted mt-2">ڕێکەفت و دەمژمێرا هەلبژارتی بۆ تە هاتە تۆمارکرن.</p>
+          </div>
+
+          <div id="confSecondCustomerNote" class="hidden max-w-md mx-auto p-4 sm:p-5 bg-amber-950/75 border border-gold text-gold-light text-base font-bold leading-relaxed">
+          </div>
+
+          <div class="bg-obsidian border border-gold/25 p-5 sm:p-6 max-w-md mx-auto text-right space-y-3 text-sm">
+            <div class="flex justify-between border-b border-white/5 pb-2.5">
+              <span class="text-muted">وەستا:</span>
+              <span id="confBarber" class="text-ivory font-semibold"></span>
+            </div>
+            <div class="flex justify-between border-b border-white/5 pb-2.5">
+              <span class="text-muted">ڕێکەفت:</span>
+              <span id="confDate" class="text-ivory font-semibold" dir="ltr"></span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-muted">دەمژمێر:</span>
+              <span id="confTime" class="text-gold font-bold" dir="ltr"></span>
+            </div>
+          </div>
+
+          <div class="flex justify-center pt-2">
+            <button type="button" id="resetBookingBtn" class="px-8 py-3.5 border border-white/20 text-ivory text-sm hover:border-gold hover:text-gold active:scale-95 transition-all">
+              وەرگرتنا ژڤانەکێ نوو
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- بنێ لاپەڕی (فوتەر) -->
+  <footer id="iletisim" class="bg-charcoal border-t border-white/10 pt-16 sm:pt-20 pb-12">
+    <div class="max-w-6xl mx-auto px-5 sm:px-6 md:px-10">
+      <div class="grid md:grid-cols-12 gap-10 sm:gap-12 pb-12 sm:pb-16 border-b border-white/10">
+
+        <!-- لۆگۆ: مەقەس و مووس -->
+        <div class="md:col-span-4 space-y-4 sm:space-y-5">
+          <div class="flex items-center gap-3.5">
+            <div class="w-10 h-10 border border-gold/60 bg-obsidian/80 flex items-center justify-center">
+              <svg class="w-6 h-6 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="6" cy="6" r="2.7" />
+                <circle cx="6" cy="18" r="2.7" />
+                <line x1="19" y1="5" x2="8" y2="16" />
+                <line x1="14" y1="14" x2="19" y2="19" />
+                <line x1="8" y1="8" x2="11.5" y2="11.5" />
+                <path d="M16.5 3.5l4 4-2.5 2.5-4-4 2.5-2.5z" />
+              </svg>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-serif text-2xl font-bold text-ivory leading-none">سەرتراشخانا بژار</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- پەیوەندی و ناڤونیشان -->
+        <div class="md:col-span-4 space-y-3 sm:space-y-4">
+          <h4 class="text-sm font-bold text-gold">پەیوەندی و ناڤونیشان</h4>
+          <div class="space-y-2.5 text-sm text-ivory/85">
+            <p class="leading-relaxed">
+              سێمێل - جادا ریعایێ بەرامبەری قوتابخانا هایدار
+            </p>
+            <p>
+              <a href="tel:07500000000" class="text-ivory hover:text-gold transition-colors tracking-wider inline-block py-1" dir="ltr">
+                0750 000 0000
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <!-- دەمژمێرێن کارکرنێ -->
+        <div class="md:col-span-4 space-y-3 sm:space-y-4">
+          <h4 class="text-sm font-bold text-gold">دەمێن کارکرنێ</h4>
+          <div class="text-sm text-ivory/85 border-b border-white/5 pb-3 flex justify-between items-center">
+            <span class="text-muted">شەمبی - پێنج شەمب</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- کۆپیرایت ب فۆنتێ Cormorant Garamond یێ ڕێک -->
+      <div class="pt-8 flex items-center justify-center sm:justify-between">
+        <p dir="ltr" class="font-signature not-italic text-xl sm:text-2xl tracking-[0.14em] gold-gradient-text font-bold">
+          © 2026 - By Ghareeb
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- پەنێلێ وەستایان -->
+  <div id="barberPanelModal" class="hidden fixed inset-0 z-50 bg-obsidian/95 flex items-center justify-center p-3 sm:p-4 overflow-y-auto overscroll-contain">
+    <div class="bg-charcoal hairline-border w-full max-w-2xl p-5 sm:p-6 md:p-9 relative my-auto">
+      <div class="flex items-center justify-between pb-4 sm:pb-5 border-b border-white/10">
+        <div>
+          <span class="text-xs text-gold">پەنێلێ ڕێڤەبرنێ</span>
+          <h3 class="font-serif text-2xl sm:text-3xl text-ivory font-bold mt-0.5">لیستا کڕیارێن بژار و ژێهات</h3>
+        </div>
+        <button id="closeBarberPanelBtn" type="button" aria-label="داخستن" class="text-muted hover:text-ivory p-2 text-3xl leading-none active:scale-90">&times;</button>
+      </div>
+
+      <div id="panelLoginBox" class="py-7 sm:py-8 space-y-5 max-w-sm mx-auto text-center">
+        <p class="text-sm text-muted">بۆ دیتنا کڕیاران، نهێنیپەیڤا وەستایان بنڤیسە:</p>
+        <input
+          type="password"
+          id="panelPassInput"
+          inputmode="numeric"
+          class="w-full bg-obsidian border border-white/15 focus:border-gold px-4 py-3.5 text-center text-ivory outline-none"
+        />
+        <p id="panelPassError" class="hidden text-xs text-red-400">نهێنیپەیڤ شاشە، دووبارە هەول بدە.</p>
+        <button id="panelLoginSubmitBtn" type="button" class="w-full py-3.5 bg-gold text-obsidian text-sm font-bold hover:bg-gold-light active:scale-[0.98] transition-all">
+          چوونا ژوور
+        </button>
+      </div>
+
+      <div id="panelContentBox" class="hidden pt-5 sm:pt-6 space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-end gap-3">
+          <div class="flex-1">
+            <label class="block text-xs text-gold font-semibold mb-2">وەستا</label>
+            <select id="panelFilterBarber" class="w-full bg-obsidian border border-white/15 px-3.5 py-3 text-ivory outline-none">
+              <option value="ALL">هەردوو وەستا (بژار و ژێهات)</option>
+              <option value="بژار">بژار</option>
+              <option value="ژێهات">ژێهات</option>
+            </select>
+          </div>
+          <button type="button" id="refreshSheetBtn" class="px-4 py-3 border border-gold/40 bg-obsidian text-gold text-xs sm:text-sm font-semibold hover:bg-gold hover:text-obsidian active:scale-95 transition-all shrink-0">
+            نویژەنکرن ↻
+          </button>
+        </div>
+
+        <div id="panelAppointmentsList" class="space-y-3 max-h-[60vh] overflow-y-auto overscroll-contain pl-1">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Google Sheets + JavaScript -->
+  <script type="module">
+    const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbx7WRRWW3iAuhnvYamvFvO0Vim0dijhD9qNmnDQx1MJ4OcsOFIL5CgIMMbEGr8D2Ihe7Q/exec';
+
+    const BARBER_PASSCODE = '1234';
+    const LOCAL_STORAGE_KEY = 'bzhar_barber_bookings_ku_v3';
+
+    let allBookings = [];
+    const hasGoogleSheet = GOOGLE_SHEET_URL && GOOGLE_SHEET_URL.startsWith('https://');
+
+    function loadLocalBookings() {
+      try {
+        return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveLocalBookings(list) {
+      try {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(list));
+      } catch (e) {}
+    }
+
+    allBookings = loadLocalBookings();
+
+    async function syncFromGoogleSheet() {
+      if (!hasGoogleSheet) return;
+      try {
+        const res = await fetch(`${GOOGLE_SHEET_URL}?t=${Date.now()}`);
+        const data = await res.json();
+        if (data && data.status === 'ok' && Array.isArray(data.bookings)) {
+          allBookings = data.bookings;
+          saveLocalBookings(allBookings);
+          validateSelectedSlot();
+          renderPanelAppointments();
+        }
+      } catch (err) {}
+    }
+
+    if (hasGoogleSheet) {
+      syncFromGoogleSheet();
+      setInterval(syncFromGoogleSheet, 20000);
+    }
+
+    const navbar = document.getElementById('navbar');
+    let isScrolled = false;
+    let scrollTicking = false;
+
+    window.addEventListener('scroll', () => {
+      if (!scrollTicking) {
+        window.requestAnimationFrame(() => {
+          const shouldBeScrolled = window.scrollY > 36;
+          if (shouldBeScrolled !== isScrolled) {
+            isScrolled = shouldBeScrolled;
+            if (isScrolled) {
+              navbar.classList.add('bg-obsidian/95', 'border-white/10');
+              navbar.classList.remove('border-transparent');
+            } else {
+              navbar.classList.remove('bg-obsidian/95', 'border-white/10');
+              navbar.classList.add('border-transparent');
+            }
+          }
+          scrollTicking = false;
         });
+        scrollTicking = true;
+      }
+    }, { passive: true });
+
+    // لیستا مۆبایلێ ب پاشبنەمایا Blur
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuBackdrop = document.getElementById('mobileMenuBackdrop');
+
+    function toggleMobileMenu(forceClose = false) {
+      const isHidden = mobileMenu.classList.contains('hidden');
+      if (forceClose || !isHidden) {
+        mobileMenu.classList.add('hidden');
+        mobileMenuBackdrop.classList.add('hidden');
+      } else {
+        mobileMenu.classList.remove('hidden');
+        mobileMenuBackdrop.classList.remove('hidden');
+      }
+    }
+
+    mobileMenuBtn.addEventListener('click', () => toggleMobileMenu());
+    mobileMenuBackdrop.addEventListener('click', () => toggleMobileMenu(true));
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => toggleMobileMenu(true));
     });
-});
-    </script>
-    <!-- ============================================ -->
-    
+
+    const revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+      revealEls.forEach(el => observer.observe(el));
+    } else {
+      revealEls.forEach(el => el.classList.add('visible'));
+    }
+
+    const barberButtons = document.querySelectorAll('.barber-option');
+    const barberInput = document.getElementById('barberInput');
+    const dateInput = document.getElementById('dateInput');
+    const timeInput = document.getElementById('timeInput');
+    const slotBusyAlert = document.getElementById('slotBusyAlert');
+    const submitBookingBtn = document.getElementById('submitBookingBtn');
+
+    const step1Container = document.getElementById('step1Container');
+    const step2Container = document.getElementById('step2Container');
+    const toStep2Btn = document.getElementById('toStep2Btn');
+    const backToStep1Btn = document.getElementById('backToStep1Btn');
+    const stepBadge2 = document.getElementById('stepBadge2');
+    const stepCircle2 = document.getElementById('stepCircle2');
+    const step2BarberLabel = document.getElementById('step2BarberLabel');
+    const step2DateLabel = document.getElementById('step2DateLabel');
+
+    function timeToMinutes(timeStr) {
+      if (!timeStr || !timeStr.includes(':')) return null;
+      const [h, m] = timeStr.split(':').map(Number);
+      return h * 60 + m;
+    }
+
+    function addThirtyMinutes(timeStr) {
+      const total = timeToMinutes(timeStr);
+      if (total === null) return timeStr;
+      const next = (total + 30) % (24 * 60);
+      const hh = String(Math.floor(next / 60)).padStart(2, '0');
+      const mm = String(next % 60).padStart(2, '0');
+      return `${hh}:${mm}`;
+    }
+
+    function getSlotBookings(barber, date, selectedTimeStr) {
+      return allBookings.filter(b => {
+        if (b.barber !== barber || b.date !== date) return false;
+        const base = b.requestedTime || b.time;
+        return base === selectedTimeStr;
+      });
+    }
+
+    function validateSelectedSlot() {
+      const barber = barberInput.value;
+      const date = dateInput.value;
+      const time = timeInput.value;
+
+      if (!time) {
+        slotBusyAlert.classList.add('hidden');
+        timeInput.classList.remove('border-red-500', 'text-red-400');
+        timeInput.classList.add('border-white/15', 'text-ivory');
+        submitBookingBtn.disabled = false;
+        submitBookingBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+        return true;
+      }
+
+      const existing = getSlotBookings(barber, date, time);
+
+      if (existing.length >= 2) {
+        slotBusyAlert.classList.remove('hidden');
+        timeInput.classList.remove('border-white/15', 'text-ivory');
+        timeInput.classList.add('border-red-500', 'text-red-400');
+        submitBookingBtn.disabled = true;
+        submitBookingBtn.classList.add('opacity-40', 'cursor-not-allowed');
+        return false;
+      } else {
+        slotBusyAlert.classList.add('hidden');
+        timeInput.classList.remove('border-red-500', 'text-red-400');
+        timeInput.classList.add('border-white/15', 'text-ivory');
+        submitBookingBtn.disabled = false;
+        submitBookingBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+        return true;
+      }
+    }
+
+    barberButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        barberButtons.forEach(b => {
+          b.classList.remove('border-gold', 'bg-gold/10', 'text-ivory');
+          b.classList.add('border-white/10', 'bg-obsidian', 'text-muted');
+          const icon = b.querySelector('svg');
+          if (icon) {
+            icon.classList.remove('text-gold');
+            icon.classList.add('text-gold/50');
+          }
+        });
+        btn.classList.remove('border-white/10', 'bg-obsidian', 'text-muted');
+        btn.classList.add('border-gold', 'bg-gold/10', 'text-ivory');
+        const activeIcon = btn.querySelector('svg');
+        if (activeIcon) {
+          activeIcon.classList.remove('text-gold/50');
+          activeIcon.classList.add('text-gold');
+        }
+        barberInput.value = btn.dataset.barber;
+        validateSelectedSlot();
+      });
+    });
+
+    window.selectBarberAndScroll = function(barberName) {
+      barberButtons.forEach(btn => {
+        if (btn.dataset.barber === barberName) btn.click();
+      });
+      goToStep1();
+      document.getElementById('randevu').scrollIntoView({ behavior: 'smooth' });
+    };
+
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const formattedToday = `${yyyy}-${mm}-${dd}`;
+    dateInput.min = formattedToday;
+    dateInput.value = formattedToday;
+
+    dateInput.addEventListener('change', validateSelectedSlot);
+
+    function formatDisplayDate(dateStr) {
+      if (!dateStr) return '-';
+      const [y, m, d] = dateStr.split('-');
+      return `${d}.${m}.${y}`;
+    }
+
+    async function goToStep2() {
+      if (!dateInput.value) {
+        dateInput.focus();
+        return;
+      }
+      step2BarberLabel.textContent = barberInput.value;
+      step2DateLabel.textContent = formatDisplayDate(dateInput.value);
+
+      step1Container.classList.add('hidden');
+      step2Container.classList.remove('hidden');
+
+      stepBadge2.classList.remove('text-muted');
+      stepBadge2.classList.add('text-gold', 'font-semibold');
+      stepCircle2.classList.remove('border-white/20', 'text-muted');
+      stepCircle2.classList.add('bg-gold', 'text-obsidian', 'border-gold');
+
+      await syncFromGoogleSheet();
+      validateSelectedSlot();
+    }
+
+    function goToStep1() {
+      step2Container.classList.add('hidden');
+      step1Container.classList.remove('hidden');
+
+      stepBadge2.classList.add('text-muted');
+      stepBadge2.classList.remove('text-gold', 'font-semibold');
+      stepCircle2.classList.add('border-white/20', 'text-muted');
+      stepCircle2.classList.remove('bg-gold', 'text-obsidian', 'border-gold');
+    }
+
+    toStep2Btn.addEventListener('click', goToStep2);
+    backToStep1Btn.addEventListener('click', goToStep1);
+
+    timeInput.value = '16:00';
+    timeInput.addEventListener('input', validateSelectedSlot);
+    timeInput.addEventListener('change', validateSelectedSlot);
+
+    const bookingForm = document.getElementById('bookingForm');
+    const bookingConfirmation = document.getElementById('bookingConfirmation');
+    const confSecondCustomerNote = document.getElementById('confSecondCustomerNote');
+
+    bookingForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const barber = barberInput.value;
+      const date = dateInput.value;
+      const selectedTime = timeInput.value;
+      const name = document.getElementById('nameInput').value.trim();
+      const phone = document.getElementById('phoneInput').value.trim();
+
+      if (!selectedTime) {
+        timeInput.focus();
+        return;
+      }
+
+      if (!name || !phone) {
+        if (!name) document.getElementById('nameInput').focus();
+        else document.getElementById('phoneInput').focus();
+        return;
+      }
+
+      submitBookingBtn.disabled = true;
+      submitBookingBtn.textContent = 'تۆمار دبیت...';
+
+      await syncFromGoogleSheet();
+
+      if (!validateSelectedSlot()) {
+        submitBookingBtn.disabled = true;
+        submitBookingBtn.textContent = 'تەمام / هنارتن';
+        slotBusyAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      const existing = getSlotBookings(barber, date, selectedTime);
+      const isSecondCustomer = existing.length === 1;
+      const actualTime = isSecondCustomer ? addThirtyMinutes(selectedTime) : selectedTime;
+
+      const newBooking = {
+        id: String(Date.now()),
+        barber,
+        date,
+        requestedTime: selectedTime,
+        time: actualTime,
+        orderNumber: isSecondCustomer ? 2 : 1,
+        name,
+        phone,
+        createdAt: Date.now()
+      };
+
+      allBookings.push(newBooking);
+      saveLocalBookings(allBookings);
+
+      if (hasGoogleSheet) {
+        try {
+          await fetch(GOOGLE_SHEET_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action: 'add', booking: newBooking })
+          });
+        } catch (err) {}
+      }
+
+      submitBookingBtn.disabled = false;
+      submitBookingBtn.textContent = 'تەمام / هنارتن';
+
+      document.getElementById('confName').textContent = name;
+      document.getElementById('confBarber').textContent = barber;
+      document.getElementById('confDate').textContent = formatDisplayDate(date);
+      document.getElementById('confTime').textContent = actualTime;
+
+      if (isSecondCustomer) {
+        confSecondCustomerNote.textContent = `تێبینی: دەمژمێر ${actualTime} ل ڤێرێ بە`;
+        confSecondCustomerNote.classList.remove('hidden');
+      } else {
+        confSecondCustomerNote.classList.add('hidden');
+        confSecondCustomerNote.textContent = '';
+      }
+
+      bookingForm.classList.add('hidden');
+      bookingConfirmation.classList.remove('hidden');
+    });
+
+    document.getElementById('resetBookingBtn').addEventListener('click', () => {
+      bookingForm.reset();
+      dateInput.value = formattedToday;
+      timeInput.value = '16:00';
+      barberButtons[0].click();
+      goToStep1();
+      bookingConfirmation.classList.add('hidden');
+      bookingForm.classList.remove('hidden');
+    });
+
+    const barberPanelModal = document.getElementById('barberPanelModal');
+    const openBarberPanelBtn = document.getElementById('openBarberPanelBtn');
+    const closeBarberPanelBtn = document.getElementById('closeBarberPanelBtn');
+    const panelLoginBox = document.getElementById('panelLoginBox');
+    const panelContentBox = document.getElementById('panelContentBox');
+    const panelPassInput = document.getElementById('panelPassInput');
+    const panelPassError = document.getElementById('panelPassError');
+    const panelLoginSubmitBtn = document.getElementById('panelLoginSubmitBtn');
+    const panelFilterBarber = document.getElementById('panelFilterBarber');
+    const panelAppointmentsList = document.getElementById('panelAppointmentsList');
+    const refreshSheetBtn = document.getElementById('refreshSheetBtn');
+
+    let panelUnlocked = false;
+
+    async function openModal() {
+      toggleMobileMenu(true);
+      barberPanelModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      if (panelUnlocked) {
+        panelLoginBox.classList.add('hidden');
+        panelContentBox.classList.remove('hidden');
+        renderPanelAppointments();
+        await syncFromGoogleSheet();
+      } else {
+        panelPassInput.value = '';
+        panelPassError.classList.add('hidden');
+        panelLoginBox.classList.remove('hidden');
+        panelContentBox.classList.add('hidden');
+        setTimeout(() => panelPassInput.focus(), 80);
+      }
+    }
+
+    function closeModal() {
+      barberPanelModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    openBarberPanelBtn.addEventListener('click', openModal);
+    closeBarberPanelBtn.addEventListener('click', closeModal);
+    barberPanelModal.addEventListener('click', (e) => {
+      if (e.target === barberPanelModal) closeModal();
+    });
+
+    async function attemptPanelLogin() {
+      if (panelPassInput.value.trim() === BARBER_PASSCODE) {
+        panelUnlocked = true;
+        panelPassError.classList.add('hidden');
+        panelLoginBox.classList.add('hidden');
+        panelContentBox.classList.remove('hidden');
+        renderPanelAppointments();
+        await syncFromGoogleSheet();
+      } else {
+        panelPassError.classList.remove('hidden');
+      }
+    }
+
+    panelLoginSubmitBtn.addEventListener('click', attemptPanelLogin);
+    panelPassInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') attemptPanelLogin();
+    });
+
+    panelFilterBarber.addEventListener('change', renderPanelAppointments);
+
+    refreshSheetBtn.addEventListener('click', async () => {
+      refreshSheetBtn.textContent = 'نوی دبیت...';
+      await syncFromGoogleSheet();
+      refreshSheetBtn.textContent = 'نویژەنکرن ↻';
+    });
+
+    function renderPanelAppointments() {
+      if (!panelUnlocked) return;
+      const selectedBarber = panelFilterBarber.value;
+
+      const filtered = allBookings
+        .filter(b => selectedBarber === 'ALL' || b.barber === selectedBarber)
+        .sort((a, b) => {
+          if (a.date !== b.date) return (a.date || '').localeCompare(b.date || '');
+          return (timeToMinutes(a.time) || 0) - (timeToMinutes(b.time) || 0);
+        });
+
+      if (filtered.length === 0) {
+        panelAppointmentsList.innerHTML = `
+          <div class="text-center py-8 text-sm text-muted border border-white/5 bg-obsidian/60">
+            چ ژڤان نەهاتینە تۆمارکرن.
+          </div>
+        `;
+        return;
+      }
+
+      panelAppointmentsList.innerHTML = filtered.map(b => `
+        <div class="flex flex-wrap items-center justify-between gap-3 sm:gap-4 bg-obsidian border border-white/10 p-3.5 sm:p-4">
+          <div class="space-y-1.5">
+            <!-- سەرێ سەری: دەمژمێر، ڕێکەفت، ناڤێ وەستای -->
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-2.5 py-0.5 bg-gold/15 border border-gold/40 text-gold text-sm font-bold" dir="ltr">${b.time}</span>
+              <span class="text-xs px-2 py-0.5 bg-white/5 text-ivory/75" dir="ltr">${formatDisplayDate(b.date)}</span>
+              <span class="text-xs px-2 py-0.5 bg-white/5 text-ivory/80">${b.barber}</span>
+            </div>
+            <!-- هەر ل بن دەمژمێرێ: ناڤێ کڕیاری - ژمارا مۆبایلێ -->
+            <div class="flex flex-wrap items-center gap-2 text-sm pt-0.5">
+              <span class="font-bold text-ivory">${b.name}</span>
+              <span class="text-gold font-bold">-</span>
+              <a href="tel:${b.phone}" class="text-ivory/85 hover:text-gold transition-colors" dir="ltr">
+                ${b.phone}
+              </a>
+            </div>
+          </div>
+          <button type="button" onclick="deleteBooking('${b.id}')" class="px-3.5 sm:px-4 py-2 bg-red-950/70 border border-red-500/40 text-red-300 text-xs font-semibold hover:bg-red-600 hover:text-white active:scale-95 transition-all">
+            تەمام بوو / ژێبرن
+          </button>
+        </div>
+      `).join('');
+    }
+
+    window.deleteBooking = async function(id) {
+      allBookings = allBookings.filter(b => String(b.id) !== String(id));
+      saveLocalBookings(allBookings);
+      renderPanelAppointments();
+      validateSelectedSlot();
+
+      if (hasGoogleSheet) {
+        try {
+          await fetch(GOOGLE_SHEET_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action: 'delete', id: String(id) })
+          });
+        } catch (e) {}
+      }
+    };
+
+    validateSelectedSlot();
+  </script>
 </body>
 </html>
