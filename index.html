@@ -77,7 +77,7 @@
       pointer-events: none;
       backdrop-filter: blur(2px);
       -webkit-backdrop-filter: blur(2px);
-      background: radial-gradient(circle at 50% 25%, rgba(197, 160, 89, 0.12) 0%, rgba(11, 11, 12, 0.28) 75%);
+      background: radial-gradient(circle at 50% 25%, rgba(197, 160, 89, 0.14) 0%, rgba(11, 11, 12, 0.3) 75%);
     }
 
     .font-serif {
@@ -117,85 +117,107 @@
     }
 
     .gold-gradient-text {
-      background: linear-gradient(135deg, #F0D498 0%, #C5A059 52%, #9E7D3E 100%);
+      background: linear-gradient(135deg, #F5DA9F 0%, #C5A059 52%, #9E7D3E 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .hairline-border {
-      border: 1px solid rgba(197, 160, 89, 0.32);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(197, 160, 89, 0.34);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
 
     .glass-card {
-      background: rgba(19, 19, 22, 0.75);
+      background: rgba(19, 19, 22, 0.76);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
     }
 
     .cta-glow {
-      box-shadow: 0 12px 32px -6px rgba(197, 160, 89, 0.48);
+      box-shadow: 0 12px 34px -6px rgba(197, 160, 89, 0.5);
       transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, box-shadow 0.2s ease;
     }
     .cta-glow:active {
-      transform: scale(0.97);
+      transform: scale3d(0.97, 0.97, 1);
     }
     @media (hover: hover) {
       .cta-glow:hover {
-        box-shadow: 0 18px 42px -6px rgba(197, 160, 89, 0.68);
+        box-shadow: 0 18px 44px -6px rgba(197, 160, 89, 0.72);
+        transform: translate3d(0, -1px, 0);
       }
     }
 
     /* ئەنیمەیشنا 60fps یا بلەز بۆ مەقەسا بارکرنێ (GPU Accelerated) */
     .scissor-loader-ring {
       will-change: transform;
-      animation: scissorPulse 0.55s cubic-bezier(0.22, 1, 0.36, 1) infinite alternate;
+      animation: scissorPulse 0.5s cubic-bezier(0.22, 1, 0.36, 1) infinite alternate;
     }
     .scissor-blade-top {
       transform-origin: 12px 12px;
       will-change: transform;
-      animation: scissorSnipTop 0.18s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+      animation: scissorSnipTop 0.16s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
     }
     .scissor-blade-bottom {
       transform-origin: 12px 12px;
       will-change: transform;
-      animation: scissorSnipBottom 0.18s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+      animation: scissorSnipBottom 0.16s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
     }
 
     @keyframes scissorPulse {
       0% { transform: scale3d(0.96, 0.96, 1); }
-      100% { transform: scale3d(1.04, 1.04, 1); }
+      100% { transform: scale3d(1.05, 1.05, 1); }
     }
     @keyframes scissorSnipTop {
-      0% { transform: rotate(-24deg) translate3d(0, 0, 0); }
-      100% { transform: rotate(14deg) translate3d(0, 0, 0); }
+      0% { transform: rotate(-25deg) translate3d(0, 0, 0); }
+      100% { transform: rotate(15deg) translate3d(0, 0, 0); }
     }
     @keyframes scissorSnipBottom {
-      0% { transform: rotate(24deg) translate3d(0, 0, 0); }
-      100% { transform: rotate(-14deg) translate3d(0, 0, 0); }
+      0% { transform: rotate(25deg) translate3d(0, 0, 0); }
+      100% { transform: rotate(-15deg) translate3d(0, 0, 0); }
     }
 
     /* ئەنیمەیشنا 60fps بۆ ڤەبوونا شاشا تەمام-شاشە */
     .fullscreen-modal-enter {
-      animation: modalFadeScale 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: modalFadeScale 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     @keyframes modalFadeScale {
       from {
         opacity: 0;
-        transform: scale3d(0.98, 0.98, 1);
+        transform: scale3d(0.985, 0.985, 1);
       }
       to {
         opacity: 1;
         transform: scale3d(1, 1, 1);
       }
     }
+
+    /* ئەنیمەیشنا سەرێ دەستپێکێ */
+    .hero-stagger {
+      animation: heroRise 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    @keyframes heroRise {
+      from {
+        opacity: 0;
+        transform: translate3d(0, 16px, 0);
+      }
+      to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+    }
   </style>
 </head>
 <body class="antialiased">
 
+  <!-- ئاگەهدارکرنا نەرم (Toast) -->
+  <div id="toastBanner" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[90] px-5 py-3 bg-charcoal/95 border border-gold/60 text-ivory text-xs sm:text-sm font-semibold shadow-2xl backdrop-blur-md flex items-center gap-2.5">
+    <span class="w-2 h-2 rounded-full bg-gold"></span>
+    <span id="toastMessage"></span>
+  </div>
+
   <!-- شاشا مەقەسا بلەز ب 60fps -->
   <div id="scissorsLoaderOverlay" class="hidden fixed inset-0 z-[80] bg-obsidian/85 backdrop-blur-md flex flex-col items-center justify-center gap-4 pointer-events-auto">
-    <div class="scissor-loader-ring w-24 h-24 rounded-full border-2 border-gold/50 bg-charcoal/95 flex items-center justify-center shadow-[0_0_40px_rgba(197,160,89,0.3)]">
+    <div class="scissor-loader-ring w-24 h-24 rounded-full border-2 border-gold/55 bg-charcoal/95 flex items-center justify-center shadow-[0_0_45px_rgba(197,160,89,0.32)]">
       <svg class="w-12 h-12 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
         <g class="scissor-blade-top">
           <circle cx="6" cy="6" r="2.8" />
@@ -268,18 +290,14 @@
     </div>
   </header>
 
-  <!-- شاشا دەستپێکێ (فۆرما ناڤی یا ڤەشارتییە هەتا کلیک ل سەر دوگمەیێ دهێتە کرن) -->
+  <!-- شاشا دەستپێکێ -->
   <section class="min-h-[88svh] flex items-center justify-center relative z-10 pt-24 pb-12">
-    <div class="max-w-4xl mx-auto px-5 sm:px-6 md:px-10 w-full text-center">
+    <div class="hero-stagger max-w-4xl mx-auto px-5 sm:px-6 md:px-10 w-full text-center">
       <div class="inline-flex items-center gap-2.5 px-4 sm:px-5 py-2 border border-gold/45 bg-obsidian/70 backdrop-blur-md mb-6">
-        <svg class="w-4 h-4 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="6" cy="6" r="3" />
-          <circle cx="6" cy="18" r="3" />
-          <line x1="20" y1="4" x2="8.12" y2="15.88" />
-          <line x1="14.47" y1="14.48" x2="20" y2="20" />
-          <line x1="8.12" y1="8.12" x2="12" y2="12" />
-        </svg>
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
         <span class="text-xs sm:text-sm text-gold-light font-semibold">سەرتراشخانا بژار</span>
+        <span class="text-white/30">•</span>
+        <span class="text-xs sm:text-sm text-ivory/90">ل ڕێزێ: <strong id="heroQueueCount" class="text-gold">0</strong></span>
       </div>
 
       <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.2] text-ivory mb-5 drop-shadow-[0_4px_18px_rgba(0,0,0,0.85)]">
@@ -287,7 +305,7 @@
         <span class="gold-gradient-text">ستایلێ هەردەمی</span>
       </h1>
 
-      <p class="text-sm sm:text-lg text-ivory/90 max-w-xl mx-auto leading-relaxed font-normal mb-10 px-4 py-2.5 bg-obsidian/45 backdrop-blur-sm border border-white/10">
+      <p class="text-sm sm:text-lg text-ivory/90 max-w-xl mx-auto leading-relaxed font-normal mb-10 px-4 py-2.5 bg-obsidian/50 backdrop-blur-sm border border-white/10">
         بۆ تۆمارکرنا ناڤێ خۆ د لیستەیێ دا، کلیک ل سەر دوگما ل خوارێ بکە.
       </p>
 
@@ -333,9 +351,8 @@
     </div>
   </footer>
 
-  <!-- شاشا تەمام-شاشە یا تۆمارکرنا ناڤ و ژمارا مۆبایلێ (دەمێ کلیک ل سەر دوگمێ دهێتە کرن ڤەدبیت) -->
+  <!-- شاشا تەمام-شاشە یا تۆمارکرنا ناڤ و ژمارا مۆبایلێ -->
   <div id="bookingFullScreenModal" class="hidden fixed inset-0 z-50 w-screen h-[100dvh] bg-obsidian/95 backdrop-blur-xl flex flex-col overflow-hidden">
-    <!-- سەرێ شاشێ ب دوگما X بۆ داخستنێ -->
     <div class="flex items-center justify-between px-5 sm:px-10 py-4 sm:py-5 border-b border-white/15 bg-charcoal/90 shrink-0">
       <div>
         <span class="text-xs text-gold font-semibold">تۆمارکرنا خێرا</span>
@@ -352,7 +369,6 @@
       </button>
     </div>
 
-    <!-- ناڤەڕۆکا تەمام-شاشە یا تۆمارکرنێ -->
     <div class="flex-1 overflow-y-auto flex items-center justify-center px-4 sm:px-6 py-8">
       <div class="w-full max-w-lg glass-card hairline-border p-6 sm:p-10">
         <form id="bookingForm" class="space-y-6" novalidate>
@@ -460,14 +476,23 @@
         </button>
       </div>
 
-      <div id="panelContentBox" class="hidden max-w-4xl mx-auto space-y-6">
-        <div class="flex flex-wrap items-center justify-between gap-4 bg-charcoal/80 border border-white/10 px-5 py-4">
+      <div id="panelContentBox" class="hidden max-w-4xl mx-auto space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-charcoal/85 border border-white/10 px-5 py-4">
           <div class="text-sm text-ivory/85">
             کۆما ناڤێن تۆمارکری: <span id="totalBookingsCount" class="text-gold font-bold text-base">0</span>
           </div>
-          <button type="button" id="refreshSheetBtn" class="px-4 py-2.5 border border-gold/50 bg-obsidian text-gold text-xs sm:text-sm font-semibold hover:bg-gold hover:text-obsidian active:scale-95 transition-all">
-            نویژەنکرن
-          </button>
+
+          <div class="flex items-center gap-2.5">
+            <input
+              type="search"
+              id="panelSearchInput"
+              placeholder="لێگەڕان ب ناڤ یان ژمارە..."
+              class="flex-1 sm:w-56 bg-obsidian border border-white/15 focus:border-gold px-3.5 py-2 text-sm text-ivory placeholder:text-muted/65 outline-none transition-colors"
+            />
+            <button type="button" id="refreshSheetBtn" class="px-4 py-2.5 border border-gold/50 bg-obsidian text-gold text-xs sm:text-sm font-semibold hover:bg-gold hover:text-obsidian active:scale-95 transition-all shrink-0">
+              نویژەنکرن
+            </button>
+          </div>
         </div>
 
         <div id="panelAppointmentsList" class="space-y-3"></div>
@@ -478,10 +503,23 @@
   <script type="module">
     const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbx7WRRWW3iAuhnvYamvFvO0Vim0dijhD9qNmnDQx1MJ4OcsOFIL5CgIMMbEGr8D2Ihe7Q/exec';
     const BARBER_PASSCODE = '1234';
-    const LOCAL_STORAGE_KEY = 'bzhar_barber_names_phone_list_v6';
+    const LOCAL_STORAGE_KEY = 'bzhar_barber_names_phone_list_v7';
 
     let allBookings = [];
     const hasGoogleSheet = GOOGLE_SHEET_URL && GOOGLE_SHEET_URL.startsWith('https://');
+
+    const toastBanner = document.getElementById('toastBanner');
+    const toastMessage = document.getElementById('toastMessage');
+    let toastTimer = null;
+
+    function showToast(msg) {
+      toastMessage.textContent = msg;
+      toastBanner.classList.remove('hidden');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toastBanner.classList.add('hidden');
+      }, 2400);
+    }
 
     const scissorsLoaderOverlay = document.getElementById('scissorsLoaderOverlay');
     function showScissorsLoader() {
@@ -489,6 +527,11 @@
     }
     function hideScissorsLoader() {
       scissorsLoaderOverlay.classList.add('hidden');
+    }
+
+    function updateQueueBadge() {
+      const el = document.getElementById('heroQueueCount');
+      if (el) el.textContent = String(allBookings.length);
     }
 
     function loadLocalBookings() {
@@ -504,9 +547,11 @@
       try {
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(list));
       } catch (e) {}
+      updateQueueBadge();
     }
 
     allBookings = loadLocalBookings();
+    updateQueueBadge();
 
     async function syncFromGoogleSheet() {
       if (!hasGoogleSheet) return;
@@ -557,7 +602,6 @@
       el.addEventListener('click', () => toggleMobileMenu(true));
     });
 
-    // مۆدالێ تەمام-شاشە بۆ تۆمارکرنا ناڤی
     const bookingFullScreenModal = document.getElementById('bookingFullScreenModal');
     const openBookingTriggers = document.querySelectorAll('.open-booking-modal');
     const closeBookingModalBtn = document.getElementById('closeBookingModalBtn');
@@ -681,6 +725,7 @@
       bookingForm.classList.add('hidden');
       bookingConfirmation.classList.remove('hidden');
       renderPanelAppointments();
+      showToast('ناڤێ تە ب سەرکەفتی هاتە تۆمارکرن');
     });
 
     resetBookingBtn.addEventListener('click', () => {
@@ -692,7 +737,6 @@
       fullNameInput.focus();
     });
 
-    // مۆدالێ تەمام-شاشە بۆ ئەدمینی
     const barberPanelModal = document.getElementById('barberPanelModal');
     const openBarberPanelBtn = document.getElementById('openBarberPanelBtn');
     const closeBarberPanelBtn = document.getElementById('closeBarberPanelBtn');
@@ -701,6 +745,7 @@
     const panelPassInput = document.getElementById('panelPassInput');
     const panelPassError = document.getElementById('panelPassError');
     const panelLoginSubmitBtn = document.getElementById('panelLoginSubmitBtn');
+    const panelSearchInput = document.getElementById('panelSearchInput');
     const panelAppointmentsList = document.getElementById('panelAppointmentsList');
     const totalBookingsCount = document.getElementById('totalBookingsCount');
     const refreshSheetBtn = document.getElementById('refreshSheetBtn');
@@ -765,29 +810,50 @@
       if (e.key === 'Enter') attemptPanelLogin();
     });
 
+    panelSearchInput.addEventListener('input', renderPanelAppointments);
+
     refreshSheetBtn.addEventListener('click', async () => {
       showScissorsLoader();
       await syncFromGoogleSheet();
       hideScissorsLoader();
+      showToast('لیستە هاتە نویژەنکرن');
     });
+
+    window.copyPhoneNumber = async function(phone) {
+      if (!phone) return;
+      try {
+        await navigator.clipboard.writeText(phone);
+        showToast(`ژمارە هاتە کۆپیکرن: ${phone}`);
+      } catch (e) {
+        showToast(phone);
+      }
+    };
 
     function renderPanelAppointments() {
       totalBookingsCount.textContent = String(allBookings.length);
 
       if (!panelUnlocked) return;
 
-      if (allBookings.length === 0) {
+      const query = (panelSearchInput.value || '').trim().toLowerCase();
+      const filtered = allBookings.filter(item => {
+        if (!query) return true;
+        const n = (item.name || '').toLowerCase();
+        const p = (item.phone || '').toLowerCase();
+        return n.includes(query) || p.includes(query);
+      });
+
+      if (filtered.length === 0) {
         panelAppointmentsList.innerHTML = `
           <div class="text-center py-12 text-sm text-muted border border-white/10 bg-charcoal/70">
-            هێشتا چ ناڤ نەهاتینە تۆمارکرن.
+            ${query ? 'چ ئەنجام بۆ لێگەڕانێ نەهاتنە دیتن.' : 'هێشتا چ ناڤ نەهاتینە تۆمارکرن.'}
           </div>
         `;
         return;
       }
 
-      panelAppointmentsList.innerHTML = allBookings.map((item, idx) => `
-        <div class="flex items-center justify-between gap-4 bg-charcoal/85 border border-white/10 hover:border-gold/35 transition-colors px-4 sm:px-6 py-4">
-          <div class="flex items-center gap-4 min-w-0">
+      panelAppointmentsList.innerHTML = filtered.map((item, idx) => `
+        <div class="flex items-center justify-between gap-3 sm:gap-4 bg-charcoal/85 border border-white/10 hover:border-gold/40 transition-colors px-4 sm:px-6 py-4">
+          <div class="flex items-center gap-3.5 sm:gap-4 min-w-0">
             <span class="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-full bg-gold/15 border border-gold/50 text-gold font-bold text-sm sm:text-base flex items-center justify-center">
               ${idx + 1}
             </span>
@@ -796,9 +862,18 @@
                 ${escapeHtml(item.name)}
               </div>
               ${item.phone ? `
-                <a href="tel:${escapeAttr(item.phone)}" class="text-xs sm:text-sm text-gold/90 hover:text-gold transition-colors inline-block mt-0.5" dir="ltr">
-                  ${escapeHtml(item.phone)}
-                </a>
+                <div class="flex items-center gap-2.5 mt-0.5">
+                  <a href="tel:${escapeAttr(item.phone)}" class="text-xs sm:text-sm text-gold/95 hover:text-gold transition-colors" dir="ltr">
+                    ${escapeHtml(item.phone)}
+                  </a>
+                  <button
+                    type="button"
+                    onclick="copyPhoneNumber('${escapeAttr(item.phone)}')"
+                    class="text-[11px] px-2 py-0.5 border border-gold/30 text-gold-light hover:bg-gold hover:text-obsidian transition-colors"
+                  >
+                    کۆپی
+                  </button>
+                </div>
               ` : ''}
             </div>
           </div>
@@ -830,6 +905,7 @@
       allBookings = allBookings.filter(b => String(b.id) !== String(id));
       saveLocalBookings(allBookings);
       renderPanelAppointments();
+      showToast('ناڤ ژ لیستەیێ هاتە ژێبرن');
 
       if (hasGoogleSheet) {
         try {
