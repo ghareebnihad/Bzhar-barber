@@ -9,7 +9,6 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>سەرتراشخانا بژار</title>
 
-  <!-- هەموو فۆنتێن کوردی (Badini / Sorani) یێن گونجای بۆ هەموو مۆبایلان (iPhone و Android) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Noto+Naskh+Arabic:wght@500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -54,20 +53,32 @@
 
     body {
       background-color: #0B0B0C;
+     background-image: linear-gradient(180deg,   url('https://github.com/ghareebnihad/Bzhar-barber/blob/main/image_5e38d5.jpg?raw=true');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
       color: #F4F1EA;
       font-family: 'Vazirmatn', 'Noto Sans Arabic', 'Geeza Pro', system-ui, -apple-system, sans-serif;
       overflow-x: hidden;
       width: 100%;
+      min-height: 100vh;
       padding-bottom: env(safe-area-inset-bottom);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      position: relative;
     }
 
-    /* دەمێ پێنگاڤا ٢ یا ژڤانی چالاک دبیت، پەڕە سابت دبیت دا نەلڤیت */
-    body.booking-locked {
-      overflow: hidden !important;
-      height: 100svh;
-      touch-action: none;
+    /* بلورەکێ گەلەک سڤک ل سەر پاشبنەمایێ body */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      background: radial-gradient(circle at 50% 25%, rgba(197, 160, 89, 0.12) 0%, rgba(11, 11, 12, 0.28) 75%);
     }
 
     .font-serif {
@@ -94,7 +105,7 @@
     }
 
     ::-webkit-scrollbar {
-      width: 5px;
+      width: 6px;
     }
     ::-webkit-scrollbar-track {
       background: #0B0B0C;
@@ -107,59 +118,24 @@
     }
 
     .gold-gradient-text {
-      background: linear-gradient(135deg, #DFC183 0%, #C5A059 50%, #9E7D3E 100%);
+      background: linear-gradient(135deg, #F0D498 0%, #C5A059 52%, #9E7D3E 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .hairline-border {
-      border: 1px solid rgba(197, 160, 89, 0.22);
+      border: 1px solid rgba(197, 160, 89, 0.32);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06);
     }
 
-    .hero-bg {
-      background-color: #0B0B0C;
-      background-image:
-        radial-gradient(circle at 25% 25%, rgba(197, 160, 89, 0.14) 0%, rgba(11, 11, 12, 0) 52%),
-        radial-gradient(circle at 80% 80%, rgba(197, 160, 89, 0.08) 0%, rgba(11, 11, 12, 0) 45%),
-        linear-gradient(180deg, rgba(11, 11, 12, 0.62) 0%, rgba(11, 11, 12, 0.92) 78%, #0B0B0C 100%),
-        url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1600&q=80');
-      background-size: cover;
-      background-position: center;
-      transform: translateZ(0);
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translate3d(0, 18px, 0);
-      will-change: opacity, transform;
-      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translate3d(0, 0, 0);
-      will-change: auto;
-    }
-
-    .gpu-card {
-      transform: translate3d(0, 0, 0);
-      backface-visibility: hidden;
-    }
-
-    input[type="date"],
-    input[type="time"] {
-      color-scheme: dark;
-      -webkit-appearance: none;
-      appearance: none;
-      min-height: 54px;
-    }
-    input[type="date"]::-webkit-calendar-picker-indicator,
-    input[type="time"]::-webkit-calendar-picker-indicator {
-      filter: invert(72%) sepia(32%) saturate(600%) hue-rotate(5deg) brightness(95%);
-      cursor: pointer;
+    .glass-card {
+      background: rgba(19, 19, 22, 0.72);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
     .cta-glow {
-      box-shadow: 0 10px 30px -8px rgba(197, 160, 89, 0.45);
+      box-shadow: 0 12px 32px -6px rgba(197, 160, 89, 0.48);
       transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, box-shadow 0.2s ease;
     }
     .cta-glow:active {
@@ -167,11 +143,11 @@
     }
     @media (hover: hover) {
       .cta-glow:hover {
-        box-shadow: 0 16px 40px -6px rgba(197, 160, 89, 0.65);
+        box-shadow: 0 18px 42px -6px rgba(197, 160, 89, 0.68);
       }
     }
 
-    /* ئەنیمەیشنا 60fps یا مەقەسا ڤەدبیت و دگریت ل شوینا بارکرنێ */
+    /* ئەنیمەیشنا 60fps یا مەقەسێ */
     .scissor-blade-top {
       transform-origin: 12px 12px;
       will-change: transform;
@@ -191,47 +167,22 @@
       0% { transform: rotate(20deg) translateZ(0); }
       100% { transform: rotate(-12deg) translateZ(0); }
     }
-
-    /* قەبارێ سابت بۆ بەشێ ژڤانی دەمێ دچیتە پێنگاڤا دەمژمێرێ */
-    .booking-section-fixed {
-      position: fixed !important;
-      inset: 0 !important;
-      z-index: 45 !important;
-      background-color: #0B0B0C !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      padding: 1rem !important;
-      overflow-y: auto !important;
-      overscroll-behavior: contain;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .reveal {
-        opacity: 1 !important;
-        transform: none !important;
-        transition: none !important;
-      }
-    }
   </style>
 </head>
 <body class="antialiased">
 
-  <!-- شاشا مەقەسا ب 60fps (ل شوینا بارکرنێ / Yükleniyor) -->
-  <div id="scissorsLoaderOverlay" class="hidden fixed inset-0 z-[70] bg-obsidian/85 backdrop-blur-md flex flex-col items-center justify-center gap-4 pointer-events-auto">
+  <!-- شاشا مەقەسا ب 60fps -->
+  <div id="scissorsLoaderOverlay" class="hidden fixed inset-0 z-[70] bg-obsidian/80 backdrop-blur-md flex flex-col items-center justify-center gap-4 pointer-events-auto">
     <div class="w-20 h-20 rounded-full border border-gold/40 bg-charcoal/95 flex items-center justify-center shadow-2xl">
       <svg class="w-11 h-11 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <!-- تیخا سەری یا مەقەسێ -->
         <g class="scissor-blade-top">
           <circle cx="6" cy="6" r="2.8" />
           <line x1="8.2" y1="8.2" x2="20" y2="20" />
         </g>
-        <!-- تیخا بنێ یا مەقەسێ -->
         <g class="scissor-blade-bottom">
           <circle cx="6" cy="18" r="2.8" />
           <line x1="8.2" y1="15.8" x2="20" y2="4" />
         </g>
-        <!-- برغیێ ناڤەڕاستێ -->
         <circle cx="12" cy="12" r="1.1" fill="currentColor" />
       </svg>
     </div>
@@ -240,10 +191,9 @@
   <!-- پاشبنەمایا Blur دەمێ لیستا مۆبایلێ ڤەدبیت -->
   <div id="mobileMenuBackdrop" class="hidden fixed inset-0 z-40 bg-obsidian/70 backdrop-blur-md transition-opacity duration-300 md:hidden"></div>
 
-  <!-- سەرێ لاپەڕی (هێدەر) -->
-  <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-colors duration-300 border-b border-transparent pt-[env(safe-area-inset-top)]">
+  <!-- سەرێ لاپەڕی -->
+  <header id="navbar" class="fixed top-0 left-0 right-0 z-40 transition-colors duration-300 border-b border-transparent pt-[env(safe-area-inset-top)]">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 h-16 sm:h-20 flex items-center justify-between gap-2 relative z-50">
-      <!-- لۆگۆ: مەقەس و مووس -->
       <a href="#" class="flex items-center gap-3 sm:gap-3.5 group shrink-0">
         <div class="w-10 h-10 sm:w-11 sm:h-11 border border-gold/60 bg-obsidian/80 flex items-center justify-center group-hover:border-gold group-hover:bg-gold/10 transition-all duration-300">
           <svg class="w-6 h-6 sm:w-7 sm:h-7 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -256,20 +206,18 @@
           </svg>
         </div>
         <div class="flex flex-col">
-          <span class="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-ivory leading-none">سەرتراشخانا بژار</span>
-          <span class="text-[10px] sm:text-[11px] text-gold mt-0.5 sm:mt-1">و ستایلێ زەلامان</span>
+          <span class="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-ivory leading-none drop-shadow">سەرتراشخانا بژار</span>
+          <span class="text-[10px] sm:text-[11px] text-gold mt-0.5 sm:mt-1 font-medium">و ستایلێ زەلامان</span>
         </div>
       </a>
 
-      <!-- لینکێن ناڤەڕاست -->
-      <nav class="hidden md:flex items-center gap-9 text-sm text-ivory/80 font-medium">
-        <a href="#randevu" class="hover:text-gold transition-colors">ژڤانێ ئۆنلاین</a>
+      <nav class="hidden md:flex items-center gap-9 text-sm text-ivory/90 font-medium">
+        <a href="#randevu" class="hover:text-gold transition-colors">تۆمارکرنا ناڤی</a>
         <a href="#iletisim" class="hover:text-gold transition-colors">پەیوەندی و ناڤونیشان</a>
       </nav>
 
-      <!-- سەرێ چەپێ: پەنێلێ وەستایان + ژڤان وەربگرە -->
       <div class="flex items-center gap-2 sm:gap-3.5">
-        <button id="openBarberPanelBtn" type="button" class="px-2.5 sm:px-3.5 py-2 sm:py-2.5 border border-gold/40 bg-obsidian/90 text-gold text-xs sm:text-sm font-semibold hover:bg-gold hover:text-obsidian active:scale-95 transition-all duration-200 flex items-center gap-1.5 sm:gap-2">
+        <button id="openBarberPanelBtn" type="button" class="px-3 sm:px-4 py-2 sm:py-2.5 border border-gold/55 bg-obsidian/80 backdrop-blur-md text-gold text-xs sm:text-sm font-semibold hover:bg-gold hover:text-obsidian active:scale-95 transition-all duration-200 flex items-center gap-1.5 sm:gap-2">
           <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
           </svg>
@@ -277,7 +225,7 @@
         </button>
 
         <a href="#randevu" class="hidden sm:inline-block px-5 py-2.5 bg-gold text-obsidian text-sm font-bold hover:bg-gold-light transition-colors duration-200">
-          ژڤان وەربگرە
+          ناڤێ خۆ تۆمار بکە
         </a>
 
         <button id="mobileMenuBtn" type="button" aria-label="ڤەکرنا لیستێ" class="md:hidden text-ivory p-2 focus:outline-none active:scale-95">
@@ -288,20 +236,20 @@
       </div>
     </div>
 
-    <!-- لیستا مۆبایلێ ب پاشبنەمایا Blur -->
-    <div id="mobileMenu" class="hidden md:hidden relative z-50 bg-charcoal/85 backdrop-blur-xl border-b border-gold/30 px-6 py-6 space-y-4 shadow-2xl">
-      <a href="#randevu" class="block py-2 text-base font-semibold text-ivory hover:text-gold transition-colors">ژڤانێ ئۆنلاین</a>
+    <!-- لیستا مۆبایلێ -->
+    <div id="mobileMenu" class="hidden md:hidden relative z-50 bg-charcoal/90 backdrop-blur-xl border-b border-gold/30 px-6 py-6 space-y-4 shadow-2xl">
+      <a href="#randevu" class="block py-2 text-base font-semibold text-ivory hover:text-gold transition-colors">تۆمارکرنا ناڤی</a>
       <a href="#iletisim" class="block py-2 text-base font-semibold text-ivory hover:text-gold transition-colors">پەیوەندی و ناڤونیشان</a>
       <a href="#randevu" class="block w-full text-center py-3.5 bg-gold text-obsidian text-base font-bold">
-        نوکە ژڤانی وەربگرە
+        نوکە ناڤێ خۆ تۆمار بکە
       </a>
     </div>
   </header>
 
   <!-- شاشا دەستپێکێ -->
-  <section class="hero-bg min-h-[100svh] flex items-center relative pt-24 pb-14">
+  <section class="min-h-[78svh] flex items-center relative z-10 pt-24 pb-10">
     <div class="max-w-4xl mx-auto px-5 sm:px-6 md:px-10 w-full text-center">
-      <div class="inline-flex items-center gap-2.5 px-4 sm:px-5 py-2 border border-gold/35 bg-obsidian/85 mb-6 sm:mb-7">
+      <div class="inline-flex items-center gap-2.5 px-4 sm:px-5 py-2 border border-gold/45 bg-obsidian/70 backdrop-blur-md mb-6">
         <svg class="w-4 h-4 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="6" cy="6" r="3" />
           <circle cx="6" cy="18" r="3" />
@@ -309,253 +257,99 @@
           <line x1="14.47" y1="14.48" x2="20" y2="20" />
           <line x1="8.12" y1="8.12" x2="12" y2="12" />
         </svg>
-        <span class="text-xs sm:text-sm text-gold-light font-medium">سەرتراشخانا بژار</span>
+        <span class="text-xs sm:text-sm text-gold-light font-semibold">سەرتراشخانا بژار</span>
       </div>
 
-      <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[1.2] text-ivory mb-5 sm:mb-6">
+      <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.2] text-ivory mb-5 drop-shadow-[0_4px_18px_rgba(0,0,0,0.85)]">
         بڕینا بێ کێماسی<br />
         <span class="gold-gradient-text">ستایلێ هەردەمی</span>
       </h1>
 
-      <p class="text-sm sm:text-lg md:text-xl text-ivory/80 max-w-xl mx-auto leading-relaxed font-light mb-9 sm:mb-11 px-2">
-        ب دیزاینا پرچا تایبەت، خزمەتگوزارییا باش، ژڤانێ خۆ د چەند چرکەیان دا تۆمار بکە.
+      <p class="text-sm sm:text-lg text-ivory/90 max-w-xl mx-auto leading-relaxed font-normal mb-8 px-3 py-2 bg-obsidian/45 backdrop-blur-sm border border-white/10">
+        ناڤ و ژمارا مۆبایلێ خۆ بنڤیسە دا ڕێزا تە ب ساناهی د لیستەیێ دا بهێتە تۆمارکرن.
       </p>
 
-      <!-- دوگما مەزن یا وەرگرتنا ژڤانی -->
-      <div class="flex flex-col items-center justify-center gap-4 sm:gap-5">
-        <a href="#randevu" class="cta-glow group w-full max-w-[340px] sm:max-w-none sm:w-auto sm:min-w-[350px] px-8 sm:px-12 py-5 sm:py-6 bg-gold text-obsidian text-lg sm:text-xl font-bold hover:bg-gold-light inline-flex items-center justify-center gap-3 sm:gap-4">
-          <span>ژڤانی وەربگرە</span>
+      <div class="flex flex-col items-center justify-center">
+        <a href="#randevu" class="cta-glow group w-full max-w-[320px] sm:w-auto sm:min-w-[320px] px-8 sm:px-10 py-4 sm:py-5 bg-gold text-obsidian text-base sm:text-lg font-bold hover:bg-gold-light inline-flex items-center justify-center gap-3">
+          <span>تۆمارکرنا ناڤی</span>
           <svg class="w-5 h-5 group-hover:-translate-x-1.5 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
           </svg>
         </a>
       </div>
-
-      <!-- ئایکۆنێن ئامیرێن سەرتراشخانێ: مەقەس و مووس -->
-      <div class="mt-10 sm:mt-12 flex items-center justify-center gap-8 sm:gap-12 text-gold/75">
-        <div class="flex flex-col items-center gap-1.5">
-          <div class="w-11 h-11 rounded-full border border-gold/30 bg-obsidian/75 flex items-center justify-center">
-            <svg class="w-5 h-5 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="6" cy="6" r="3" />
-              <circle cx="6" cy="18" r="3" />
-              <line x1="20" y1="4" x2="8.12" y2="15.88" />
-              <line x1="14.47" y1="14.48" x2="20" y2="20" />
-              <line x1="8.12" y1="8.12" x2="12" y2="12" />
-            </svg>
-          </div>
-          <span class="text-xs text-ivory/75">بڕینا پرچێ</span>
-        </div>
-
-        <div class="flex flex-col items-center gap-1.5">
-          <div class="w-11 h-11 rounded-full border border-gold/30 bg-obsidian/75 flex items-center justify-center">
-            <svg class="w-5 h-5 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 17L15 6l3 3L7 20H4v-3z" />
-              <path d="M15 6l3.5-2.5 2 2L18 9" />
-              <circle cx="19" cy="5.5" r="0.6" fill="currentColor" />
-            </svg>
-          </div>
-          <span class="text-xs text-ivory/75">ڕیهـ و سمبێل</span>
-        </div>
-      </div>
-
-      <!-- دەمژمێرێن کارکرنێ -->
-      <div class="mt-8 sm:mt-10 pt-6 border-t border-white/10 inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-xs sm:text-sm text-ivory/80">
-        <span class="text-gold font-semibold">دەمێن کارکرنێ:</span>
-        <span>شەمبی - پێنج شەمب</span>
-      </div>
     </div>
   </section>
 
-  <!-- سیستەمێ ژڤانێ ئۆنلاین ب پێنگاڤان -->
-  <section id="randevu" class="py-20 sm:py-24 md:py-32 bg-obsidian relative border-t border-white/5 transition-all duration-200">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 md:px-10 w-full">
-      <div id="bookingSectionHeader" class="text-center mb-10 sm:mb-12 reveal">
-        <div class="inline-flex items-center justify-center gap-2 mb-2">
-          <svg class="w-4 h-4 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <circle cx="6" cy="6" r="3" />
-            <circle cx="6" cy="18" r="3" />
-            <line x1="20" y1="4" x2="8.12" y2="15.88" />
-            <line x1="14.47" y1="14.48" x2="20" y2="20" />
-            <line x1="8.12" y1="8.12" x2="12" y2="12" />
-          </svg>
-          <span class="text-sm text-gold font-medium">تۆمارکرن</span>
-        </div>
-        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl text-ivory font-bold mb-3">ژڤانێ ئۆنلاین</h2>
+  <!-- بەشێ تۆمارکرنا کڕیاری (ناڤ و ژمارا مۆبایلێ) -->
+  <section id="randevu" class="py-14 sm:py-20 relative z-10">
+    <div class="max-w-xl mx-auto px-4 sm:px-6 w-full">
+      <div class="text-center mb-7">
+        <span class="text-xs sm:text-sm text-gold font-semibold tracking-wide bg-obsidian/65 px-3 py-1 border border-gold/25 inline-block">تۆمارکرنا خێرا</span>
+        <h2 class="font-serif text-3xl sm:text-4xl text-ivory font-bold mt-2 drop-shadow">ناڤ و ژمارا مۆبایلێ</h2>
       </div>
 
-      <div class="reveal gpu-card bg-charcoal hairline-border p-5 sm:p-7 md:p-11">
-        <!-- نیشاندەرێ پێنگاڤان -->
-        <div class="flex items-center justify-center gap-3 sm:gap-4 mb-8 pb-5 border-b border-white/10">
-          <div id="stepBadge1" class="flex items-center gap-2 text-xs sm:text-sm text-gold font-semibold">
-            <span class="w-7 h-7 rounded-full bg-gold text-obsidian flex items-center justify-center text-xs font-bold shrink-0">١</span>
-            <span>ڕێکەفت</span>
-          </div>
-          <div class="w-6 sm:w-10 h-[1px] bg-white/15"></div>
-          <div id="stepBadge2" class="flex items-center gap-2 text-xs sm:text-sm text-muted">
-            <span id="stepCircle2" class="w-7 h-7 rounded-full border border-white/20 text-muted flex items-center justify-center text-xs font-bold shrink-0">٢</span>
-            <span>دەمژمێر و پشتڕاستکرن</span>
-          </div>
-        </div>
-
-        <form id="bookingForm" class="space-y-7" novalidate>
-
-          <!-- پێنگاڤا ١: هەلبژارتنا وەستای + ڕێکەفت -->
-          <div id="step1Container" class="space-y-6 sm:space-y-7">
-            <div>
-              <label class="block text-sm text-gold font-semibold mb-3">وەستایێ خۆ هەلبژێرە</label>
-              <div class="grid grid-cols-2 gap-3 sm:gap-4" id="barberSelector">
-                <button type="button" data-barber="بژار" class="barber-option py-3.5 sm:py-4 px-4 sm:px-5 border border-gold bg-gold/10 text-ivory text-right active:scale-[0.98] transition-all flex items-center justify-between">
-                  <span class="font-serif text-2xl sm:text-3xl font-bold text-ivory">بژار</span>
-                  <svg class="w-5 h-5 text-gold shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                    <circle cx="6" cy="6" r="3" />
-                    <circle cx="6" cy="18" r="3" />
-                    <line x1="20" y1="4" x2="8.12" y2="15.88" />
-                    <line x1="14.47" y1="14.48" x2="20" y2="20" />
-                    <line x1="8.12" y1="8.12" x2="12" y2="12" />
-                  </svg>
-                </button>
-                <button type="button" data-barber="ژێهات" class="barber-option py-3.5 sm:py-4 px-4 sm:px-5 border border-white/10 bg-obsidian text-muted hover:border-gold/40 text-right active:scale-[0.98] transition-all flex items-center justify-between">
-                  <span class="font-serif text-2xl sm:text-3xl font-bold text-ivory">ژێهات</span>
-                  <svg class="w-5 h-5 text-gold/50 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                    <circle cx="6" cy="6" r="3" />
-                    <circle cx="6" cy="18" r="3" />
-                    <line x1="20" y1="4" x2="8.12" y2="15.88" />
-                    <line x1="14.47" y1="14.48" x2="20" y2="20" />
-                    <line x1="8.12" y1="8.12" x2="12" y2="12" />
-                  </svg>
-                </button>
-              </div>
-              <input type="hidden" id="barberInput" value="بژار" />
-            </div>
-
-            <div>
-              <label for="dateInput" class="block text-sm text-gold font-semibold mb-3">ڕێکەفتێ هەلبژێرە</label>
-              <input
-                type="date"
-                id="dateInput"
-                required
-                class="w-full bg-obsidian border border-white/15 focus:border-gold px-4 py-3.5 text-ivory outline-none transition-colors"
-              />
-            </div>
-
-            <button
-              type="button"
-              id="toStep2Btn"
-              class="w-full py-4 sm:py-5 bg-gold text-obsidian text-base font-bold hover:bg-gold-light active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-3"
-            >
-              <span>بەردەوام بە — دەمژمێرێ هەلبژێرە</span>
-              <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-              </svg>
-            </button>
+      <div class="glass-card hairline-border p-6 sm:p-9">
+        <form id="bookingForm" class="space-y-5" novalidate>
+          <div>
+            <label for="fullNameInput" class="block text-sm text-gold font-semibold mb-2">
+              ناڤ و پاشناڤ
+            </label>
+            <input
+              type="text"
+              id="fullNameInput"
+              autocomplete="name"
+              placeholder="بۆ نموونە: بژار نهێلی"
+              required
+              class="w-full bg-obsidian/85 border border-white/15 focus:border-gold px-4 py-3.5 text-ivory placeholder:text-muted/65 outline-none transition-colors"
+            />
+            <p id="nameErrorMsg" class="hidden text-xs text-red-400 mt-1.5">هیڤیدارین ناڤ و پاشناڤی بنڤیسە.</p>
           </div>
 
-          <!-- پێنگاڤا ٢: هەلبژارتنا دەمژمێرێ، ناڤ/مۆبایل و تەمام / هنارتن (سابت دمینیت) -->
-          <div id="step2Container" class="hidden space-y-6 sm:space-y-7">
-            <div class="flex items-center justify-between bg-obsidian/90 border border-gold/25 px-4 sm:px-5 py-3.5">
-              <div class="text-sm text-ivory">
-                <span class="text-gold font-bold" id="step2BarberLabel">بژار</span>
-                <span class="mx-2 text-white/25">•</span>
-                <span id="step2DateLabel" class="text-ivory/90" dir="ltr">-</span>
-              </div>
-              <button type="button" id="backToStep1Btn" class="text-xs sm:text-sm text-gold hover:text-gold-light underline underline-offset-4 py-1">
-                گوهۆڕین
-              </button>
-            </div>
-
-            <div>
-              <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-                <label for="timeInput" class="block text-sm text-gold font-semibold">دەمژمێرێ هەلبژێرە</label>
-                <span class="text-xs text-muted">ژ مۆبایلێ دەمژمێرێ هەلبژێرە</span>
-              </div>
-              <input
-                type="time"
-                id="timeInput"
-                min="00:00"
-                max="23:59"
-                step="60"
-                required
-                class="w-full bg-obsidian border border-white/15 focus:border-gold px-4 py-3.5 text-ivory outline-none transition-colors"
-              />
-
-              <div id="slotBusyAlert" class="hidden mt-3 p-4 bg-red-950/85 border border-red-500 text-red-300 text-sm font-semibold flex items-center gap-3">
-                <svg class="w-5 h-5 text-red-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
-                </svg>
-                <span>بۆشایی نینە، نەفەرێ یێ هەی د ڤێ دەمژمێرێ دا</span>
-              </div>
-            </div>
-
-            <div class="grid sm:grid-cols-2 gap-5 sm:gap-6">
-              <div>
-                <label for="nameInput" class="block text-sm text-gold font-semibold mb-2.5">ناڤێ تە یێ تەمام</label>
-                <input
-                  type="text"
-                  id="nameInput"
-                  autocomplete="name"
-                  placeholder="ناڤێ خۆ بنڤیسە"
-                  required
-                  class="w-full bg-obsidian border border-white/15 focus:border-gold px-4 py-3.5 text-ivory placeholder:text-muted/50 outline-none transition-colors"
-                />
-              </div>
-              <div>
-                <label for="phoneInput" class="block text-sm text-gold font-semibold mb-2.5">ژمارا مۆبایلێ</label>
-                <input
-                  type="tel"
-                  id="phoneInput"
-                  inputmode="tel"
-                  autocomplete="tel"
-                  placeholder="ژمارا موبایلێ"
-                  required
-                  class="w-full bg-obsidian border border-white/15 focus:border-gold px-4 py-3.5 text-ivory placeholder:text-muted/50 outline-none transition-colors text-right"
-                />
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              id="submitBookingBtn"
-              class="w-full py-4 sm:py-5 bg-gold text-obsidian text-base font-bold hover:bg-gold-light active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-2"
-            >
-              <span>تەمام / هنارتن</span>
-            </button>
+          <div>
+            <label for="phoneInput" class="block text-sm text-gold font-semibold mb-2">
+              ژمارا مۆبایلێ
+            </label>
+            <input
+              type="tel"
+              id="phoneInput"
+              inputmode="tel"
+              autocomplete="tel"
+              placeholder="0750 000 0000"
+              required
+              class="w-full bg-obsidian/85 border border-white/15 focus:border-gold px-4 py-3.5 text-ivory placeholder:text-muted/65 outline-none transition-colors text-right"
+            />
+            <p id="phoneErrorMsg" class="hidden text-xs text-red-400 mt-1.5">هیڤیدارین ژمارا مۆبایلێ بنڤیسە.</p>
           </div>
+
+          <button
+            type="submit"
+            id="submitBookingBtn"
+            class="w-full py-4 sm:py-5 bg-gold text-obsidian text-base sm:text-lg font-bold hover:bg-gold-light active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-2 mt-2"
+          >
+            <span>تۆمار بکە</span>
+          </button>
         </form>
 
-        <!-- شاشا پشتڕاستکرنا ژڤانی (سابت دمینیت هەتا وەرگرتنا ژڤانەکێ نوو) -->
-        <div id="bookingConfirmation" class="hidden text-center py-6 sm:py-8 space-y-6">
-          <div class="w-16 h-16 mx-auto border border-gold flex items-center justify-center text-gold">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+        <!-- پەیاما پشتڕاستکرنێ -->
+        <div id="bookingConfirmation" class="hidden text-center py-6 space-y-5">
+          <div class="w-16 h-16 mx-auto border border-gold bg-gold/15 flex items-center justify-center text-gold">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
             </svg>
           </div>
+
           <div>
-            <span class="text-sm text-gold font-semibold">ژڤانێ تە هاتە پەسەندکرن</span>
-            <h3 class="font-serif text-3xl sm:text-4xl text-ivory font-bold mt-2">سوپاس بۆ تە، <span id="confName"></span></h3>
-            <p class="text-sm text-muted mt-2">ڕێکەفت و دەمژمێرا هەلبژارتی بۆ تە هاتە تۆمارکرن.</p>
+            <span class="text-xs text-gold font-semibold">ب سەرکەفتی هاتە تۆمارکرن</span>
+            <h3 class="font-serif text-2xl sm:text-3xl text-ivory font-bold mt-1.5" id="confName"></h3>
+            <p class="text-sm text-ivory/85 mt-1" dir="ltr" id="confPhone"></p>
+            <p class="text-sm text-ivory/80 mt-2">
+              ڕێزا تە د لیستەیێ دا: <span id="confOrderNumber" class="text-gold font-bold text-base"></span>
+            </p>
           </div>
 
-          <div id="confSecondCustomerNote" class="hidden max-w-md mx-auto p-4 sm:p-5 bg-amber-950/75 border border-gold text-gold-light text-base font-bold leading-relaxed">
-          </div>
-
-          <div class="bg-obsidian border border-gold/25 p-5 sm:p-6 max-w-md mx-auto text-right space-y-3 text-sm">
-            <div class="flex justify-between border-b border-white/5 pb-2.5">
-              <span class="text-muted">وەستا:</span>
-              <span id="confBarber" class="text-ivory font-semibold"></span>
-            </div>
-            <div class="flex justify-between border-b border-white/5 pb-2.5">
-              <span class="text-muted">ڕێکەفت:</span>
-              <span id="confDate" class="text-ivory font-semibold" dir="ltr"></span>
-            </div>
-            <div class="flex justify-between">
-              <span class="text-muted">دەمژمێر:</span>
-              <span id="confTime" class="text-gold font-bold" dir="ltr"></span>
-            </div>
-          </div>
-
-          <div class="flex justify-center pt-2">
-            <button type="button" id="resetBookingBtn" class="px-8 py-3.5 border border-white/20 text-ivory text-sm hover:border-gold hover:text-gold active:scale-95 transition-all">
-              وەرگرتنا ژڤانەکێ نوو
+          <div class="pt-2">
+            <button type="button" id="resetBookingBtn" class="px-7 py-3 border border-gold/45 text-gold text-sm font-semibold hover:bg-gold hover:text-obsidian active:scale-95 transition-all">
+              تۆمارکرنا ناڤەکێ دی
             </button>
           </div>
         </div>
@@ -563,57 +357,27 @@
     </div>
   </section>
 
-  <!-- بنێ لاپەڕی (فوتەر) -->
-  <footer id="iletisim" class="bg-charcoal border-t border-white/10 pt-16 sm:pt-20 pb-12">
+  <!-- بنێ لاپەڕی -->
+  <footer id="iletisim" class="glass-card border-t border-white/10 pt-14 pb-10 mt-10 relative z-10">
     <div class="max-w-6xl mx-auto px-5 sm:px-6 md:px-10">
-      <div class="grid md:grid-cols-12 gap-10 sm:gap-12 pb-12 sm:pb-16 border-b border-white/10">
-
-        <!-- لۆگۆ: مەقەس و مووس -->
-        <div class="md:col-span-4 space-y-4 sm:space-y-5">
-          <div class="flex items-center gap-3.5">
-            <div class="w-10 h-10 border border-gold/60 bg-obsidian/80 flex items-center justify-center">
-              <svg class="w-6 h-6 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="6" cy="6" r="2.7" />
-                <circle cx="6" cy="18" r="2.7" />
-                <line x1="19" y1="5" x2="8" y2="16" />
-                <line x1="14" y1="14" x2="19" y2="19" />
-                <line x1="8" y1="8" x2="11.5" y2="11.5" />
-                <path d="M16.5 3.5l4 4-2.5 2.5-4-4 2.5-2.5z" />
-              </svg>
-            </div>
-            <div class="flex flex-col">
-              <span class="font-serif text-2xl font-bold text-ivory leading-none">سەرتراشخانا بژار</span>
-            </div>
-          </div>
+      <div class="grid md:grid-cols-2 gap-10 pb-10 border-b border-white/10">
+        <div class="space-y-3">
+          <span class="font-serif text-2xl font-bold text-ivory block">سەرتراشخانا بژار</span>
+          <p class="text-sm text-ivory/85">سێمێل - جادا ریعایێ بەرامبەری قوتابخانا هایدار</p>
+          <p>
+            <a href="tel:07500000000" class="text-gold hover:text-gold-light transition-colors tracking-wider inline-block font-medium" dir="ltr">
+              0750 000 0000
+            </a>
+          </p>
         </div>
 
-        <!-- پەیوەندی و ناڤونیشان -->
-        <div class="md:col-span-4 space-y-3 sm:space-y-4">
-          <h4 class="text-sm font-bold text-gold">پەیوەندی و ناڤونیشان</h4>
-          <div class="space-y-2.5 text-sm text-ivory/85">
-            <p class="leading-relaxed">
-              سێمێل - جادا ریعایێ بەرامبەری قوتابخانا هایدار
-            </p>
-            <p>
-              <a href="tel:07500000000" class="text-ivory hover:text-gold transition-colors tracking-wider inline-block py-1" dir="ltr">
-                0750 000 0000
-              </a>
-            </p>
-          </div>
-        </div>
-
-        <!-- دەمژمێرێن کارکرنێ -->
-        <div class="md:col-span-4 space-y-3 sm:space-y-4">
+        <div class="space-y-2 md:text-left">
           <h4 class="text-sm font-bold text-gold">دەمێن کارکرنێ</h4>
-          <div class="text-sm text-ivory/85 border-b border-white/5 pb-3 flex justify-between items-center">
-            <span class="text-muted">شەمبی - پێنج شەمب</span>
-          </div>
+          <p class="text-sm text-ivory/85">شەمبی - پێنج شەمب</p>
         </div>
-
       </div>
 
-      <!-- کۆپیرایت ب فۆنتێ Cormorant Garamond یێ ڕێک -->
-      <div class="pt-8 flex items-center justify-center sm:justify-between">
+      <div class="pt-7 flex items-center justify-center sm:justify-between">
         <p dir="ltr" class="font-signature not-italic text-xl sm:text-2xl tracking-[0.14em] gold-gradient-text font-bold">
           © 2026 - By Ghareeb
         </p>
@@ -621,24 +385,33 @@
     </div>
   </footer>
 
-  <!-- پەنێلێ وەستایان -->
-  <div id="barberPanelModal" class="hidden fixed inset-0 z-50 bg-obsidian/95 flex items-center justify-center p-3 sm:p-4 overflow-y-auto overscroll-contain">
-    <div class="bg-charcoal hairline-border w-full max-w-2xl p-5 sm:p-6 md:p-9 relative my-auto">
-      <div class="flex items-center justify-between pb-4 sm:pb-5 border-b border-white/10">
-        <div>
-          <span class="text-xs text-gold">پەنێلێ ڕێڤەبرنێ</span>
-          <h3 class="font-serif text-2xl sm:text-3xl text-ivory font-bold mt-0.5">لیستا کڕیارێن بژار و ژێهات</h3>
-        </div>
-        <button id="closeBarberPanelBtn" type="button" aria-label="داخستن" class="text-muted hover:text-ivory p-2 text-3xl leading-none active:scale-90">&times;</button>
+  <!-- پەنێلێ ئەدمینێ تەمام-شاشە (Full Screen) د هەمان تاب دا -->
+  <div id="barberPanelModal" class="hidden fixed inset-0 z-50 w-screen h-[100dvh] bg-obsidian/95 backdrop-blur-xl flex flex-col overflow-hidden">
+    <div class="flex items-center justify-between px-5 sm:px-10 py-4 sm:py-5 border-b border-white/15 bg-charcoal/90 shrink-0">
+      <div>
+        <span class="text-xs text-gold font-semibold">پەنێلێ ڕێڤەبرنێ — تەمام شاشە</span>
+        <h3 class="font-serif text-xl sm:text-3xl text-ivory font-bold mt-0.5">لیستا ناڤ و ژمارێن تۆمارکری</h3>
       </div>
 
-      <div id="panelLoginBox" class="py-7 sm:py-8 space-y-5 max-w-sm mx-auto text-center">
-        <p class="text-sm text-muted">بۆ دیتنا کڕیاران، نهێنیپەیڤا وەستایان بنڤیسە:</p>
+      <button
+        id="closeBarberPanelBtn"
+        type="button"
+        aria-label="داخستنا پەنێلێ"
+        class="w-11 h-11 sm:w-12 sm:h-12 border border-red-500/40 bg-red-950/50 text-red-300 hover:bg-red-600 hover:text-white active:scale-95 transition-all flex items-center justify-center text-2xl font-bold leading-none"
+      >
+        &times;
+      </button>
+    </div>
+
+    <div class="flex-1 overflow-y-auto px-4 sm:px-8 md:px-12 py-8">
+      <div id="panelLoginBox" class="max-w-sm mx-auto my-10 glass-card hairline-border p-6 sm:p-8 text-center space-y-5">
+        <p class="text-sm text-ivory/85">بۆ دیتنا لیستەیێ، نهێنیپەیڤا ئەدمینی بنڤیسە:</p>
         <input
           type="password"
           id="panelPassInput"
           inputmode="numeric"
-          class="w-full bg-obsidian border border-white/15 focus:border-gold px-4 py-3.5 text-center text-ivory outline-none"
+          placeholder="••••"
+          class="w-full bg-obsidian border border-white/15 focus:border-gold px-4 py-3.5 text-center text-ivory tracking-[0.35em] outline-none"
         />
         <p id="panelPassError" class="hidden text-xs text-red-400">نهێنیپەیڤ شاشە، دووبارە هەول بدە.</p>
         <button id="panelLoginSubmitBtn" type="button" class="w-full py-3.5 bg-gold text-obsidian text-sm font-bold hover:bg-gold-light active:scale-[0.98] transition-all">
@@ -646,39 +419,25 @@
         </button>
       </div>
 
-      <div id="panelContentBox" class="hidden pt-5 sm:pt-6 space-y-5">
-        <div class="flex flex-col sm:flex-row sm:items-end gap-3">
-          <div class="flex-1">
-            <label class="block text-xs text-gold font-semibold mb-2">وەستا</label>
-            <select id="panelFilterBarber" class="w-full bg-obsidian border border-white/15 px-3.5 py-3 text-ivory outline-none">
-              <option value="ALL">هەردوو وەستا (بژار و ژێهات)</option>
-              <option value="بژار">بژار</option>
-              <option value="ژێهات">ژێهات</option>
-            </select>
+      <div id="panelContentBox" class="hidden max-w-4xl mx-auto space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4 bg-charcoal/80 border border-white/10 px-5 py-4">
+          <div class="text-sm text-ivory/85">
+            کۆما ناڤێن تۆمارکری: <span id="totalBookingsCount" class="text-gold font-bold text-base">0</span>
           </div>
-          <button type="button" id="refreshSheetBtn" class="px-4 py-3 border border-gold/40 bg-obsidian text-gold text-xs sm:text-sm font-semibold hover:bg-gold hover:text-obsidian active:scale-95 transition-all shrink-0 flex items-center justify-center gap-2">
-            <span>نویژەنکرن</span>
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="6" cy="6" r="2.8" />
-              <circle cx="6" cy="18" r="2.8" />
-              <line x1="8.2" y1="8.2" x2="20" y2="20" />
-              <line x1="8.2" y1="15.8" x2="20" y2="4" />
-            </svg>
+          <button type="button" id="refreshSheetBtn" class="px-4 py-2.5 border border-gold/50 bg-obsidian text-gold text-xs sm:text-sm font-semibold hover:bg-gold hover:text-obsidian active:scale-95 transition-all">
+            نویژەنکرن
           </button>
         </div>
 
-        <div id="panelAppointmentsList" class="space-y-3 max-h-[60vh] overflow-y-auto overscroll-contain pl-1">
-        </div>
+        <div id="panelAppointmentsList" class="space-y-3"></div>
       </div>
     </div>
   </div>
 
-  <!-- Google Sheets + JavaScript -->
   <script type="module">
     const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbx7WRRWW3iAuhnvYamvFvO0Vim0dijhD9qNmnDQx1MJ4OcsOFIL5CgIMMbEGr8D2Ihe7Q/exec';
-
     const BARBER_PASSCODE = '1234';
-    const LOCAL_STORAGE_KEY = 'bzhar_barber_bookings_ku_v3';
+    const LOCAL_STORAGE_KEY = 'bzhar_barber_names_phone_list_v5';
 
     let allBookings = [];
     const hasGoogleSheet = GOOGLE_SHEET_URL && GOOGLE_SHEET_URL.startsWith('https://');
@@ -693,7 +452,8 @@
 
     function loadLocalBookings() {
       try {
-        return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
+        const parsed = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+        return Array.isArray(parsed) ? parsed : [];
       } catch (e) {
         return [];
       }
@@ -713,9 +473,8 @@
         const res = await fetch(`${GOOGLE_SHEET_URL}?t=${Date.now()}`);
         const data = await res.json();
         if (data && data.status === 'ok' && Array.isArray(data.bookings)) {
-          allBookings = data.bookings;
+          allBookings = data.bookings.filter(item => item && item.name);
           saveLocalBookings(allBookings);
-          validateSelectedSlot();
           renderPanelAppointments();
         }
       } catch (err) {}
@@ -723,34 +482,19 @@
 
     if (hasGoogleSheet) {
       syncFromGoogleSheet();
-      setInterval(syncFromGoogleSheet, 20000);
     }
 
     const navbar = document.getElementById('navbar');
-    let isScrolled = false;
-    let scrollTicking = false;
-
     window.addEventListener('scroll', () => {
-      if (!scrollTicking) {
-        window.requestAnimationFrame(() => {
-          const shouldBeScrolled = window.scrollY > 36;
-          if (shouldBeScrolled !== isScrolled) {
-            isScrolled = shouldBeScrolled;
-            if (isScrolled) {
-              navbar.classList.add('bg-obsidian/95', 'border-white/10');
-              navbar.classList.remove('border-transparent');
-            } else {
-              navbar.classList.remove('bg-obsidian/95', 'border-white/10');
-              navbar.classList.add('border-transparent');
-            }
-          }
-          scrollTicking = false;
-        });
-        scrollTicking = true;
+      if (window.scrollY > 30) {
+        navbar.classList.add('bg-obsidian/85', 'backdrop-blur-md', 'border-white/10');
+        navbar.classList.remove('border-transparent');
+      } else {
+        navbar.classList.remove('bg-obsidian/85', 'backdrop-blur-md', 'border-white/10');
+        navbar.classList.add('border-transparent');
       }
     }, { passive: true });
 
-    // لیستا مۆبایلێ ب پاشبنەمایا Blur
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileMenuBackdrop = document.getElementById('mobileMenuBackdrop');
@@ -772,256 +516,73 @@
       link.addEventListener('click', () => toggleMobileMenu(true));
     });
 
-    const revealEls = document.querySelectorAll('.reveal');
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            obs.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
-      revealEls.forEach(el => observer.observe(el));
-    } else {
-      revealEls.forEach(el => el.classList.add('visible'));
-    }
-
-    const randevuSection = document.getElementById('randevu');
-    const bookingSectionHeader = document.getElementById('bookingSectionHeader');
-    const barberButtons = document.querySelectorAll('.barber-option');
-    const barberInput = document.getElementById('barberInput');
-    const dateInput = document.getElementById('dateInput');
-    const timeInput = document.getElementById('timeInput');
-    const slotBusyAlert = document.getElementById('slotBusyAlert');
+    const bookingForm = document.getElementById('bookingForm');
+    const fullNameInput = document.getElementById('fullNameInput');
+    const phoneInput = document.getElementById('phoneInput');
+    const nameErrorMsg = document.getElementById('nameErrorMsg');
+    const phoneErrorMsg = document.getElementById('phoneErrorMsg');
     const submitBookingBtn = document.getElementById('submitBookingBtn');
+    const bookingConfirmation = document.getElementById('bookingConfirmation');
+    const confName = document.getElementById('confName');
+    const confPhone = document.getElementById('confPhone');
+    const confOrderNumber = document.getElementById('confOrderNumber');
+    const resetBookingBtn = document.getElementById('resetBookingBtn');
 
-    const step1Container = document.getElementById('step1Container');
-    const step2Container = document.getElementById('step2Container');
-    const toStep2Btn = document.getElementById('toStep2Btn');
-    const backToStep1Btn = document.getElementById('backToStep1Btn');
-    const stepBadge2 = document.getElementById('stepBadge2');
-    const stepCircle2 = document.getElementById('stepCircle2');
-    const step2BarberLabel = document.getElementById('step2BarberLabel');
-    const step2DateLabel = document.getElementById('step2DateLabel');
-
-    // قفلکرن و بەردانا پەڕەی (سابتکرنا بەشێ ژڤانی)
-    function lockBookingView() {
-      document.body.classList.add('booking-locked');
-      randevuSection.classList.add('booking-section-fixed');
-      bookingSectionHeader.classList.add('mb-4', 'sm:mb-6');
-      bookingSectionHeader.classList.remove('mb-10', 'sm:mb-12');
-    }
-
-    function unlockBookingView() {
-      document.body.classList.remove('booking-locked');
-      randevuSection.classList.remove('booking-section-fixed');
-      bookingSectionHeader.classList.remove('mb-4', 'sm:mb-6');
-      bookingSectionHeader.classList.add('mb-10', 'sm:mb-12');
-    }
-
-    function timeToMinutes(timeStr) {
-      if (!timeStr || !timeStr.includes(':')) return null;
-      const [h, m] = timeStr.split(':').map(Number);
-      return h * 60 + m;
-    }
-
-    function addThirtyMinutes(timeStr) {
-      const total = timeToMinutes(timeStr);
-      if (total === null) return timeStr;
-      const next = (total + 30) % (24 * 60);
-      const hh = String(Math.floor(next / 60)).padStart(2, '0');
-      const mm = String(next % 60).padStart(2, '0');
-      return `${hh}:${mm}`;
-    }
-
-    function getSlotBookings(barber, date, selectedTimeStr) {
-      return allBookings.filter(b => {
-        if (b.barber !== barber || b.date !== date) return false;
-        const base = b.requestedTime || b.time;
-        return base === selectedTimeStr;
-      });
-    }
-
-    function validateSelectedSlot() {
-      const barber = barberInput.value;
-      const date = dateInput.value;
-      const time = timeInput.value;
-
-      if (!time) {
-        slotBusyAlert.classList.add('hidden');
-        timeInput.classList.remove('border-red-500', 'text-red-400');
-        timeInput.classList.add('border-white/15', 'text-ivory');
-        submitBookingBtn.disabled = false;
-        submitBookingBtn.classList.remove('opacity-40', 'cursor-not-allowed');
-        return true;
+    fullNameInput.addEventListener('input', () => {
+      if (fullNameInput.value.trim()) {
+        nameErrorMsg.classList.add('hidden');
+        fullNameInput.classList.remove('border-red-500');
+        fullNameInput.classList.add('border-white/15');
       }
-
-      const existing = getSlotBookings(barber, date, time);
-
-      if (existing.length >= 2) {
-        slotBusyAlert.classList.remove('hidden');
-        timeInput.classList.remove('border-white/15', 'text-ivory');
-        timeInput.classList.add('border-red-500', 'text-red-400');
-        submitBookingBtn.disabled = true;
-        submitBookingBtn.classList.add('opacity-40', 'cursor-not-allowed');
-        return false;
-      } else {
-        slotBusyAlert.classList.add('hidden');
-        timeInput.classList.remove('border-red-500', 'text-red-400');
-        timeInput.classList.add('border-white/15', 'text-ivory');
-        submitBookingBtn.disabled = false;
-        submitBookingBtn.classList.remove('opacity-40', 'cursor-not-allowed');
-        return true;
-      }
-    }
-
-    barberButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        barberButtons.forEach(b => {
-          b.classList.remove('border-gold', 'bg-gold/10', 'text-ivory');
-          b.classList.add('border-white/10', 'bg-obsidian', 'text-muted');
-          const icon = b.querySelector('svg');
-          if (icon) {
-            icon.classList.remove('text-gold');
-            icon.classList.add('text-gold/50');
-          }
-        });
-        btn.classList.remove('border-white/10', 'bg-obsidian', 'text-muted');
-        btn.classList.add('border-gold', 'bg-gold/10', 'text-ivory');
-        const activeIcon = btn.querySelector('svg');
-        if (activeIcon) {
-          activeIcon.classList.remove('text-gold/50');
-          activeIcon.classList.add('text-gold');
-        }
-        barberInput.value = btn.dataset.barber;
-        validateSelectedSlot();
-      });
     });
 
-    window.selectBarberAndScroll = function(barberName) {
-      barberButtons.forEach(btn => {
-        if (btn.dataset.barber === barberName) btn.click();
-      });
-      goToStep1();
-      document.getElementById('randevu').scrollIntoView({ behavior: 'smooth' });
-    };
-
-    const today = new Date();
-    const yyyy = today.getFullYear();
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const dd = String(today.getDate()).padStart(2, '0');
-    const formattedToday = `${yyyy}-${mm}-${dd}`;
-    dateInput.min = formattedToday;
-    dateInput.value = formattedToday;
-
-    dateInput.addEventListener('change', validateSelectedSlot);
-
-    function formatDisplayDate(dateStr) {
-      if (!dateStr) return '-';
-      const [y, m, d] = dateStr.split('-');
-      return `${d}.${m}.${y}`;
-    }
-
-    async function goToStep2() {
-      if (!dateInput.value) {
-        dateInput.focus();
-        return;
+    phoneInput.addEventListener('input', () => {
+      if (phoneInput.value.trim()) {
+        phoneErrorMsg.classList.add('hidden');
+        phoneInput.classList.remove('border-red-500');
+        phoneInput.classList.add('border-white/15');
       }
-      step2BarberLabel.textContent = barberInput.value;
-      step2DateLabel.textContent = formatDisplayDate(dateInput.value);
-
-      step1Container.classList.add('hidden');
-      step2Container.classList.remove('hidden');
-
-      stepBadge2.classList.remove('text-muted');
-      stepBadge2.classList.add('text-gold', 'font-semibold');
-      stepCircle2.classList.remove('border-white/20', 'text-muted');
-      stepCircle2.classList.add('bg-gold', 'text-obsidian', 'border-gold');
-
-      // سابتکرنا شاشا هەلبژارتنا دەمژمێرێ دا نەلڤیت
-      lockBookingView();
-
-      showScissorsLoader();
-      await syncFromGoogleSheet();
-      hideScissorsLoader();
-      validateSelectedSlot();
-    }
-
-    function goToStep1() {
-      step2Container.classList.add('hidden');
-      step1Container.classList.remove('hidden');
-
-      stepBadge2.classList.add('text-muted');
-      stepBadge2.classList.remove('text-gold', 'font-semibold');
-      stepCircle2.classList.add('border-white/20', 'text-muted');
-      stepCircle2.classList.remove('bg-gold', 'text-obsidian', 'border-gold');
-
-      // بەردانا سابتکرنێ دەمێ دزڤڕیتە پێنگاڤا ئێکێ
-      unlockBookingView();
-    }
-
-    toStep2Btn.addEventListener('click', goToStep2);
-    backToStep1Btn.addEventListener('click', goToStep1);
-
-    timeInput.value = '16:00';
-    timeInput.addEventListener('input', validateSelectedSlot);
-    timeInput.addEventListener('change', validateSelectedSlot);
-
-    const bookingForm = document.getElementById('bookingForm');
-    const bookingConfirmation = document.getElementById('bookingConfirmation');
-    const confSecondCustomerNote = document.getElementById('confSecondCustomerNote');
+    });
 
     bookingForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const name = fullNameInput.value.trim();
+      const phone = phoneInput.value.trim();
+      let hasError = false;
 
-      const barber = barberInput.value;
-      const date = dateInput.value;
-      const selectedTime = timeInput.value;
-      const name = document.getElementById('nameInput').value.trim();
-      const phone = document.getElementById('phoneInput').value.trim();
-
-      if (!selectedTime) {
-        timeInput.focus();
-        return;
+      if (!name) {
+        nameErrorMsg.classList.remove('hidden');
+        fullNameInput.classList.remove('border-white/15');
+        fullNameInput.classList.add('border-red-500');
+        hasError = true;
       }
 
-      if (!name || !phone) {
-        if (!name) document.getElementById('nameInput').focus();
-        else document.getElementById('phoneInput').focus();
+      if (!phone) {
+        phoneErrorMsg.classList.remove('hidden');
+        phoneInput.classList.remove('border-white/15');
+        phoneInput.classList.add('border-red-500');
+        hasError = true;
+      }
+
+      if (hasError) {
+        if (!name) fullNameInput.focus();
+        else phoneInput.focus();
         return;
       }
 
       submitBookingBtn.disabled = true;
       showScissorsLoader();
 
-      await syncFromGoogleSheet();
-
-      if (!validateSelectedSlot()) {
-        hideScissorsLoader();
-        submitBookingBtn.disabled = true;
-        slotBusyAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        return;
-      }
-
-      const existing = getSlotBookings(barber, date, selectedTime);
-      const isSecondCustomer = existing.length === 1;
-      const actualTime = isSecondCustomer ? addThirtyMinutes(selectedTime) : selectedTime;
-
-      const newBooking = {
+      const newEntry = {
         id: String(Date.now()),
-        barber,
-        date,
-        requestedTime: selectedTime,
-        time: actualTime,
-        orderNumber: isSecondCustomer ? 2 : 1,
         name,
         phone,
         createdAt: Date.now()
       };
 
-      allBookings.push(newBooking);
+      allBookings.push(newEntry);
       saveLocalBookings(allBookings);
+      const assignedOrder = allBookings.length;
 
       if (hasGoogleSheet) {
         try {
@@ -1029,7 +590,7 @@
             method: 'POST',
             mode: 'no-cors',
             headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify({ action: 'add', booking: newBooking })
+            body: JSON.stringify({ action: 'add', booking: newEntry })
           });
         } catch (err) {}
       }
@@ -1037,33 +598,21 @@
       hideScissorsLoader();
       submitBookingBtn.disabled = false;
 
-      document.getElementById('confName').textContent = name;
-      document.getElementById('confBarber').textContent = barber;
-      document.getElementById('confDate').textContent = formatDisplayDate(date);
-      document.getElementById('confTime').textContent = actualTime;
-
-      if (isSecondCustomer) {
-        confSecondCustomerNote.textContent = `تێبینی: دەمژمێر ${actualTime} ل ڤێرێ بە`;
-        confSecondCustomerNote.classList.remove('hidden');
-      } else {
-        confSecondCustomerNote.classList.add('hidden');
-        confSecondCustomerNote.textContent = '';
-      }
-
+      confName.textContent = name;
+      confPhone.textContent = phone;
+      confOrderNumber.textContent = `#${assignedOrder}`;
       bookingForm.classList.add('hidden');
       bookingConfirmation.classList.remove('hidden');
-      // شاشا پشتڕاستکرنێ ژی سابت دمینیت هەتا دوگما "وەرگرتنا ژڤانەکێ نوو" دهێتە لێدان
+      renderPanelAppointments();
     });
 
-    document.getElementById('resetBookingBtn').addEventListener('click', () => {
+    resetBookingBtn.addEventListener('click', () => {
       bookingForm.reset();
-      dateInput.value = formattedToday;
-      timeInput.value = '16:00';
-      barberButtons[0].click();
+      nameErrorMsg.classList.add('hidden');
+      phoneErrorMsg.classList.add('hidden');
       bookingConfirmation.classList.add('hidden');
       bookingForm.classList.remove('hidden');
-      goToStep1();
-      randevuSection.scrollIntoView({ behavior: 'smooth' });
+      fullNameInput.focus();
     });
 
     const barberPanelModal = document.getElementById('barberPanelModal');
@@ -1074,8 +623,8 @@
     const panelPassInput = document.getElementById('panelPassInput');
     const panelPassError = document.getElementById('panelPassError');
     const panelLoginSubmitBtn = document.getElementById('panelLoginSubmitBtn');
-    const panelFilterBarber = document.getElementById('panelFilterBarber');
     const panelAppointmentsList = document.getElementById('panelAppointmentsList');
+    const totalBookingsCount = document.getElementById('totalBookingsCount');
     const refreshSheetBtn = document.getElementById('refreshSheetBtn');
 
     let panelUnlocked = false;
@@ -1084,6 +633,7 @@
       toggleMobileMenu(true);
       barberPanelModal.classList.remove('hidden');
       document.body.style.overflow = 'hidden';
+
       if (panelUnlocked) {
         panelLoginBox.classList.add('hidden');
         panelContentBox.classList.remove('hidden');
@@ -1102,15 +652,16 @@
 
     function closeModal() {
       barberPanelModal.classList.add('hidden');
-      if (!document.body.classList.contains('booking-locked')) {
-        document.body.style.overflow = '';
-      }
+      document.body.style.overflow = '';
     }
 
     openBarberPanelBtn.addEventListener('click', openModal);
     closeBarberPanelBtn.addEventListener('click', closeModal);
-    barberPanelModal.addEventListener('click', (e) => {
-      if (e.target === barberPanelModal) closeModal();
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !barberPanelModal.classList.contains('hidden')) {
+        closeModal();
+      }
     });
 
     async function attemptPanelLogin() {
@@ -1133,8 +684,6 @@
       if (e.key === 'Enter') attemptPanelLogin();
     });
 
-    panelFilterBarber.addEventListener('change', renderPanelAppointments);
-
     refreshSheetBtn.addEventListener('click', async () => {
       showScissorsLoader();
       await syncFromGoogleSheet();
@@ -1142,55 +691,64 @@
     });
 
     function renderPanelAppointments() {
+      totalBookingsCount.textContent = String(allBookings.length);
+
       if (!panelUnlocked) return;
-      const selectedBarber = panelFilterBarber.value;
 
-      const filtered = allBookings
-        .filter(b => selectedBarber === 'ALL' || b.barber === selectedBarber)
-        .sort((a, b) => {
-          if (a.date !== b.date) return (a.date || '').localeCompare(b.date || '');
-          return (timeToMinutes(a.time) || 0) - (timeToMinutes(b.time) || 0);
-        });
-
-      if (filtered.length === 0) {
+      if (allBookings.length === 0) {
         panelAppointmentsList.innerHTML = `
-          <div class="text-center py-8 text-sm text-muted border border-white/5 bg-obsidian/60">
-            چ ژڤان نەهاتینە تۆمارکرن.
+          <div class="text-center py-12 text-sm text-muted border border-white/10 bg-charcoal/70">
+            هێشتا چ ناڤ نەهاتینە تۆمارکرن.
           </div>
         `;
         return;
       }
 
-      panelAppointmentsList.innerHTML = filtered.map(b => `
-        <div class="flex flex-wrap items-center justify-between gap-3 sm:gap-4 bg-obsidian border border-white/10 p-3.5 sm:p-4">
-          <div class="space-y-1.5">
-            <!-- سەرێ سەری: دەمژمێر، ڕێکەفت، ناڤێ وەستای -->
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="px-2.5 py-0.5 bg-gold/15 border border-gold/40 text-gold text-sm font-bold" dir="ltr">${b.time}</span>
-              <span class="text-xs px-2 py-0.5 bg-white/5 text-ivory/75" dir="ltr">${formatDisplayDate(b.date)}</span>
-              <span class="text-xs px-2 py-0.5 bg-white/5 text-ivory/80">${b.barber}</span>
-            </div>
-            <!-- هەر ل بن دەمژمێرێ: ناڤێ کڕیاری - ژمارا مۆبایلێ -->
-            <div class="flex flex-wrap items-center gap-2 text-sm pt-0.5">
-              <span class="font-bold text-ivory">${b.name}</span>
-              <span class="text-gold font-bold">-</span>
-              <a href="tel:${b.phone}" class="text-ivory/85 hover:text-gold transition-colors" dir="ltr">
-                ${b.phone}
-              </a>
+      panelAppointmentsList.innerHTML = allBookings.map((item, idx) => `
+        <div class="flex items-center justify-between gap-4 bg-charcoal/85 border border-white/10 hover:border-gold/35 transition-colors px-4 sm:px-6 py-4">
+          <div class="flex items-center gap-4 min-w-0">
+            <span class="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-full bg-gold/15 border border-gold/50 text-gold font-bold text-sm sm:text-base flex items-center justify-center">
+              ${idx + 1}
+            </span>
+            <div class="min-w-0">
+              <div class="font-serif text-lg sm:text-xl font-bold text-ivory truncate">
+                ${escapeHtml(item.name)}
+              </div>
+              ${item.phone ? `
+                <a href="tel:${escapeAttr(item.phone)}" class="text-xs sm:text-sm text-gold/90 hover:text-gold transition-colors inline-block mt-0.5" dir="ltr">
+                  ${escapeHtml(item.phone)}
+                </a>
+              ` : ''}
             </div>
           </div>
-          <button type="button" onclick="deleteBooking('${b.id}')" class="px-3.5 sm:px-4 py-2 bg-red-950/70 border border-red-500/40 text-red-300 text-xs font-semibold hover:bg-red-600 hover:text-white active:scale-95 transition-all">
-            تەمام بوو / ژێبرن
+
+          <button
+            type="button"
+            onclick="deleteBooking('${escapeAttr(String(item.id))}')"
+            class="px-3.5 sm:px-4 py-2 bg-red-950/70 border border-red-500/40 text-red-300 text-xs sm:text-sm font-semibold hover:bg-red-600 hover:text-white active:scale-95 transition-all shrink-0"
+          >
+            ژێبرن
           </button>
         </div>
       `).join('');
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function escapeAttr(str) {
+      return String(str || '').replace(/'/g, "\\'");
     }
 
     window.deleteBooking = async function(id) {
       allBookings = allBookings.filter(b => String(b.id) !== String(id));
       saveLocalBookings(allBookings);
       renderPanelAppointments();
-      validateSelectedSlot();
 
       if (hasGoogleSheet) {
         try {
@@ -1203,8 +761,6 @@
         } catch (e) {}
       }
     };
-
-    validateSelectedSlot();
   </script>
 </body>
 </html>
