@@ -53,7 +53,9 @@
 
     body {
       background-color: #0B0B0C;
-      background-image: linear-gradient(180deg, rgba(11, 11, 12, 0.52) 0%, rgba(11, 11, 12, 0.65) 55%, rgba(11, 11, 12, 0.85) 100%), url('https://github.com/ghareebnihad/Bzhar-barber/blob/main/image_5e38d5.jpg?raw=true');
+      background-image:
+        linear-gradient(180deg, rgba(11, 11, 12, 0.48) 0%, rgba(11, 11, 12, 0.64) 52%, rgba(11, 11, 12, 0.88) 100%),
+        url('https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/cover.png?token=GHSAT0AAAAAAEREAZOHVL34TIDTV462DRHA2YEIOXQ');
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
@@ -75,9 +77,32 @@
       inset: 0;
       z-index: 0;
       pointer-events: none;
-      backdrop-filter: blur(2px);
-      -webkit-backdrop-filter: blur(2px);
-      background: radial-gradient(circle at 50% 25%, rgba(197, 160, 89, 0.14) 0%, rgba(11, 11, 12, 0.3) 75%);
+      backdrop-filter: blur(1.4px);
+      -webkit-backdrop-filter: blur(1.4px);
+      background: radial-gradient(circle at 50% 20%, rgba(197, 160, 89, 0.12) 0%, rgba(11, 11, 12, 0.24) 75%);
+    }
+
+    .admin-panel-bg {
+      background-color: #0B0B0C;
+      background-image:
+        radial-gradient(circle at 18% 18%, rgba(197, 160, 89, 0.24) 0%, transparent 45%),
+        radial-gradient(circle at 82% 28%, rgba(56, 189, 248, 0.16) 0%, transparent 48%),
+        radial-gradient(circle at 50% 88%, rgba(168, 85, 247, 0.16) 0%, transparent 52%),
+        linear-gradient(160deg, rgba(11, 11, 12, 0.72) 0%, rgba(19, 19, 28, 0.80) 50%, rgba(11, 11, 12, 0.88) 100%),
+        url('https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/makine.jpg?token=GHSAT0AAAAAAEREAZOH4EGSY7PZQJPAGNTU2YEIPJQ');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+
+    .admin-panel-bg::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      backdrop-filter: blur(2.2px);
+      -webkit-backdrop-filter: blur(2.2px);
+      z-index: 0;
     }
 
     .font-serif {
@@ -117,68 +142,138 @@
     }
 
     .gold-gradient-text {
-      background: linear-gradient(135deg, #F5DA9F 0%, #C5A059 52%, #9E7D3E 100%);
+      background: linear-gradient(135deg, #F8E2B0 0%, #C5A059 52%, #9E7D3E 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .hairline-border {
-      border: 1px solid rgba(197, 160, 89, 0.34);
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(197, 160, 89, 0.38);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
 
     .glass-card {
-      background: rgba(19, 19, 22, 0.76);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      background: rgba(19, 19, 22, 0.74);
+      backdrop-filter: blur(11px);
+      -webkit-backdrop-filter: blur(11px);
+    }
+
+    .admin-glass-card {
+      background: linear-gradient(135deg, rgba(24, 24, 32, 0.76) 0%, rgba(16, 16, 22, 0.84) 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(197, 160, 89, 0.28);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
 
     .cta-glow {
-      box-shadow: 0 12px 34px -6px rgba(197, 160, 89, 0.5);
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 12px 34px -6px rgba(197, 160, 89, 0.52);
+      transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.22s ease, box-shadow 0.24s ease;
     }
     .cta-glow:active {
       transform: scale3d(0.97, 0.97, 1);
     }
     @media (hover: hover) {
       .cta-glow:hover {
-        box-shadow: 0 18px 44px -6px rgba(197, 160, 89, 0.72);
-        transform: translate3d(0, -1px, 0);
+        box-shadow: 0 18px 44px -6px rgba(197, 160, 89, 0.75);
+        transform: translate3d(0, -2px, 0);
       }
     }
 
-    /* ئەنیمەیشنا 60fps یا بلەز بۆ مەقەسا بارکرنێ (GPU Accelerated) */
     .scissor-loader-ring {
       will-change: transform;
-      animation: scissorPulse 0.5s cubic-bezier(0.22, 1, 0.36, 1) infinite alternate;
+      animation: scissorPulse 0.55s cubic-bezier(0.22, 1, 0.36, 1) infinite alternate;
     }
-    .scissor-blade-top {
+
+    .dual-scissor-left {
+      transform-origin: center center;
+      will-change: transform;
+      animation: dualScissorLeft 0.36s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+    }
+    .dual-scissor-right {
+      transform-origin: center center;
+      will-change: transform;
+      animation: dualScissorRight 0.36s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+    }
+
+    .scissor-blade-a {
       transform-origin: 12px 12px;
       will-change: transform;
-      animation: scissorSnipTop 0.16s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+      animation: snipA 0.16s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
     }
-    .scissor-blade-bottom {
+    .scissor-blade-b {
       transform-origin: 12px 12px;
       will-change: transform;
-      animation: scissorSnipBottom 0.16s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+      animation: snipB 0.16s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+    }
+
+    .orbit-dot {
+      will-change: transform;
+      animation: orbitSpin 1.1s linear infinite;
     }
 
     @keyframes scissorPulse {
       0% { transform: scale3d(0.96, 0.96, 1); }
       100% { transform: scale3d(1.05, 1.05, 1); }
     }
-    @keyframes scissorSnipTop {
-      0% { transform: rotate(-25deg) translate3d(0, 0, 0); }
-      100% { transform: rotate(15deg) translate3d(0, 0, 0); }
+    @keyframes dualScissorLeft {
+      0% { transform: translate3d(-4px, -2px, 0) rotate(-14deg); }
+      100% { transform: translate3d(3px, 2px, 0) rotate(10deg); }
     }
-    @keyframes scissorSnipBottom {
-      0% { transform: rotate(25deg) translate3d(0, 0, 0); }
-      100% { transform: rotate(-15deg) translate3d(0, 0, 0); }
+    @keyframes dualScissorRight {
+      0% { transform: translate3d(4px, 2px, 0) rotate(14deg); }
+      100% { transform: translate3d(-3px, -2px, 0) rotate(-10deg); }
+    }
+    @keyframes snipA {
+      0% { transform: rotate(-24deg); }
+      100% { transform: rotate(14deg); }
+    }
+    @keyframes snipB {
+      0% { transform: rotate(24deg); }
+      100% { transform: rotate(-14deg); }
+    }
+    @keyframes orbitSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
-    /* ئەنیمەیشنا 60fps بۆ ڤەبوونا شاشا تەمام-شاشە */
+    .service-tile {
+      aspect-ratio: 1 / 1;
+      border-radius: 18px;
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease, box-shadow 0.28s ease;
+      will-change: transform;
+    }
+    @media (hover: hover) {
+      .service-tile:hover {
+        transform: translate3d(0, -4px, 0) scale3d(1.02, 1.02, 1);
+        border-color: rgba(197, 160, 89, 0.85);
+        box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.85), 0 0 20px rgba(197, 160, 89, 0.18);
+      }
+    }
+
+    .service-tile-img {
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+    @media (hover: hover) {
+      .service-tile:hover .service-tile-img {
+        transform: scale3d(1.08, 1.08, 1);
+      }
+    }
+
+    .reveal-item {
+      opacity: 0;
+      transform: translate3d(0, 14px, 0);
+      transition: opacity 0.48s cubic-bezier(0.22, 1, 0.36, 1), transform 0.48s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+    .reveal-item.is-visible {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+
     .fullscreen-modal-enter {
-      animation: modalFadeScale 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: modalFadeScale 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
     @keyframes modalFadeScale {
       from {
@@ -191,9 +286,8 @@
       }
     }
 
-    /* ئەنیمەیشنا سەرێ دەستپێکێ */
     .hero-stagger {
-      animation: heroRise 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation: heroRise 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
     @keyframes heroRise {
       from {
@@ -209,37 +303,49 @@
 </head>
 <body class="antialiased">
 
-  <!-- ئاگەهدارکرنا نەرم (Toast) -->
   <div id="toastBanner" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[90] px-5 py-3 bg-charcoal/95 border border-gold/60 text-ivory text-xs sm:text-sm font-semibold shadow-2xl backdrop-blur-md flex items-center gap-2.5">
-    <span class="w-2 h-2 rounded-full bg-gold"></span>
+    <span class="w-2 h-2 rounded-full bg-gold animate-ping"></span>
     <span id="toastMessage"></span>
   </div>
 
-  <!-- شاشا مەقەسا بلەز ب 60fps -->
-  <div id="scissorsLoaderOverlay" class="hidden fixed inset-0 z-[80] bg-obsidian/85 backdrop-blur-md flex flex-col items-center justify-center gap-4 pointer-events-auto">
-    <div class="scissor-loader-ring w-24 h-24 rounded-full border-2 border-gold/55 bg-charcoal/95 flex items-center justify-center shadow-[0_0_45px_rgba(197,160,89,0.32)]">
-      <svg class="w-12 h-12 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-        <g class="scissor-blade-top">
-          <circle cx="6" cy="6" r="2.8" />
-          <line x1="8.2" y1="8.2" x2="20" y2="20" />
-        </g>
-        <g class="scissor-blade-bottom">
-          <circle cx="6" cy="18" r="2.8" />
-          <line x1="8.2" y1="15.8" x2="20" y2="4" />
-        </g>
-        <circle cx="12" cy="12" r="1.2" fill="currentColor" />
-      </svg>
+  <div id="scissorsLoaderOverlay" class="hidden fixed inset-0 z-[80] bg-obsidian/88 backdrop-blur-md flex flex-col items-center justify-center gap-4 pointer-events-auto">
+    <div class="relative w-28 h-28 flex items-center justify-center">
+      <div class="orbit-dot absolute inset-0 rounded-full border border-dashed border-gold/40"></div>
+      <div class="scissor-loader-ring w-24 h-24 rounded-full border-2 border-gold/60 bg-charcoal/95 flex items-center justify-center shadow-[0_0_45px_rgba(197,160,89,0.35)] relative overflow-hidden">
+        <svg class="dual-scissor-left w-10 h-10 text-gold -ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <g class="scissor-blade-a">
+            <circle cx="6" cy="6" r="2.6" />
+            <line x1="8.2" y1="8.2" x2="20" y2="20" />
+          </g>
+          <g class="scissor-blade-b">
+            <circle cx="6" cy="18" r="2.6" />
+            <line x1="8.2" y1="15.8" x2="20" y2="4" />
+          </g>
+          <circle cx="12" cy="12" r="1.2" fill="currentColor" />
+        </svg>
+
+        <svg class="dual-scissor-right w-10 h-10 text-gold-light -mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <g class="scissor-blade-b">
+            <circle cx="6" cy="6" r="2.6" />
+            <line x1="8.2" y1="8.2" x2="20" y2="20" />
+          </g>
+          <g class="scissor-blade-a">
+            <circle cx="6" cy="18" r="2.6" />
+            <line x1="8.2" y1="15.8" x2="20" y2="4" />
+          </g>
+          <circle cx="12" cy="12" r="1.2" fill="currentColor" />
+        </svg>
+      </div>
     </div>
+    <span class="text-xs sm:text-sm font-semibold text-gold tracking-wider">چاوەڕێ بە...</span>
   </div>
 
-  <!-- پاشبنەمایا Blur دەمێ لیستا مۆبایلێ ڤەدبیت -->
-  <div id="mobileMenuBackdrop" class="hidden fixed inset-0 z-40 bg-obsidian/70 backdrop-blur-md transition-opacity duration-300 md:hidden"></div>
+  <div id="mobileMenuBackdrop" class="hidden fixed inset-0 z-40 bg-obsidian/65 backdrop-blur-sm transition-opacity duration-300 md:hidden"></div>
 
-  <!-- سەرێ لاپەڕی -->
   <header id="navbar" class="fixed top-0 left-0 right-0 z-40 transition-colors duration-300 border-b border-transparent pt-[env(safe-area-inset-top)]">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 h-16 sm:h-20 flex items-center justify-between gap-2 relative z-50">
       <a href="#" class="flex items-center gap-3 sm:gap-3.5 group shrink-0">
-        <div class="w-10 h-10 sm:w-11 sm:h-11 border border-gold/60 bg-obsidian/80 flex items-center justify-center group-hover:border-gold group-hover:bg-gold/10 transition-all duration-300">
+        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl border border-gold/60 bg-obsidian/80 flex items-center justify-center group-hover:border-gold group-hover:bg-gold/10 group-hover:rotate-6 transition-all duration-300">
           <svg class="w-6 h-6 sm:w-7 sm:h-7 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="6" cy="6" r="2.7" />
             <circle cx="6" cy="18" r="2.7" />
@@ -255,22 +361,22 @@
         </div>
       </a>
 
-      <nav class="hidden md:flex items-center gap-9 text-sm text-ivory/90 font-medium">
-        <button type="button" class="open-booking-modal hover:text-gold transition-colors">تۆمارکرنا ناڤی</button>
+      <nav class="hidden md:flex items-center gap-8 text-sm text-ivory/90 font-medium">
+        <a href="#rezervasyon" class="hover:text-gold transition-colors">تۆمارکرنا ناڤی</a>
         <a href="#iletisim" class="hover:text-gold transition-colors">پەیوەندی و ناڤونیشان</a>
       </nav>
 
       <div class="flex items-center gap-2 sm:gap-3.5">
-        <button id="openBarberPanelBtn" type="button" class="px-3 sm:px-4 py-2 sm:py-2.5 border border-gold/55 bg-obsidian/80 backdrop-blur-md text-gold text-xs sm:text-sm font-semibold hover:bg-gold hover:text-obsidian active:scale-95 transition-all duration-200 flex items-center gap-1.5 sm:gap-2">
+        <button id="openBarberPanelBtn" type="button" class="px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg border border-gold/55 bg-obsidian/80 text-gold text-xs sm:text-sm font-semibold hover:bg-gold hover:text-obsidian active:scale-95 transition-all duration-200 flex items-center gap-1.5 sm:gap-2">
           <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
           </svg>
           <span>ئەدمین</span>
         </button>
 
-        <button type="button" class="open-booking-modal hidden sm:inline-block px-5 py-2.5 bg-gold text-obsidian text-sm font-bold hover:bg-gold-light transition-colors duration-200">
+        <a href="#rezervasyon" class="hidden sm:inline-block px-5 py-2.5 rounded-lg bg-gold text-obsidian text-sm font-bold hover:bg-gold-light transition-colors duration-200">
           ناڤێ خۆ تۆمار بکە
-        </button>
+        </a>
 
         <button id="mobileMenuBtn" type="button" aria-label="ڤەکرنا لیستێ" class="md:hidden text-ivory p-2 focus:outline-none active:scale-95">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -280,47 +386,133 @@
       </div>
     </div>
 
-    <!-- لیستا مۆبایلێ -->
-    <div id="mobileMenu" class="hidden md:hidden relative z-50 bg-charcoal/90 backdrop-blur-xl border-b border-gold/30 px-6 py-6 space-y-4 shadow-2xl">
-      <button type="button" class="open-booking-modal block w-full text-right py-2 text-base font-semibold text-ivory hover:text-gold transition-colors">تۆمارکرنا ناڤی</button>
+    <div id="mobileMenu" class="hidden md:hidden relative z-50 bg-charcoal/92 backdrop-blur-md border-b border-gold/30 px-6 py-6 space-y-4 shadow-2xl">
+      <a href="#rezervasyon" class="block py-2 text-base font-semibold text-ivory hover:text-gold transition-colors">تۆمارکرنا ناڤی</a>
       <a href="#iletisim" class="block py-2 text-base font-semibold text-ivory hover:text-gold transition-colors">پەیوەندی و ناڤونیشان</a>
-      <button type="button" class="open-booking-modal block w-full text-center py-3.5 bg-gold text-obsidian text-base font-bold">
+      <a href="#rezervasyon" class="block w-full text-center py-3.5 rounded-lg bg-gold text-obsidian text-base font-bold">
         نوکە ناڤێ خۆ تۆمار بکە
-      </button>
+      </a>
     </div>
   </header>
 
-  <!-- شاشا دەستپێکێ -->
-  <section class="min-h-[88svh] flex items-center justify-center relative z-10 pt-24 pb-12">
+  <section class="min-h-[60svh] flex items-center justify-center relative z-10 pt-24 pb-6">
     <div class="hero-stagger max-w-4xl mx-auto px-5 sm:px-6 md:px-10 w-full text-center">
-      <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.2] text-ivory mb-5 drop-shadow-[0_4px_18px_rgba(0,0,0,0.85)]">
+      <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.2] text-ivory mb-4 drop-shadow-[0_4px_18px_rgba(0,0,0,0.85)]">
         بڕینا بێ کێماسی<br />
         <span class="gold-gradient-text">ستایلێ هەردەمی</span>
       </h1>
 
-      <p class="text-sm sm:text-lg text-ivory/90 max-w-xl mx-auto leading-relaxed font-normal mb-10 px-4 py-2.5 bg-obsidian/50 backdrop-blur-sm border border-white/10">
-        بۆ تۆمارکرنا ناڤێ خۆ د لیستەیێ دا، کلیک ل سەر دوگما ل خوارێ بکە.
+      <p class="text-sm sm:text-base text-ivory/90 max-w-lg mx-auto leading-relaxed font-normal mb-6 px-4 py-2 rounded-xl bg-obsidian/55 border border-white/10">
+        نرخ ب ڕێزبەندی هاتینە دانان؛ بۆ تۆمارکرنا ناڤی ل خوارێ ناڤ و ژمارا مۆبایلێ بنڤیسە.
       </p>
 
-      <div class="flex flex-col items-center justify-center">
-        <button
-          type="button"
-          class="open-booking-modal cta-glow group w-full max-w-[340px] sm:w-auto sm:min-w-[340px] px-8 sm:px-12 py-5 sm:py-6 bg-gold text-obsidian text-lg sm:text-xl font-bold hover:bg-gold-light inline-flex items-center justify-center gap-3.5"
+      <div class="flex items-center justify-center">
+        <a
+          href="#rezervasyon"
+          class="cta-glow group px-8 sm:px-11 py-3.5 sm:py-4 rounded-xl bg-gold text-obsidian text-base sm:text-lg font-bold hover:bg-gold-light inline-flex items-center justify-center gap-2.5"
         >
           <span>تۆمارکرنا ناڤی</span>
-          <svg class="w-5 h-5 group-hover:-translate-x-1.5 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+          <svg class="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
           </svg>
-        </button>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- بنێ لاپەڕی -->
-  <footer id="iletisim" class="glass-card border-t border-white/10 pt-14 pb-10 relative z-10">
+  <section id="fiyatlar" class="relative z-10 py-8 sm:py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <div class="text-center max-w-md mx-auto mb-6 reveal-item">
+        <span class="text-xs font-bold text-gold tracking-wider block mb-1">لیستا نرخان</span>
+        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ivory">نرخێن سەرتراشخانێ</h2>
+      </div>
+
+      <div id="pricesGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4"></div>
+    </div>
+  </section>
+
+  <section id="rezervasyon" class="relative z-10 py-10 sm:py-14">
+    <div class="max-w-lg mx-auto px-4 sm:px-6 reveal-item">
+      <div class="glass-card hairline-border rounded-2xl p-6 sm:p-8 relative overflow-hidden">
+        <div class="text-center mb-6">
+          <span class="text-xs font-bold text-gold tracking-wider block mb-1">تۆمارکرنا ناڤی</span>
+          <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ivory">ناڤ و ژمارا مۆبایلێ</h2>
+        </div>
+
+        <form id="inlineBookingForm" class="space-y-4" novalidate>
+          <div>
+            <label for="inlineNameInput" class="block text-xs sm:text-sm text-gold font-semibold mb-1.5">
+              ناڤ و پاشناڤ
+            </label>
+            <input
+              type="text"
+              id="inlineNameInput"
+              autocomplete="name"
+              placeholder="ناڤێ خۆ بنڤیسە..."
+              required
+              class="w-full rounded-xl bg-obsidian/85 border border-white/15 focus:border-gold px-3.5 py-3.5 text-ivory placeholder:text-muted/65 outline-none transition-colors"
+            />
+            <p id="inlineNameError" class="hidden text-xs text-red-400 mt-1">هیڤیدارین ناڤی بنڤیسە.</p>
+          </div>
+
+          <div>
+            <label for="inlinePhoneInput" class="block text-xs sm:text-sm text-gold font-semibold mb-1.5">
+              ژمارا مۆبایلێ
+            </label>
+            <input
+              type="tel"
+              id="inlinePhoneInput"
+              inputmode="tel"
+              autocomplete="tel"
+              dir="ltr"
+              placeholder="0750 000 0000"
+              required
+              class="w-full rounded-xl bg-obsidian/85 border border-white/15 focus:border-gold px-3.5 py-3.5 text-ivory placeholder:text-muted/65 outline-none transition-colors text-left"
+            />
+            <p id="inlinePhoneError" class="hidden text-xs text-red-400 mt-1">هیڤیدارین ژمارا مۆبایلێ بنڤیسە.</p>
+          </div>
+
+          <button
+            type="submit"
+            id="inlineSubmitBtn"
+            class="cta-glow w-full py-3.5 sm:py-4 rounded-xl bg-gold text-obsidian text-base font-bold hover:bg-gold-light active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 mt-2"
+          >
+            <span>تۆمار بکە</span>
+          </button>
+        </form>
+
+        <div id="inlineBookingConfirmation" class="hidden text-center py-5 space-y-4">
+          <div class="w-14 h-14 mx-auto rounded-full border border-gold bg-gold/15 flex items-center justify-center text-gold">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+          </div>
+
+          <div>
+            <span class="text-xs text-gold font-semibold">ب سەرکەفتی هاتە تۆمارکرن</span>
+            <h3 class="font-serif text-2xl text-ivory font-bold mt-1" id="inlineConfName"></h3>
+            <p class="text-sm text-ivory/85 mt-0.5" dir="ltr" id="inlineConfPhone"></p>
+            <p class="text-sm text-ivory/85 mt-2">
+              ڕێزا تە: <span id="inlineConfOrder" class="text-gold font-bold text-lg"></span>
+            </p>
+          </div>
+
+          <button
+            type="button"
+            id="inlineResetBtn"
+            class="px-6 py-2.5 rounded-xl bg-gold text-obsidian text-sm font-bold hover:bg-gold-light active:scale-95 transition-all"
+          >
+            تۆمارکرنا ناڤەکێ دی
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="iletisim" class="glass-card border-t border-white/10 pt-12 pb-8 relative z-10">
     <div class="max-w-6xl mx-auto px-5 sm:px-6 md:px-10">
-      <div class="grid md:grid-cols-2 gap-10 pb-10 border-b border-white/10">
-        <div class="space-y-3">
+      <div class="grid md:grid-cols-2 gap-8 pb-8 border-b border-white/10">
+        <div class="space-y-2.5">
           <span class="font-serif text-2xl font-bold text-ivory block">سەرتراشخانا بژار</span>
           <p class="text-sm text-ivory/85">سێمێل - جادا ریعایێ بەرامبەری قوتابخانا هایدار</p>
           <p>
@@ -330,13 +522,13 @@
           </p>
         </div>
 
-        <div class="space-y-2 md:text-left">
+        <div class="space-y-1.5 md:text-left">
           <h4 class="text-sm font-bold text-gold">دەمێن کارکرنێ</h4>
           <p class="text-sm text-ivory/85">شەمبی - پێنج شەمب</p>
         </div>
       </div>
 
-      <div class="pt-7 flex items-center justify-center sm:justify-between">
+      <div class="pt-6 flex items-center justify-center sm:justify-between">
         <p dir="ltr" class="font-signature not-italic text-xl sm:text-2xl tracking-[0.14em] gold-gradient-text font-bold">
           © 2026 - By Ghareeb
         </p>
@@ -344,135 +536,44 @@
     </div>
   </footer>
 
-  <!-- شاشا تەمام-شاشە یا تۆمارکرنا ناڤ و ژمارا مۆبایلێ -->
-  <div id="bookingFullScreenModal" class="hidden fixed inset-0 z-50 w-screen h-[100dvh] bg-obsidian/95 backdrop-blur-xl flex flex-col overflow-hidden">
-    <div class="flex items-center justify-between px-5 sm:px-10 py-4 sm:py-5 border-b border-white/15 bg-charcoal/90 shrink-0">
+  <div id="barberPanelModal" class="hidden fixed inset-0 z-50 w-screen h-[100dvh] admin-panel-bg flex flex-col overflow-hidden">
+    <div class="relative z-10 flex items-center justify-between px-5 sm:px-10 py-4 sm:py-5 border-b border-gold/25 bg-gradient-to-l from-obsidian/85 via-charcoal/80 to-obsidian/85 backdrop-blur-md shrink-0 shadow-lg">
       <div>
-        <span class="text-xs text-gold font-semibold">تۆمارکرنا خێرا</span>
-        <h3 class="font-serif text-xl sm:text-3xl text-ivory font-bold mt-0.5">ناڤ و ژمارا مۆبایلێ</h3>
-      </div>
-
-      <button
-        id="closeBookingModalBtn"
-        type="button"
-        aria-label="داخستن"
-        class="w-11 h-11 sm:w-12 sm:h-12 border border-red-500/40 bg-red-950/50 text-red-300 hover:bg-red-600 hover:text-white active:scale-95 transition-all flex items-center justify-center text-2xl font-bold leading-none"
-      >
-        &times;
-      </button>
-    </div>
-
-    <div class="flex-1 overflow-y-auto flex items-center justify-center px-4 sm:px-6 py-8">
-      <div class="w-full max-w-lg glass-card hairline-border p-6 sm:p-10">
-        <form id="bookingForm" class="space-y-6" novalidate>
-          <div>
-            <label for="fullNameInput" class="block text-sm text-gold font-semibold mb-2.5">
-             ناڤ  
-            </label>
-            <input
-              type="text"
-              id="fullNameInput"
-              autocomplete="name"
-              
-              required
-              class="w-full bg-obsidian/90 border border-white/15 focus:border-gold px-4 py-4 text-ivory placeholder:text-muted/65 outline-none transition-colors"
-            />
-            <p id="nameErrorMsg" class="hidden text-xs text-red-400 mt-1.5">هیڤیدارین ناڤ و پاشناڤی بنڤیسە.</p>
-          </div>
-
-          <div>
-            <label for="phoneInput" class="block text-sm text-gold font-semibold mb-2.5">
-              ژمارا مۆبایلێ
-            </label>
-            <input
-              type="tel"
-              id="phoneInput"
-              inputmode="tel"
-              autocomplete="tel"
-              
-              required
-              class="w-full bg-obsidian/90 border border-white/15 focus:border-gold px-4 py-4 text-ivory placeholder:text-muted/65 outline-none transition-colors text-right"
-            />
-            <p id="phoneErrorMsg" class="hidden text-xs text-red-400 mt-1.5">هیڤیدارین ژمارا مۆبایلێ بنڤیسە.</p>
-          </div>
-
-          <button
-            type="submit"
-            id="submitBookingBtn"
-            class="cta-glow w-full py-4 sm:py-5 bg-gold text-obsidian text-base sm:text-lg font-bold hover:bg-gold-light active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 mt-2"
-          >
-            <span>تۆمار بکە</span>
-          </button>
-        </form>
-
-        <!-- پەیاما پشتڕاستکرنێ -->
-        <div id="bookingConfirmation" class="hidden text-center py-6 space-y-6">
-          <div class="w-16 h-16 mx-auto border border-gold bg-gold/15 flex items-center justify-center text-gold">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-            </svg>
-          </div>
-
-          <div>
-            <span class="text-xs text-gold font-semibold">ب سەرکەفتی هاتە تۆمارکرن</span>
-            <h3 class="font-serif text-2xl sm:text-3xl text-ivory font-bold mt-1.5" id="confName"></h3>
-            <p class="text-sm text-ivory/85 mt-1" dir="ltr" id="confPhone"></p>
-            <p class="text-sm text-ivory/80 mt-2">
-              ڕێزا تە د لیستەیێ دا: <span id="confOrderNumber" class="text-gold font-bold text-lg"></span>
-            </p>
-          </div>
-
-          <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
-            <button type="button" id="resetBookingBtn" class="px-6 py-3 border border-gold/45 text-gold text-sm font-semibold hover:bg-gold hover:text-obsidian active:scale-95 transition-all">
-              تۆمارکرنا ناڤەکێ دی
-            </button>
-            <button type="button" id="doneAndCloseBookingBtn" class="px-6 py-3 bg-gold text-obsidian text-sm font-bold hover:bg-gold-light active:scale-95 transition-all">
-              تەمام / داخستن
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- پەنێلێ ئەدمینێ تەمام-شاشە (Full Screen) د هەمان تاب دا -->
-  <div id="barberPanelModal" class="hidden fixed inset-0 z-50 w-screen h-[100dvh] bg-obsidian/95 backdrop-blur-xl flex flex-col overflow-hidden">
-    <div class="flex items-center justify-between px-5 sm:px-10 py-4 sm:py-5 border-b border-white/15 bg-charcoal/90 shrink-0">
-      <div>
-        <span class="text-xs text-gold font-semibold">پەنێلێ ڕێڤەبرنێ — تەمام شاشە</span>
-        <h3 class="font-serif text-xl sm:text-3xl text-ivory font-bold mt-0.5">لیستا ناڤ و ژمارێن تۆمارکری</h3>
+        <span class="text-xs font-semibold bg-gradient-to-l from-gold-light via-gold to-amber-300 bg-clip-text text-transparent">پەنێلێ ڕێڤەبرنێ — تەمام شاشە</span>
+        <h3 class="font-serif text-xl sm:text-3xl text-ivory font-bold mt-0.5 drop-shadow">لیستا ناڤ و ژمارێن تۆمارکری</h3>
       </div>
 
       <button
         id="closeBarberPanelBtn"
         type="button"
         aria-label="داخستنا پەنێلێ"
-        class="w-11 h-11 sm:w-12 sm:h-12 border border-red-500/40 bg-red-950/50 text-red-300 hover:bg-red-600 hover:text-white active:scale-95 transition-all flex items-center justify-center text-2xl font-bold leading-none"
+        class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl border border-red-500/45 bg-red-950/60 text-red-300 hover:bg-red-600 hover:text-white active:scale-95 transition-all flex items-center justify-center text-2xl font-bold leading-none shadow-md"
       >
         &times;
       </button>
     </div>
 
-    <div class="flex-1 overflow-y-auto px-4 sm:px-8 md:px-12 py-8">
-      <div id="panelLoginBox" class="max-w-sm mx-auto my-10 glass-card hairline-border p-6 sm:p-8 text-center space-y-5">
-        <p class="text-sm text-ivory/85">بۆ دیتنا لیستەیێ، نهێنیپەیڤا ئەدمینی بنڤیسە:</p>
+    <div class="relative z-10 flex-1 overflow-y-auto px-4 sm:px-8 md:px-12 py-8">
+      <div id="panelLoginBox" class="max-w-sm mx-auto my-10 admin-glass-card hairline-border rounded-2xl p-6 sm:p-8 text-center space-y-5">
+        <p class="text-sm text-ivory/90">بۆ دیتنا لیستەیێ، نهێنیپەیڤا ئەدمینی بنڤیسە:</p>
         <input
           type="password"
           id="panelPassInput"
-          inputmode="numeric"
+          inputmode="text"
           placeholder="••••"
-          class="w-full bg-obsidian border border-white/15 focus:border-gold px-4 py-3.5 text-center text-ivory tracking-[0.35em] outline-none"
+          class="w-full rounded-xl bg-obsidian/85 border border-gold/30 focus:border-gold px-4 py-3.5 text-center text-ivory tracking-[0.35em] outline-none"
         />
         <p id="panelPassError" class="hidden text-xs text-red-400">نهێنیپەیڤ شاشە، دووبارە هەول بدە.</p>
-        <button id="panelLoginSubmitBtn" type="button" class="w-full py-3.5 bg-gold text-obsidian text-sm font-bold hover:bg-gold-light active:scale-[0.98] transition-all">
+        <button id="panelLoginSubmitBtn" type="button" class="cta-glow w-full py-3.5 rounded-xl bg-gold text-obsidian text-sm font-bold hover:bg-gold-light active:scale-[0.98] transition-all">
           چوونا ژوور
         </button>
       </div>
 
       <div id="panelContentBox" class="hidden max-w-4xl mx-auto space-y-5">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-charcoal/85 border border-white/10 px-5 py-4">
-          <div class="text-sm text-ivory/85">
-            کۆما ناڤێن تۆمارکری: <span id="totalBookingsCount" class="text-gold font-bold text-base">0</span>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 admin-glass-card rounded-2xl px-5 py-4">
+          <div class="text-sm text-ivory/90 flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]"></span>
+            <span>کۆما ناڤێن تۆمارکری: <span id="totalBookingsCount" class="text-gold font-bold text-base">0</span></span>
           </div>
 
           <div class="flex items-center gap-2.5">
@@ -480,9 +581,9 @@
               type="search"
               id="panelSearchInput"
               placeholder="لێگەڕان ب ناڤ یان ژمارە..."
-              class="flex-1 sm:w-56 bg-obsidian border border-white/15 focus:border-gold px-3.5 py-2 text-sm text-ivory placeholder:text-muted/65 outline-none transition-colors"
+              class="flex-1 sm:w-56 rounded-xl bg-obsidian/80 border border-gold/25 focus:border-gold px-3.5 py-2 text-sm text-ivory placeholder:text-muted/75 outline-none transition-colors"
             />
-            <button type="button" id="refreshSheetBtn" class="px-4 py-2.5 border border-gold/50 bg-obsidian text-gold text-xs sm:text-sm font-semibold hover:bg-gold hover:text-obsidian active:scale-95 transition-all shrink-0">
+            <button type="button" id="refreshSheetBtn" class="px-4 py-2.5 rounded-xl border border-gold/55 bg-obsidian/85 text-gold text-xs sm:text-sm font-semibold hover:bg-gold hover:text-obsidian active:scale-95 transition-all shrink-0">
               نویژەنکرن
             </button>
           </div>
@@ -496,9 +597,151 @@
   <script type="module">
     const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbx7WRRWW3iAuhnvYamvFvO0Vim0dijhD9qNmnDQx1MJ4OcsOFIL5CgIMMbEGr8D2Ihe7Q/exec';
     const BARBER_PASSCODE = '1234';
-    const LOCAL_STORAGE_KEY = 'bzhar_barber_names_phone_list_v7';
+    const LOCAL_STORAGE_KEY = 'bzhar_barber_names_phone_list_v12';
+
+    const SERVICES_BY_PRICE = [
+      {
+        id: 'vip',
+        title: 'VIP',
+        price: 10000,
+        image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/normal.jpg?token=GHSAT0AAAAAAEREAZOHM7477GLBCCNXZSQ22YEIETQ',
+        badge: 'VIP'
+      },
+      {
+        id: 'normal',
+        title: 'Normal',
+        price: 5000,
+        image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/normal.jpg?token=GHSAT0AAAAAAEREAZOHM7477GLBCCNXZSQ22YEIETQ',
+        badge: 'NR'
+      },
+      {
+        id: 'bxar',
+        title: 'Bxar',
+        price: 5000,
+        image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/face.png?token=GHSAT0AAAAAAEREAZOGIWIFC32SF2IWSN3S2YEIFFA',
+        badge: 'BZ'
+      },
+      {
+        id: 'cocuk',
+        title: 'Cocuk',
+        price: 3000,
+        image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/cocuk.jpg?token=GHSAT0AAAAAAEREAZOHGFJWGGKRWV6UN3FS2YEIFMA',
+        badge: 'CK'
+      },
+      {
+        id: 'edit',
+        title: 'Edit',
+        price: 3000,
+        image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/edit.png?token=GHSAT0AAAAAAEREAZOHJU46FY5WFRERUO442YEIGCA',
+        badge: 'ED'
+      },
+      {
+        id: 'for',
+        title: 'For',
+        price: 2000,
+        image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/fon.jpg?token=GHSAT0AAAAAAEREAZOHD5XG7WAIAUTF2C3W2YEIFVQ',
+        badge: 'FR'
+      },
+      {
+        id: 'mask',
+        title: 'Mask',
+        price: 1000,
+        image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/mask.png?token=GHSAT0AAAAAAEREAZOHY7XQP3HTAS2OLBCS2YEIEGQ',
+        badge: 'MK'
+      },
+      {
+        id: 'qalam',
+        title: 'Qalam',
+        price: 200,
+        image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/edit.png?token=GHSAT0AAAAAAEREAZOHJU46FY5WFRERUO442YEIGCA',
+        badge: 'QL'
+      }
+    ].sort((a, b) => b.price - a.price);
+
+    function formatPrice(amount) {
+      return Number(amount || 0).toLocaleString('en-US');
+    }
+
+    const pricesGrid = document.getElementById('pricesGrid');
+
+    function renderPricesGrid() {
+      if (!pricesGrid) return;
+
+      pricesGrid.innerHTML = SERVICES_BY_PRICE.map((srv, idx) => `
+        <article
+          class="service-tile reveal-item glass-card border border-white/15 relative overflow-hidden group flex flex-col justify-between"
+          style="transition-delay: ${Math.min(idx * 45, 320)}ms;"
+        >
+          <img
+            src="${escapeAttr(srv.image)}"
+            alt="${escapeAttr(srv.title)}"
+            loading="eager"
+            referrerpolicy="no-referrer"
+            class="service-tile-img tile-bg-img absolute inset-0 w-full h-full object-cover"
+          />
+          <div class="tile-fallback hidden absolute inset-0 bg-gradient-to-br from-charcoal via-obsidian to-graphite flex items-center justify-center">
+            <span class="font-signature text-2xl sm:text-3xl font-bold gold-gradient-text tracking-widest opacity-85">
+              ${escapeHtml(srv.badge)}
+            </span>
+          </div>
+
+          <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/50 to-obsidian/15 pointer-events-none"></div>
+
+          <div class="relative z-10 p-2.5 flex items-center justify-between">
+            <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">
+              #${idx + 1}
+            </span>
+            <span class="w-2 h-2 rounded-full bg-gold/80"></span>
+          </div>
+
+          <div class="relative z-10 p-3 text-right bg-obsidian/45 border-t border-white/10">
+            <div class="font-serif text-sm sm:text-base font-bold text-ivory leading-tight group-hover:text-gold transition-colors truncate">
+              ${escapeHtml(srv.title)}
+            </div>
+            <div class="text-sm sm:text-lg font-extrabold gold-gradient-text leading-tight mt-0.5" dir="ltr">
+              ${formatPrice(srv.price)}
+            </div>
+          </div>
+        </article>
+      `).join('');
+
+      pricesGrid.querySelectorAll('.service-tile').forEach(card => {
+        const img = card.querySelector('.tile-bg-img');
+        const fallback = card.querySelector('.tile-fallback');
+        if (img && fallback) {
+          const showFallback = () => {
+            img.classList.add('hidden');
+            fallback.classList.remove('hidden');
+          };
+          img.addEventListener('error', showFallback);
+          if (img.complete && img.naturalWidth === 0) {
+            showFallback();
+          }
+        }
+      });
+    }
+
+    renderPricesGrid();
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05 });
+
+    document.querySelectorAll('.reveal-item').forEach(el => {
+      observer.observe(el);
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.95) {
+        el.classList.add('is-visible');
+      }
+    });
 
     let allBookings = [];
+    const deletedIds = new Set();
     const hasGoogleSheet = GOOGLE_SHEET_URL && GOOGLE_SHEET_URL.startsWith('https://');
 
     const toastBanner = document.getElementById('toastBanner');
@@ -545,7 +788,7 @@
         const res = await fetch(`${GOOGLE_SHEET_URL}?t=${Date.now()}`);
         const data = await res.json();
         if (data && data.status === 'ok' && Array.isArray(data.bookings)) {
-          allBookings = data.bookings.filter(item => item && item.name);
+          allBookings = data.bookings.filter(item => item && item.name && !deletedIds.has(String(item.id)));
           saveLocalBookings(allBookings);
           renderPanelAppointments();
         }
@@ -588,98 +831,7 @@
       el.addEventListener('click', () => toggleMobileMenu(true));
     });
 
-    const bookingFullScreenModal = document.getElementById('bookingFullScreenModal');
-    const openBookingTriggers = document.querySelectorAll('.open-booking-modal');
-    const closeBookingModalBtn = document.getElementById('closeBookingModalBtn');
-    const doneAndCloseBookingBtn = document.getElementById('doneAndCloseBookingBtn');
-
-    const bookingForm = document.getElementById('bookingForm');
-    const fullNameInput = document.getElementById('fullNameInput');
-    const phoneInput = document.getElementById('phoneInput');
-    const nameErrorMsg = document.getElementById('nameErrorMsg');
-    const phoneErrorMsg = document.getElementById('phoneErrorMsg');
-    const submitBookingBtn = document.getElementById('submitBookingBtn');
-    const bookingConfirmation = document.getElementById('bookingConfirmation');
-    const confName = document.getElementById('confName');
-    const confPhone = document.getElementById('confPhone');
-    const confOrderNumber = document.getElementById('confOrderNumber');
-    const resetBookingBtn = document.getElementById('resetBookingBtn');
-
-    function openBookingModal() {
-      toggleMobileMenu(true);
-      bookingForm.reset();
-      nameErrorMsg.classList.add('hidden');
-      phoneErrorMsg.classList.add('hidden');
-      fullNameInput.classList.remove('border-red-500');
-      fullNameInput.classList.add('border-white/15');
-      phoneInput.classList.remove('border-red-500');
-      phoneInput.classList.add('border-white/15');
-      bookingConfirmation.classList.add('hidden');
-      bookingForm.classList.remove('hidden');
-
-      bookingFullScreenModal.classList.remove('hidden');
-      bookingFullScreenModal.classList.add('fullscreen-modal-enter');
-      document.body.style.overflow = 'hidden';
-      setTimeout(() => fullNameInput.focus(), 100);
-    }
-
-    function closeBookingModal() {
-      bookingFullScreenModal.classList.add('hidden');
-      bookingFullScreenModal.classList.remove('fullscreen-modal-enter');
-      document.body.style.overflow = '';
-    }
-
-    openBookingTriggers.forEach(btn => {
-      btn.addEventListener('click', openBookingModal);
-    });
-    closeBookingModalBtn.addEventListener('click', closeBookingModal);
-    doneAndCloseBookingBtn.addEventListener('click', closeBookingModal);
-
-    fullNameInput.addEventListener('input', () => {
-      if (fullNameInput.value.trim()) {
-        nameErrorMsg.classList.add('hidden');
-        fullNameInput.classList.remove('border-red-500');
-        fullNameInput.classList.add('border-white/15');
-      }
-    });
-
-    phoneInput.addEventListener('input', () => {
-      if (phoneInput.value.trim()) {
-        phoneErrorMsg.classList.add('hidden');
-        phoneInput.classList.remove('border-red-500');
-        phoneInput.classList.add('border-white/15');
-      }
-    });
-
-    bookingForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const name = fullNameInput.value.trim();
-      const phone = phoneInput.value.trim();
-      let hasError = false;
-
-      if (!name) {
-        nameErrorMsg.classList.remove('hidden');
-        fullNameInput.classList.remove('border-white/15');
-        fullNameInput.classList.add('border-red-500');
-        hasError = true;
-      }
-
-      if (!phone) {
-        phoneErrorMsg.classList.remove('hidden');
-        phoneInput.classList.remove('border-white/15');
-        phoneInput.classList.add('border-red-500');
-        hasError = true;
-      }
-
-      if (hasError) {
-        if (!name) fullNameInput.focus();
-        else phoneInput.focus();
-        return;
-      }
-
-      submitBookingBtn.disabled = true;
-      showScissorsLoader();
-
+    async function createBooking({ name, phone }) {
       const newEntry = {
         id: String(Date.now()),
         name,
@@ -702,25 +854,87 @@
         } catch (err) {}
       }
 
-      hideScissorsLoader();
-      submitBookingBtn.disabled = false;
-
-      confName.textContent = name;
-      confPhone.textContent = phone;
-      confOrderNumber.textContent = `#${assignedOrder}`;
-      bookingForm.classList.add('hidden');
-      bookingConfirmation.classList.remove('hidden');
       renderPanelAppointments();
+      return assignedOrder;
+    }
+
+    const inlineBookingForm = document.getElementById('inlineBookingForm');
+    const inlineNameInput = document.getElementById('inlineNameInput');
+    const inlinePhoneInput = document.getElementById('inlinePhoneInput');
+    const inlineNameError = document.getElementById('inlineNameError');
+    const inlinePhoneError = document.getElementById('inlinePhoneError');
+    const inlineSubmitBtn = document.getElementById('inlineSubmitBtn');
+    const inlineBookingConfirmation = document.getElementById('inlineBookingConfirmation');
+    const inlineConfName = document.getElementById('inlineConfName');
+    const inlineConfPhone = document.getElementById('inlineConfPhone');
+    const inlineConfOrder = document.getElementById('inlineConfOrder');
+    const inlineResetBtn = document.getElementById('inlineResetBtn');
+
+    inlineNameInput.addEventListener('input', () => {
+      if (inlineNameInput.value.trim()) {
+        inlineNameError.classList.add('hidden');
+        inlineNameInput.classList.remove('border-red-500');
+        inlineNameInput.classList.add('border-white/15');
+      }
+    });
+
+    inlinePhoneInput.addEventListener('input', () => {
+      if (inlinePhoneInput.value.trim()) {
+        inlinePhoneError.classList.add('hidden');
+        inlinePhoneInput.classList.remove('border-red-500');
+        inlinePhoneInput.classList.add('border-white/15');
+      }
+    });
+
+    inlineBookingForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = inlineNameInput.value.trim();
+      const phone = inlinePhoneInput.value.trim();
+      let hasError = false;
+
+      if (!name) {
+        inlineNameError.classList.remove('hidden');
+        inlineNameInput.classList.remove('border-white/15');
+        inlineNameInput.classList.add('border-red-500');
+        hasError = true;
+      }
+
+      if (!phone) {
+        inlinePhoneError.classList.remove('hidden');
+        inlinePhoneInput.classList.remove('border-white/15');
+        inlinePhoneInput.classList.add('border-red-500');
+        hasError = true;
+      }
+
+      if (hasError) {
+        if (!name) inlineNameInput.focus();
+        else inlinePhoneInput.focus();
+        return;
+      }
+
+      inlineSubmitBtn.disabled = true;
+      showScissorsLoader();
+
+      const assignedOrder = await createBooking({ name, phone });
+
+      hideScissorsLoader();
+      inlineSubmitBtn.disabled = false;
+
+      inlineConfName.textContent = name;
+      inlineConfPhone.textContent = phone;
+      inlineConfOrder.textContent = `#${assignedOrder}`;
+      inlineBookingForm.classList.add('hidden');
+      inlineBookingConfirmation.classList.remove('hidden');
       showToast('ناڤێ تە ب سەرکەفتی هاتە تۆمارکرن');
     });
 
-    resetBookingBtn.addEventListener('click', () => {
-      bookingForm.reset();
-      nameErrorMsg.classList.add('hidden');
-      phoneErrorMsg.classList.add('hidden');
-      bookingConfirmation.classList.add('hidden');
-      bookingForm.classList.remove('hidden');
-      fullNameInput.focus();
+    inlineResetBtn.addEventListener('click', () => {
+      inlineBookingForm.reset();
+      inlineNameError.classList.add('hidden');
+      inlinePhoneError.classList.add('hidden');
+      inlineBookingConfirmation.classList.add('hidden');
+      inlineBookingForm.classList.remove('hidden');
+      inlineNameInput.focus();
     });
 
     const barberPanelModal = document.getElementById('barberPanelModal');
@@ -770,9 +984,8 @@
     closeBarberPanelBtn.addEventListener('click', closeModal);
 
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        if (!bookingFullScreenModal.classList.contains('hidden')) closeBookingModal();
-        if (!barberPanelModal.classList.contains('hidden')) closeModal();
+      if (e.key === 'Escape' && !barberPanelModal.classList.contains('hidden')) {
+        closeModal();
       }
     });
 
@@ -830,7 +1043,7 @@
 
       if (filtered.length === 0) {
         panelAppointmentsList.innerHTML = `
-          <div class="text-center py-12 text-sm text-muted border border-white/10 bg-charcoal/70">
+          <div class="text-center py-12 text-sm text-ivory/80 admin-glass-card rounded-2xl">
             ${query ? 'چ ئەنجام بۆ لێگەڕانێ نەهاتنە دیتن.' : 'هێشتا چ ناڤ نەهاتینە تۆمارکرن.'}
           </div>
         `;
@@ -838,9 +1051,9 @@
       }
 
       panelAppointmentsList.innerHTML = filtered.map((item, idx) => `
-        <div class="flex items-center justify-between gap-3 sm:gap-4 bg-charcoal/85 border border-white/10 hover:border-gold/40 transition-colors px-4 sm:px-6 py-4">
+        <div class="flex items-center justify-between gap-3 sm:gap-4 admin-glass-card hover:border-gold/55 rounded-xl transition-all px-4 sm:px-6 py-4">
           <div class="flex items-center gap-3.5 sm:gap-4 min-w-0">
-            <span class="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-full bg-gold/15 border border-gold/50 text-gold font-bold text-sm sm:text-base flex items-center justify-center">
+            <span class="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-full bg-gradient-to-br from-gold/30 to-amber-500/10 border border-gold/60 text-gold-light font-bold text-sm sm:text-base flex items-center justify-center shadow-inner">
               ${idx + 1}
             </span>
             <div class="min-w-0">
@@ -849,13 +1062,13 @@
               </div>
               ${item.phone ? `
                 <div class="flex items-center gap-2.5 mt-0.5">
-                  <a href="tel:${escapeAttr(item.phone)}" class="text-xs sm:text-sm text-gold/95 hover:text-gold transition-colors" dir="ltr">
+                  <a href="tel:${escapeAttr(item.phone)}" class="text-xs sm:text-sm text-gold hover:text-gold-light transition-colors" dir="ltr">
                     ${escapeHtml(item.phone)}
                   </a>
                   <button
                     type="button"
                     onclick="copyPhoneNumber('${escapeAttr(item.phone)}')"
-                    class="text-[11px] px-2 py-0.5 border border-gold/30 text-gold-light hover:bg-gold hover:text-obsidian transition-colors"
+                    class="text-[11px] px-2 py-0.5 rounded border border-gold/35 bg-gold/10 text-gold-light hover:bg-gold hover:text-obsidian transition-colors"
                   >
                     کۆپی
                   </button>
@@ -867,7 +1080,7 @@
           <button
             type="button"
             onclick="deleteBooking('${escapeAttr(String(item.id))}')"
-            class="px-3.5 sm:px-4 py-2 bg-red-950/70 border border-red-500/40 text-red-300 text-xs sm:text-sm font-semibold hover:bg-red-600 hover:text-white active:scale-95 transition-all shrink-0"
+            class="px-3.5 sm:px-4 py-2 rounded-lg bg-red-950/75 border border-red-500/45 text-red-300 text-xs sm:text-sm font-semibold hover:bg-red-600 hover:text-white active:scale-95 transition-all shrink-0"
           >
             ژێبرن
           </button>
@@ -888,7 +1101,9 @@
     }
 
     window.deleteBooking = async function(id) {
-      allBookings = allBookings.filter(b => String(b.id) !== String(id));
+      const targetId = String(id);
+      deletedIds.add(targetId);
+      allBookings = allBookings.filter(b => String(b.id) !== targetId);
       saveLocalBookings(allBookings);
       renderPanelAppointments();
       showToast('ناڤ ژ لیستەیێ هاتە ژێبرن');
@@ -899,7 +1114,7 @@
             method: 'POST',
             mode: 'no-cors',
             headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify({ action: 'delete', id: String(id) })
+            body: JSON.stringify({ action: 'delete', id: targetId })
           });
         } catch (e) {}
       }
