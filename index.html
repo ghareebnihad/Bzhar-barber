@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#0B0B0C" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>سەرتراشخانا بژار</title>
+  <title>سەرتراشخانا کوچەر</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -53,13 +53,6 @@
 
     body {
       background-color: #0B0B0C;
-      background-image:
-        linear-gradient(180deg, rgba(11, 11, 12, 0.48) 0%, rgba(11, 11, 12, 0.64) 52%, rgba(11, 11, 12, 0.88) 100%),
-        url('https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/cover.png');
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
       color: #F4F1EA;
       font-family: 'Vazirmatn', 'Noto Sans Arabic', 'Geeza Pro', system-ui, -apple-system, sans-serif;
       overflow-x: hidden;
@@ -71,11 +64,27 @@
       position: relative;
     }
 
-    body::before {
-      content: "";
+    /* Kaydırma sırasında her cihazda sabit kalan arka plan fotoğrafı */
+    .fixed-bg-photo {
       position: fixed;
       inset: 0;
-      z-index: 0;
+      z-index: -2;
+      pointer-events: none;
+      background-color: #0B0B0C;
+      background-image:
+        linear-gradient(180deg, rgba(11, 11, 12, 0.48) 0%, rgba(11, 11, 12, 0.64) 52%, rgba(11, 11, 12, 0.88) 100%),
+        url('https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/cover.png');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      transform: translate3d(0, 0, 0);
+      will-change: transform;
+    }
+
+    .fixed-bg-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
       pointer-events: none;
       backdrop-filter: blur(1.1px);
       -webkit-backdrop-filter: blur(1.4px);
@@ -180,7 +189,6 @@
       }
     }
 
-    /* Tek makas animasyonu */
     .scissor-loader-ring {
       will-change: transform;
       animation: scissorPulse 0.6s cubic-bezier(0.22, 1, 0.36, 1) infinite alternate;
@@ -229,7 +237,6 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* VIP kurdele (açık mor) */
     .vip-ribbon-wrap {
       position: absolute;
       top: 10px;
@@ -335,6 +342,8 @@
   </style>
 </head>
 <body class="antialiased">
+  <div class="fixed-bg-photo" aria-hidden="true"></div>
+  <div class="fixed-bg-overlay" aria-hidden="true"></div>
 
   <div id="toastBanner" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[90] px-5 py-3 bg-charcoal/95 border border-gold/60 text-ivory text-xs sm:text-sm font-semibold shadow-2xl backdrop-blur-md flex items-center gap-2.5">
     <span class="w-2 h-2 rounded-full bg-gold animate-ping"></span>
@@ -378,13 +387,14 @@
           </svg>
         </div>
         <div class="flex flex-col">
-          <span class="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-ivory leading-none drop-shadow">سەرتراشخانا بژار</span>
+          <span class="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-ivory leading-none drop-shadow">سەرتراشخانا کوچەر</span>
           <span class="text-[10px] sm:text-[11px] text-gold mt-0.5 sm:mt-1 font-medium">و ستایلێ زەلامان</span>
         </div>
       </a>
 
       <nav class="hidden md:flex items-center gap-8 text-sm text-ivory/90 font-medium">
         <a href="#rezervasyon" class="hover:text-gold transition-colors">تۆمارکرنا ناڤی</a>
+        <a href="#fiyatlar" class="hover:text-gold transition-colors">خزمەتگوزاری و نرخ</a>
         <a href="#iletisim" class="hover:text-gold transition-colors">پەیوەندی و ناڤونیشان</a>
       </nav>
 
@@ -410,6 +420,7 @@
 
     <div id="mobileMenu" class="hidden md:hidden relative z-50 bg-charcoal/92 backdrop-blur-md border-b border-gold/30 px-6 py-6 space-y-4 shadow-2xl">
       <a href="#rezervasyon" class="block py-2 text-base font-semibold text-ivory hover:text-gold transition-colors">تۆمارکرنا ناڤی</a>
+      <a href="#fiyatlar" class="block py-2 text-base font-semibold text-ivory hover:text-gold transition-colors">خزمەتگوزاری و نرخ</a>
       <a href="#iletisim" class="block py-2 text-base font-semibold text-ivory hover:text-gold transition-colors">پەیوەندی و ناڤونیشان</a>
       <a href="#rezervasyon" class="block w-full text-center py-3.5 rounded-lg bg-gold text-obsidian text-base font-bold">
         نوکە ناڤێ خۆ تۆمار بکە
@@ -417,7 +428,7 @@
     </div>
   </header>
 
-  <section class="min-h-[60svh] flex items-center justify-center relative z-10 pt-24 pb-6">
+  <section class="min-h-[52svh] flex items-center justify-center relative z-10 pt-24 pb-4">
     <div class="hero-stagger max-w-4xl mx-auto px-5 sm:px-6 md:px-10 w-full text-center">
       <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.2] text-ivory mb-4 drop-shadow-[0_4px_18px_rgba(0,0,0,0.85)]">
         بڕینا بێ کێماسی<br />
@@ -442,18 +453,8 @@
     </div>
   </section>
 
-  <section id="fiyatlar" class="relative z-10 py-8 sm:py-12">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6">
-      <div class="text-center max-w-md mx-auto mb-6 reveal-item">
-        <span class="text-xs font-bold text-gold tracking-wider block mb-1">لیستا نرخان</span>
-        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ivory">نرخێن سەرتراشخانێ</h2>
-      </div>
-
-      <div id="pricesGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4"></div>
-    </div>
-  </section>
-
-  <section id="rezervasyon" class="relative z-10 py-10 sm:py-14">
+  <!-- 1. Rezervasyon Bölümü -->
+  <section id="rezervasyon" class="relative z-10 py-8 sm:py-12">
     <div class="max-w-lg mx-auto px-4 sm:px-6 reveal-item">
       <div class="glass-card hairline-border rounded-2xl p-6 sm:p-8 relative overflow-hidden">
         <div class="text-center mb-6">
@@ -531,11 +532,25 @@
     </div>
   </section>
 
+  <!-- 2. Hizmetler ve Fiyatlar Bölümü -->
+  <section id="fiyatlar" class="relative z-10 py-10 sm:py-14">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <div class="text-center max-w-md mx-auto mb-6 reveal-item">
+        <span class="text-xs font-bold text-gold tracking-wider block mb-1">خزمەتگوزاری و لیستا نرخان</span>
+        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ivory">خزمەتگوزاری و نرخێن سەرتراشخانێ</h2>
+      </div>
+
+      <div id="pricesGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4"></div>
+    </div>
+  </section>
+
+  <!-- 3. Bilgiler / İletişim Bölümü -->
   <footer id="iletisim" class="glass-card border-t border-white/10 pt-12 pb-8 relative z-10">
     <div class="max-w-6xl mx-auto px-5 sm:px-6 md:px-10">
       <div class="grid md:grid-cols-2 gap-8 pb-8 border-b border-white/10">
         <div class="space-y-2.5">
-          <span class="font-serif text-2xl font-bold text-ivory block">سەرتراشخانا بژار</span>
+          <span class="text-xs font-bold text-gold tracking-wider block">پەیوەندی و ناڤونیشان</span>
+          <span class="font-serif text-2xl font-bold text-ivory block">سەرتراشخانا کوچەر</span>
           <p class="text-sm text-ivory/85">سێمێل - جادا ریعایێ بەرامبەری قوتابخانا هایدار</p>
           <p>
             <a href="tel:07500000000" class="text-gold hover:text-gold-light transition-colors tracking-wider inline-block font-medium" dir="ltr">
@@ -630,49 +645,49 @@
         badge: 'VIP'
       },
       {
-        id: 'normal',
+        id: 'چێکرنا پرچێ بو مەزنا',
         title: 'Normal',
         price: 5000,
         image: 'https://github.com/ghareebnihad/Bzhar-barber/blob/main/normal.jpg?raw=true',
         badge: 'NR'
       },
       {
-        id: 'bxar',
+        id: 'پاقژکرنا سەروچاڤا بخار',
         title: 'Bxar',
         price: 5000,
         image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/face.png',
         badge: 'BZ'
       },
       {
-        id: 'cocuk',
+        id: 'چێکرنا پرچێ بو زاروکا',
         title: 'Cocuk',
         price: 3000,
         image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/cocuk.jpg',
         badge: 'CK'
       },
       {
-        id: 'edit',
+        id: 'تعدیلات',
         title: 'Edit',
         price: 3000,
         image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/edit.png',
         badge: 'ED'
       },
       {
-        id: 'for',
+        id: 'شەکرنا پرچێ',
         title: 'For',
         price: 2000,
         image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/fon.jpg',
         badge: 'FR'
       },
       {
-        id: 'mask',
+        id: 'دانانا ماسکی',
         title: 'Mask',
         price: 1000,
         image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/mask.png',
         badge: 'MK'
       },
       {
-        id: 'qalam',
+        id: 'قەلەم کرن',
         title: 'Qalam',
         price: 200,
         image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/edit.png',
@@ -699,7 +714,6 @@
           ${isVip ? `
             <div class="vip-ribbon-wrap" aria-label="VIP kurdele">
               <span class="vip-ribbon-bow">
-                <span>🎀</span>
                 <span>VIP</span>
               </span>
               <span class="vip-ribbon-tail"></span>
