@@ -180,31 +180,27 @@
       }
     }
 
+    /* Tek makas animasyonu */
     .scissor-loader-ring {
       will-change: transform;
-      animation: scissorPulse 0.55s cubic-bezier(0.22, 1, 0.36, 1) infinite alternate;
+      animation: scissorPulse 0.6s cubic-bezier(0.22, 1, 0.36, 1) infinite alternate;
     }
 
-    .dual-scissor-left {
+    .single-scissor-body {
       transform-origin: center center;
       will-change: transform;
-      animation: dualScissorLeft 0.36s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
-    }
-    .dual-scissor-right {
-      transform-origin: center center;
-      will-change: transform;
-      animation: dualScissorRight 0.36s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+      animation: singleScissorTilt 0.42s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
     }
 
     .scissor-blade-a {
       transform-origin: 12px 12px;
       will-change: transform;
-      animation: snipA 0.16s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+      animation: snipA 0.18s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
     }
     .scissor-blade-b {
       transform-origin: 12px 12px;
       will-change: transform;
-      animation: snipB 0.16s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+      animation: snipB 0.18s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
     }
 
     .orbit-dot {
@@ -214,15 +210,11 @@
 
     @keyframes scissorPulse {
       0% { transform: scale3d(0.96, 0.96, 1); }
-      100% { transform: scale3d(1.05, 1.05, 1); }
+      100% { transform: scale3d(1.04, 1.04, 1); }
     }
-    @keyframes dualScissorLeft {
-      0% { transform: translate3d(-4px, -2px, 0) rotate(-14deg); }
-      100% { transform: translate3d(3px, 2px, 0) rotate(10deg); }
-    }
-    @keyframes dualScissorRight {
-      0% { transform: translate3d(4px, 2px, 0) rotate(14deg); }
-      100% { transform: translate3d(-3px, -2px, 0) rotate(-10deg); }
+    @keyframes singleScissorTilt {
+      0% { transform: translate3d(-2px, -1px, 0) rotate(-10deg); }
+      100% { transform: translate3d(2px, 1px, 0) rotate(10deg); }
     }
     @keyframes snipA {
       0% { transform: rotate(-24deg); }
@@ -237,6 +229,43 @@
       100% { transform: rotate(360deg); }
     }
 
+    /* VIP kurdele (açık mor) */
+    .vip-ribbon-wrap {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 25;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .vip-ribbon-bow {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, #E9D5FF 0%, #D8B4FE 50%, #C084FC 100%);
+      color: #2E1065;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      border: 1px solid rgba(250, 245, 255, 0.85);
+      box-shadow: 0 4px 14px rgba(192, 132, 252, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.75);
+    }
+
+    .vip-ribbon-tail {
+      width: 8px;
+      height: 16px;
+      background: linear-gradient(180deg, #D8B4FE 0%, #A855F7 100%);
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+      transform: rotate(-18deg);
+      box-shadow: 0 2px 6px rgba(168, 85, 247, 0.45);
+    }
+
     .service-tile {
       aspect-ratio: 1 / 1;
       border-radius: 18px;
@@ -248,6 +277,10 @@
         transform: translate3d(0, -4px, 0) scale3d(1.02, 1.02, 1);
         border-color: rgba(197, 160, 89, 0.85);
         box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.85), 0 0 20px rgba(197, 160, 89, 0.18);
+      }
+      .service-tile.is-vip:hover {
+        border-color: rgba(216, 180, 254, 0.95);
+        box-shadow: 0 16px 34px -10px rgba(0, 0, 0, 0.85), 0 0 24px rgba(192, 132, 252, 0.38);
       }
     }
 
@@ -308,11 +341,12 @@
     <span id="toastMessage"></span>
   </div>
 
+  <!-- Tek Makas Loader -->
   <div id="scissorsLoaderOverlay" class="hidden fixed inset-0 z-[80] bg-obsidian/88 backdrop-blur-md flex flex-col items-center justify-center gap-4 pointer-events-auto">
     <div class="relative w-28 h-28 flex items-center justify-center">
       <div class="orbit-dot absolute inset-0 rounded-full border border-dashed border-gold/40"></div>
       <div class="scissor-loader-ring w-24 h-24 rounded-full border-2 border-gold/60 bg-charcoal/95 flex items-center justify-center shadow-[0_0_45px_rgba(197,160,89,0.35)] relative overflow-hidden">
-        <svg class="dual-scissor-left w-10 h-10 text-gold -ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="single-scissor-body w-12 h-12 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
           <g class="scissor-blade-a">
             <circle cx="6" cy="6" r="2.6" />
             <line x1="8.2" y1="8.2" x2="20" y2="20" />
@@ -321,19 +355,7 @@
             <circle cx="6" cy="18" r="2.6" />
             <line x1="8.2" y1="15.8" x2="20" y2="4" />
           </g>
-          <circle cx="12" cy="12" r="1.2" fill="currentColor" />
-        </svg>
-
-        <svg class="dual-scissor-right w-10 h-10 text-gold-light -mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-          <g class="scissor-blade-b">
-            <circle cx="6" cy="6" r="2.6" />
-            <line x1="8.2" y1="8.2" x2="20" y2="20" />
-          </g>
-          <g class="scissor-blade-a">
-            <circle cx="6" cy="18" r="2.6" />
-            <line x1="8.2" y1="15.8" x2="20" y2="4" />
-          </g>
-          <circle cx="12" cy="12" r="1.2" fill="currentColor" />
+          <circle cx="12" cy="12" r="1.3" fill="currentColor" />
         </svg>
       </div>
     </div>
@@ -667,11 +689,23 @@
     function renderPricesGrid() {
       if (!pricesGrid) return;
 
-      pricesGrid.innerHTML = SERVICES_BY_PRICE.map((srv, idx) => `
+      pricesGrid.innerHTML = SERVICES_BY_PRICE.map((srv, idx) => {
+        const isVip = srv.id === 'vip';
+        return `
         <article
-          class="service-tile reveal-item glass-card border border-white/15 relative overflow-hidden group flex flex-col justify-between"
+          class="service-tile reveal-item glass-card ${isVip ? 'is-vip border-2 border-purple-300/80 shadow-[0_0_24px_rgba(216,180,254,0.28)]' : 'border border-white/15'} relative overflow-hidden group flex flex-col justify-between"
           style="transition-delay: ${Math.min(idx * 45, 320)}ms;"
         >
+          ${isVip ? `
+            <div class="vip-ribbon-wrap" aria-label="VIP kurdele">
+              <span class="vip-ribbon-bow">
+                <span>🎀</span>
+                <span>VIP</span>
+              </span>
+              <span class="vip-ribbon-tail"></span>
+            </div>
+          ` : ''}
+
           <img
             src="${escapeAttr(srv.image)}"
             alt="${escapeAttr(srv.title)}"
@@ -687,23 +721,28 @@
 
           <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/50 to-obsidian/15 pointer-events-none"></div>
 
-          <div class="relative z-10 p-2.5 flex items-center justify-between">
-            <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">
-              #${idx + 1}
-            </span>
-            <span class="w-2 h-2 rounded-full bg-gold/80"></span>
+          <div class="relative z-10 p-2.5 flex items-center ${isVip ? 'justify-end' : 'justify-between'}">
+            ${!isVip ? `
+              <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">
+                #${idx + 1}
+              </span>
+              <span class="w-2 h-2 rounded-full bg-gold/80"></span>
+            ` : `
+              <span class="w-2.5 h-2.5 rounded-full bg-purple-300 shadow-[0_0_10px_rgba(216,180,254,0.9)]"></span>
+            `}
           </div>
 
-          <div class="relative z-10 p-3 text-right bg-obsidian/45 border-t border-white/10">
-            <div class="font-serif text-sm sm:text-base font-bold text-ivory leading-tight group-hover:text-gold transition-colors truncate">
+          <div class="relative z-10 p-3 text-right ${isVip ? 'bg-purple-950/50 border-t border-purple-300/35' : 'bg-obsidian/45 border-t border-white/10'}">
+            <div class="font-serif text-sm sm:text-base font-bold ${isVip ? 'text-purple-200 group-hover:text-purple-100' : 'text-ivory group-hover:text-gold'} leading-tight transition-colors truncate">
               ${escapeHtml(srv.title)}
             </div>
-            <div class="text-sm sm:text-lg font-extrabold gold-gradient-text leading-tight mt-0.5" dir="ltr">
+            <div class="text-sm sm:text-lg font-extrabold ${isVip ? 'text-purple-200' : 'gold-gradient-text'} leading-tight mt-0.5" dir="ltr">
               ${formatPrice(srv.price)}
             </div>
           </div>
         </article>
-      `).join('');
+      `;
+      }).join('');
 
       pricesGrid.querySelectorAll('.service-tile').forEach(card => {
         const img = card.querySelector('.tile-bg-img');
