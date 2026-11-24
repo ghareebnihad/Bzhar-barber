@@ -57,6 +57,7 @@
       position: relative;
     }
 
+    /* Sabit Arka Plan Görseli */
     .hero-bg-photo {
       position: absolute;
       inset: 0;
@@ -64,15 +65,38 @@
       pointer-events: none;
       background-color: #0B0B0C;
       background-image:
-        linear-gradient(180deg, rgba(11, 11, 12, 0.45) 0%, rgba(11, 11, 12, 0.62) 55%, rgba(11, 11, 12, 0.92) 100%),
+        linear-gradient(180deg, rgba(11, 11, 12, 0.42) 0%, rgba(11, 11, 12, 0.6) 55%, rgba(11, 11, 12, 0.92) 100%),
         url('https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/cover.png');
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
+      background-attachment: fixed;
+      transition: filter 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Hizmetler açılınca arka plan %50 blur */
+    .hero-bg-photo.is-services-blur {
+      filter: blur(50%);
+      transform: scale(1.06);
+    }
+
+    /* Admin Panel açılınca %80 siyah katman */
+    .panel-blackout-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 5;
+      pointer-events: none;
+      background-color: rgba(11, 11, 12, 0.8);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .panel-blackout-layer.is-active {
+      opacity: 1;
     }
 
     .glass-card {
-      background: rgba(19, 19, 22, 0.84);
+      background: rgba(19, 19, 22, 0.88);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
     }
@@ -86,6 +110,58 @@
     .service-tile {
       aspect-ratio: 1 / 1;
       border-radius: 18px;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.35s ease;
+    }
+
+    .service-tile:hover {
+      transform: translateY(-3px);
+    }
+
+    .service-tile:active {
+      transform: scale(0.97);
+    }
+
+    .smooth-view {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.38s cubic-bezier(0.22, 1, 0.36, 1), transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .smooth-view.is-entering {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    .smooth-dropdown {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.97);
+      pointer-events: none;
+      transition: opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1), transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .smooth-dropdown.is-open {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .smooth-overlay {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .smooth-overlay.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .smooth-btn {
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+    }
+
+    .smooth-btn:active {
+      transform: scale(0.96);
     }
 
     .barber-pole-loader {
@@ -157,7 +233,8 @@
   </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen">
-  <div id="actionLoader" class="hidden fixed inset-0 z-50 bg-obsidian/90 backdrop-blur-md flex flex-col items-center justify-center gap-3">
+  <!-- Yükleme Ekranı -->
+  <div id="actionLoader" class="smooth-overlay fixed inset-0 z-50 bg-obsidian/90 backdrop-blur-md flex flex-col items-center justify-center gap-3">
     <div class="barber-pole-loader">
       <div class="barber-pole-inner">
         <svg class="scissor-snip w-10 h-10 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -171,48 +248,63 @@
     <span class="text-xs sm:text-sm font-bold text-gold tracking-wider">چاوەڕێ بە...</span>
   </div>
 
-  <div id="menuBackdrop" class="hidden fixed inset-0 z-30 bg-black/50"></div>
+  <!-- Admin Panel %80 Siyah Arka Plan Katmanı -->
+  <div id="panelBlackout" class="panel-blackout-layer" aria-hidden="true"></div>
 
-  <div class="relative min-h-screen flex flex-col">
-    <div class="hero-bg-photo" aria-hidden="true"></div>
+  <!-- Menü Arka Planı -->
+  <div id="menuBackdrop" class="smooth-overlay fixed inset-0 z-30 bg-black/50"></div>
 
-    <!-- Üst Bar: Solda 3 Çizgi Menü, Sağda Berber İsmi + Makas İkonu (Beyaz) -->
+  <div class="relative min-h-screen flex flex-col overflow-hidden">
+    <div id="heroBgPhoto" class="hero-bg-photo" aria-hidden="true"></div>
+
+    <!-- Üst Bar: Solda 3 Çizgi Menü + P A N E L Butonu, Sağda Beyaz Berber İsmi + Makas İkonu -->
     <div class="relative z-40 w-full max-w-5xl mx-auto px-4 sm:px-6 pt-5 pb-3 flex items-center justify-between" dir="ltr">
-      <div class="relative" dir="rtl">
+      <div class="flex items-center gap-2.5" dir="rtl">
+        <div class="relative">
+          <button
+            type="button"
+            id="menuToggleBtn"
+            aria-label="لیستا بەشان"
+            class="smooth-btn w-11 h-11 rounded-xl glass-card border border-white/25 text-white hover:bg-white hover:text-obsidian flex items-center justify-center"
+          >
+            <svg class="w-6 h-6 transition-transform duration-300" id="menuIconSvg" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" viewBox="0 0 24 24">
+              <line x1="4" y1="7" x2="20" y2="7" />
+              <line x1="4" y1="12" x2="20" y2="12" />
+              <line x1="4" y1="17" x2="20" y2="17" />
+            </svg>
+          </button>
+
+          <div id="navDropdown" class="smooth-dropdown absolute left-0 mt-2.5 w-60 rounded-2xl glass-card border border-white/20 shadow-2xl overflow-hidden py-1.5">
+            <button type="button" data-nav="home" class="smooth-btn w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian flex items-center justify-between">
+              <span>دەستپێک</span>
+              <span class="text-xs opacity-75">←</span>
+            </button>
+            <button type="button" data-nav="reservation" class="smooth-btn w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian flex items-center justify-between border-t border-white/10">
+              <span>تۆمارکرنا ناڤی</span>
+              <span class="text-xs opacity-75">←</span>
+            </button>
+            <button type="button" data-nav="services" class="smooth-btn w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian flex items-center justify-between border-t border-white/10">
+              <span>خزمەتگوزاری و نرخ</span>
+              <span class="text-xs opacity-75">←</span>
+            </button>
+            <button type="button" data-nav="footer" class="smooth-btn w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian flex items-center justify-between border-t border-white/10">
+              <span>ناڤونیشان و دەمێن کارکرنێ</span>
+              <span class="text-xs opacity-75">↓</span>
+            </button>
+          </div>
+        </div>
+
         <button
           type="button"
-          id="menuToggleBtn"
-          aria-label="لیستا بەشان"
-          class="w-11 h-11 rounded-xl glass-card border border-white/25 text-white hover:bg-white hover:text-obsidian active:scale-95 transition-all flex items-center justify-center"
+          id="btnPanelHeader"
+          dir="ltr"
+          class="smooth-btn h-11 px-3.5 sm:px-4 rounded-xl glass-card border border-gold/65 text-gold text-xs sm:text-sm font-extrabold tracking-[0.2em] hover:bg-gold hover:text-obsidian flex items-center justify-center"
         >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" viewBox="0 0 24 24">
-            <line x1="4" y1="7" x2="20" y2="7" />
-            <line x1="4" y1="12" x2="20" y2="12" />
-            <line x1="4" y1="17" x2="20" y2="17" />
-          </svg>
+          P A N E L
         </button>
-
-        <div id="navDropdown" class="hidden absolute left-0 mt-2.5 w-60 rounded-2xl glass-card border border-white/20 shadow-2xl overflow-hidden py-1.5">
-          <button type="button" data-nav="home" class="w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian transition-colors flex items-center justify-between">
-            <span>دەستپێک</span>
-            <span class="text-xs opacity-75">←</span>
-          </button>
-          <button type="button" data-nav="reservation" class="w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian transition-colors flex items-center justify-between border-t border-white/10">
-            <span>تۆمارکرنا ناڤی</span>
-            <span class="text-xs opacity-75">←</span>
-          </button>
-          <button type="button" data-nav="services" class="w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian transition-colors flex items-center justify-between border-t border-white/10">
-            <span>خزمەتگوزاری و نرخ</span>
-            <span class="text-xs opacity-75">←</span>
-          </button>
-          <button type="button" data-nav="footer" class="w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian transition-colors flex items-center justify-between border-t border-white/10">
-            <span>ناڤونیشان و دەمێن کارکرنێ</span>
-            <span class="text-xs opacity-75">↓</span>
-          </button>
-        </div>
       </div>
 
-      <a href="#" id="brandTitleBtn" dir="rtl" class="inline-flex items-center gap-2 font-serif text-xl sm:text-2xl font-bold text-white tracking-wide hover:opacity-90 transition-opacity">
+      <a href="#" id="brandTitleBtn" dir="rtl" class="smooth-btn inline-flex items-center gap-2 font-serif text-xl sm:text-2xl font-bold text-white tracking-wide hover:opacity-85">
         <span>سەرتراشخانا کوچەر</span>
         <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="6" cy="6" r="2.5" />
@@ -224,13 +316,13 @@
     </div>
 
     <main class="flex-1 relative z-10 flex flex-col">
-      <!-- İlk Ekran -->
-      <section id="homeHero" class="flex-1 min-h-[calc(100vh-4.5rem)] flex flex-col justify-end items-center px-4 pb-16 sm:pb-20">
+      <!-- Ana Ekran (Rezervasyon ve Hizmet Butonları) -->
+      <section id="homeHero" class="smooth-view flex-1 min-h-[calc(100vh-4.5rem)] flex flex-col justify-end items-center px-4 pb-16 sm:pb-20">
         <div class="flex flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-md">
           <button
             type="button"
             id="btnReservation"
-            class="flex-1 py-3.5 px-4 rounded-xl bg-gold text-obsidian text-sm sm:text-base font-bold hover:bg-gold-light active:scale-95 transition-all text-center"
+            class="smooth-btn flex-1 py-3.5 px-4 rounded-xl bg-gold text-obsidian text-sm sm:text-base font-bold hover:bg-gold-light hover:shadow-lg hover:shadow-gold/20 text-center"
           >
             تۆمارکرنا ناڤی
           </button>
@@ -238,7 +330,7 @@
           <button
             type="button"
             id="btnServices"
-            class="flex-1 py-3.5 px-4 rounded-xl glass-card border border-gold/65 text-gold text-sm sm:text-base font-bold hover:bg-gold hover:text-obsidian active:scale-95 transition-all text-center"
+            class="smooth-btn flex-1 py-3.5 px-4 rounded-xl glass-card border border-gold/65 text-gold text-sm sm:text-base font-bold hover:bg-gold hover:text-obsidian hover:shadow-lg hover:shadow-gold/20 text-center"
           >
             خزمەتگوزاری ببینە
           </button>
@@ -246,11 +338,11 @@
       </section>
 
       <!-- Rezervasyon Bölümü -->
-      <section id="reservationSection" class="hidden flex-1 min-h-[calc(100vh-4.5rem)] flex items-center justify-center px-4 py-12">
+      <section id="reservationSection" class="hidden smooth-view flex-1 min-h-[calc(100vh-4.5rem)] flex items-center justify-center px-4 py-12">
         <div class="w-full max-w-md glass-card border border-gold/35 rounded-2xl p-6 sm:p-8 space-y-5">
           <div id="reservationHeader" class="flex items-center justify-between gap-3">
             <h2 class="font-serif text-2xl font-bold text-ivory">تۆمارکرنا ناڤی</h2>
-            <button type="button" id="backFromReservation" class="text-sm sm:text-base font-bold text-gold hover:text-gold-light px-5 py-2.5 rounded-xl border border-gold/50 bg-obsidian/60 active:scale-95 transition-all">
+            <button type="button" id="backFromReservation" class="smooth-btn text-sm sm:text-base font-bold text-gold hover:text-gold-light px-5 py-2.5 rounded-xl border border-gold/50 bg-obsidian/60">
               زڤرین
             </button>
           </div>
@@ -258,18 +350,21 @@
           <form id="simpleBookingForm" class="space-y-4">
             <div>
               <label for="custName" class="block text-xs font-semibold text-gold mb-1.5">ناڤ و پاشناڤ</label>
-              <input id="custName" type="text" required placeholder="ناڤێ خۆ بنڤیسە..." class="w-full rounded-xl bg-obsidian/70 border border-white/15 focus:border-gold px-3.5 py-3 text-ivory outline-none" />
+              <input id="custName" type="text" required placeholder="ناڤێ خۆ بنڤیسە..." class="w-full rounded-xl bg-obsidian/70 border border-white/15 focus:border-gold px-3.5 py-3 text-ivory outline-none transition-colors duration-300" />
             </div>
             <div>
               <label for="custPhone" class="block text-xs font-semibold text-gold mb-1.5">ژمارا مۆبایلێ</label>
-              <input id="custPhone" type="tel" dir="ltr" required placeholder="0750 000 0000" class="w-full rounded-xl bg-obsidian/70 border border-white/15 focus:border-gold px-3.5 py-3 text-ivory text-left outline-none" />
+              <input id="custPhone" type="tel" dir="ltr" required placeholder="0750 000 0000" class="w-full rounded-xl bg-obsidian/70 border border-white/15 focus:border-gold px-3.5 py-3 text-ivory text-left outline-none transition-colors duration-300" />
             </div>
-            <button type="submit" class="w-full py-3.5 rounded-xl bg-gold text-obsidian text-sm sm:text-base font-bold hover:bg-gold-light active:scale-95 transition-all">
+            <p id="formErrorText" class="hidden text-xs font-semibold text-red-400 text-center">
+              کێشەیەک چێبوو د تۆمارکرنێ دا، هیڤیە دووبارە تاقی بکە.
+            </p>
+            <button type="submit" id="submitBookingBtn" class="smooth-btn w-full py-3.5 rounded-xl bg-gold text-obsidian text-sm sm:text-base font-bold hover:bg-gold-light hover:shadow-lg hover:shadow-gold/20">
               تۆمار بکە
             </button>
           </form>
 
-          <div id="bookingResult" class="hidden text-center py-4 space-y-4">
+          <div id="bookingResult" class="hidden smooth-view text-center py-4 space-y-4">
             <div class="w-12 h-12 mx-auto rounded-full bg-gold/15 border border-gold/60 flex items-center justify-center text-gold">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
@@ -280,7 +375,7 @@
             <button
               type="button"
               id="bookingDoneBtn"
-              class="w-full py-3.5 rounded-xl bg-gold text-obsidian text-base font-bold hover:bg-gold-light active:scale-95 transition-all"
+              class="smooth-btn w-full py-3.5 rounded-xl bg-gold text-obsidian text-base font-bold hover:bg-gold-light hover:shadow-lg hover:shadow-gold/20"
             >
               تەمام
             </button>
@@ -289,11 +384,11 @@
       </section>
 
       <!-- Hizmetler Bölümü -->
-      <section id="servicesSection" class="hidden flex-1 min-h-[calc(100vh-4.5rem)] px-4 sm:px-6 py-10">
+      <section id="servicesSection" class="hidden smooth-view flex-1 min-h-[calc(100vh-4.5rem)] px-4 sm:px-6 py-10">
         <div class="max-w-4xl mx-auto">
           <div class="flex items-center justify-between gap-3 mb-6">
             <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ivory">خزمەتگوزاری و نرخ</h2>
-            <button type="button" id="backFromServices" class="text-sm sm:text-base font-bold text-gold hover:text-gold-light px-5 py-2.5 rounded-xl glass-card border border-gold/50 active:scale-95 transition-all">
+            <button type="button" id="backFromServices" class="smooth-btn text-sm sm:text-base font-bold text-gold hover:text-gold-light px-5 py-2.5 rounded-xl glass-card border border-gold/50">
               زڤرین
             </button>
           </div>
@@ -398,14 +493,109 @@
           </div>
         </div>
       </section>
+
+      <!-- P A N E L Bölümü (Şifreli 12345 + Sıralama + Done Listesi) -->
+      <section id="panelSection" class="hidden smooth-view flex-1 min-h-[calc(100vh-4.5rem)] px-4 sm:px-6 py-10">
+        <div class="max-w-3xl mx-auto space-y-6">
+          <div class="flex items-center justify-between gap-3">
+            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ivory">P A N E L</h2>
+            <button type="button" id="backFromPanel" class="smooth-btn text-sm sm:text-base font-bold text-gold hover:text-gold-light px-5 py-2.5 rounded-xl glass-card border border-gold/50">
+              زڤرین
+            </button>
+          </div>
+
+          <!-- Şifre Ekranı (12345) -->
+          <div id="panelPinBox" class="max-w-md mx-auto glass-card border border-gold/35 rounded-2xl p-6 sm:p-8 space-y-5">
+            <div class="text-center space-y-1">
+              <p class="text-xs font-extrabold tracking-[0.22em] text-gold" dir="ltr">P A N E L</p>
+              <h3 class="font-serif text-xl font-bold text-ivory">کۆدێ نهێنی بنڤیسە</h3>
+            </div>
+
+            <form id="panelPinForm" class="space-y-4">
+              <div>
+                <label for="panelPinInput" class="block text-xs font-semibold text-gold mb-1.5">پاسۆرد</label>
+                <input
+                  id="panelPinInput"
+                  type="password"
+                  inputmode="numeric"
+                  dir="ltr"
+                  required
+                  placeholder="•••••"
+                  class="w-full rounded-xl bg-obsidian/80 border border-white/15 focus:border-gold px-4 py-3 text-center text-lg font-extrabold tracking-[0.35em] text-ivory outline-none transition-colors"
+                />
+              </div>
+              <p id="panelPinError" class="hidden text-xs font-semibold text-red-400 text-center">
+                کۆدێ نهێنی خەڵەتە!
+              </p>
+              <button
+                type="submit"
+                class="smooth-btn w-full py-3.5 rounded-xl bg-gold text-obsidian text-sm sm:text-base font-bold hover:bg-gold-light"
+              >
+                چوونە ژوور
+              </button>
+            </form>
+          </div>
+
+          <!-- Şifre Doğrulandıktan Sonra Sıra ve Done Listesi -->
+          <div id="panelContentBox" class="hidden space-y-5">
+            <div class="flex items-center justify-between gap-2 glass-card border border-white/15 rounded-2xl p-3.5">
+              <div class="flex items-center gap-4 text-xs sm:text-sm font-bold tabular-nums">
+                <span class="text-gold">ڕێز: <strong id="panelWaitingCount">0</strong></span>
+                <span class="text-emerald-300">تەمام بووین: <strong id="panelDoneCount">0</strong></span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button
+                  type="button"
+                  id="panelRefreshBtn"
+                  class="smooth-btn px-3.5 py-1.5 rounded-xl bg-gold text-obsidian text-xs font-bold hover:bg-gold-light"
+                >
+                  نوێکرنەوە
+                </button>
+                <button
+                  type="button"
+                  id="panelLockBtn"
+                  class="smooth-btn px-3 py-1.5 rounded-xl border border-white/20 text-xs font-bold text-ivory/80 hover:border-gold hover:text-gold"
+                >
+                  قفل
+                </button>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button
+                type="button"
+                id="panelTabQueue"
+                class="smooth-btn flex-1 py-2.5 px-4 rounded-xl bg-gold text-obsidian text-xs sm:text-sm font-bold"
+              >
+                ڕێزا نۆرەی
+              </button>
+              <button
+                type="button"
+                id="panelTabDone"
+                class="smooth-btn flex-1 py-2.5 px-4 rounded-xl glass-card border border-white/15 text-ivory/80 text-xs sm:text-sm font-bold hover:border-gold/50"
+              >
+                لیستا تەمام بووین
+              </button>
+            </div>
+
+            <div id="panelStatusMsg" class="hidden rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-xs sm:text-sm font-semibold text-red-300"></div>
+            <div id="panelLoading" class="glass-card border border-white/10 rounded-2xl p-6 text-center text-sm text-muted">
+              ناڤ دهێنە وەرگرتن...
+            </div>
+            <div id="panelItemsList" class="space-y-3 hidden"></div>
+            <div id="panelEmpty" class="hidden glass-card border border-white/10 rounded-2xl p-6 text-center text-sm text-muted">
+              هیچ ناڤەک د ڤێ لیستێ دا نینە.
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
 
-  <!-- Cetvel Hizalı, Profesyonel Tipografiye Sahip Footer -->
+  <!-- Cetvel Hizalı Footer -->
   <footer id="siteFooter" class="bg-obsidian border-t border-white/15 pt-8 pb-6 px-4 sm:px-6 relative z-20 font-sans">
     <div class="max-w-4xl mx-auto">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 items-start pb-7">
-        <!-- Sol Sütun: Adres ve Telefon -->
         <div class="space-y-2.5 text-left" dir="ltr">
           <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-gold">
             Location &amp; Contact
@@ -414,13 +604,12 @@
             سێمێل - جادا ریعایێ بەرامبەری قوتابخانا هایدار
           </p>
           <p class="pt-0.5">
-            <a href="tel:07500000000" class="inline-block text-sm font-semibold tracking-wider text-white hover:text-gold transition-colors tabular-nums">
+            <a href="tel:07500000000" class="smooth-btn inline-block text-sm font-semibold tracking-wider text-white hover:text-gold tabular-nums">
               0750 000 0000
             </a>
           </p>
         </div>
 
-        <!-- Sağ Sütun: Cetvel Hizalı Günler ve Saatler -->
         <div class="w-full max-w-xs sm:mr-auto">
           <p class="text-[11px] font-semibold tracking-wider text-gold mb-2.5 text-right">
             دەمێن کارکرنێ
@@ -454,7 +643,6 @@
         </div>
       </div>
 
-      <!-- İnce Çizgi ve Sol Köşede Copyright -->
       <div class="border-t border-white/20 pt-4 flex items-center justify-start" dir="ltr">
         <p class="not-italic font-sans text-xs sm:text-sm font-bold tracking-wider text-white">
           © 2026 | by Ghareeb
@@ -464,29 +652,76 @@
   </footer>
 
   <script>
+    // GOOGLE APPS SCRIPT WEB APP URL'NİZİ BURAYA YAPIŞTIRIN:
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby1Oo1D1Q9aIttjO4lIYzu7BIF5iAdCEasvtPd3rqg0raf8fk19on2lmIactiOHsyJo/exec";
+    const PANEL_PIN = "12345";
+
+    const heroBgPhoto = document.getElementById('heroBgPhoto');
+    const panelBlackout = document.getElementById('panelBlackout');
+
     const actionLoader = document.getElementById('actionLoader');
     const homeHero = document.getElementById('homeHero');
     const reservationSection = document.getElementById('reservationSection');
     const servicesSection = document.getElementById('servicesSection');
+    const panelSection = document.getElementById('panelSection');
+
     const simpleBookingForm = document.getElementById('simpleBookingForm');
     const bookingResult = document.getElementById('bookingResult');
     const reservationHeader = document.getElementById('reservationHeader');
+    const formErrorText = document.getElementById('formErrorText');
+    const submitBookingBtn = document.getElementById('submitBookingBtn');
+
     const menuToggleBtn = document.getElementById('menuToggleBtn');
     const navDropdown = document.getElementById('navDropdown');
     const menuBackdrop = document.getElementById('menuBackdrop');
+    const btnPanelHeader = document.getElementById('btnPanelHeader');
+
+    const panelPinBox = document.getElementById('panelPinBox');
+    const panelContentBox = document.getElementById('panelContentBox');
+    const panelPinForm = document.getElementById('panelPinForm');
+    const panelPinInput = document.getElementById('panelPinInput');
+    const panelPinError = document.getElementById('panelPinError');
+    const panelLockBtn = document.getElementById('panelLockBtn');
+    const panelRefreshBtn = document.getElementById('panelRefreshBtn');
+    const panelTabQueue = document.getElementById('panelTabQueue');
+    const panelTabDone = document.getElementById('panelTabDone');
+    const panelStatusMsg = document.getElementById('panelStatusMsg');
+    const panelLoading = document.getElementById('panelLoading');
+    const panelItemsList = document.getElementById('panelItemsList');
+    const panelEmpty = document.getElementById('panelEmpty');
+    const panelWaitingCount = document.getElementById('panelWaitingCount');
+    const panelDoneCount = document.getElementById('panelDoneCount');
+
+    let panelCustomers = [];
+    let panelFilter = 'Bekliyor';
+    let panelUnlocked = false;
+
+    function syncBackgroundState(targetSection) {
+      if (targetSection === servicesSection) {
+        heroBgPhoto.classList.add('is-services-blur');
+      } else {
+        heroBgPhoto.classList.remove('is-services-blur');
+      }
+
+      if (targetSection === panelSection) {
+        panelBlackout.classList.add('is-active');
+      } else {
+        panelBlackout.classList.remove('is-active');
+      }
+    }
 
     function closeMenu() {
-      navDropdown.classList.add('hidden');
-      menuBackdrop.classList.add('hidden');
+      navDropdown.classList.remove('is-open');
+      menuBackdrop.classList.remove('is-visible');
     }
 
     function toggleMenu() {
-      const willOpen = navDropdown.classList.contains('hidden');
-      if (willOpen) {
-        navDropdown.classList.remove('hidden');
-        menuBackdrop.classList.remove('hidden');
-      } else {
+      const isOpen = navDropdown.classList.contains('is-open');
+      if (isOpen) {
         closeMenu();
+      } else {
+        navDropdown.classList.add('is-open');
+        menuBackdrop.classList.add('is-visible');
       }
     }
 
@@ -494,11 +729,13 @@
     menuBackdrop.addEventListener('click', closeMenu);
 
     function runWithBarberLoader(onDone) {
-      actionLoader.classList.remove('hidden');
+      actionLoader.classList.add('is-visible');
       setTimeout(() => {
-        actionLoader.classList.add('hidden');
         onDone();
-      }, 750);
+        requestAnimationFrame(() => {
+          actionLoader.classList.remove('is-visible');
+        });
+      }, 650);
     }
 
     function resetBookingView() {
@@ -506,15 +743,42 @@
       simpleBookingForm.classList.remove('hidden');
       reservationHeader.classList.remove('hidden');
       bookingResult.classList.add('hidden');
+      formErrorText.classList.add('hidden');
+      submitBookingBtn.disabled = false;
     }
 
     function showSection(target) {
-      homeHero.classList.add('hidden');
-      reservationSection.classList.add('hidden');
-      servicesSection.classList.add('hidden');
+      [homeHero, reservationSection, servicesSection, panelSection].forEach(sec => {
+        if (sec !== target) sec.classList.add('hidden');
+      });
+      syncBackgroundState(target);
+      target.classList.add('is-entering');
       target.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          target.classList.remove('is-entering');
+        });
+      });
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    function openPanelView() {
+      closeMenu();
+      showSection(panelSection);
+      if (panelUnlocked) {
+        panelPinBox.classList.add('hidden');
+        panelContentBox.classList.remove('hidden');
+        loadPanelQueue();
+      } else {
+        panelPinBox.classList.remove('hidden');
+        panelContentBox.classList.add('hidden');
+        panelPinError.classList.add('hidden');
+        panelPinInput.value = '';
+        setTimeout(() => panelPinInput.focus(), 100);
+      }
+    }
+
+    btnPanelHeader.addEventListener('click', openPanelView);
 
     document.getElementById('brandTitleBtn').addEventListener('click', (e) => {
       e.preventDefault();
@@ -536,7 +800,7 @@
         } else if (dest === 'services') {
           runWithBarberLoader(() => showSection(servicesSection));
         } else if (dest === 'footer') {
-          document.getElementById('siteFooter').scrollIntoView({ behavior: 'smooth' });
+          document.getElementById('siteFooter').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
     });
@@ -559,18 +823,231 @@
       showSection(homeHero);
     });
 
-    simpleBookingForm.addEventListener('submit', (e) => {
+    document.getElementById('backFromPanel').addEventListener('click', () => {
+      showSection(homeHero);
+    });
+
+    panelPinForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (panelPinInput.value.trim() === PANEL_PIN) {
+        panelUnlocked = true;
+        panelPinError.classList.add('hidden');
+        panelPinInput.value = '';
+        panelPinBox.classList.add('hidden');
+        panelContentBox.classList.remove('hidden');
+        loadPanelQueue();
+      } else {
+        panelPinError.classList.remove('hidden');
+        panelPinInput.select();
+      }
+    });
+
+    panelLockBtn.addEventListener('click', () => {
+      panelUnlocked = false;
+      panelContentBox.classList.add('hidden');
+      panelPinBox.classList.remove('hidden');
+      panelPinInput.value = '';
+      panelPinError.classList.add('hidden');
+    });
+
+    function setPanelFilter(filterName) {
+      panelFilter = filterName;
+      if (filterName === 'Bekliyor') {
+        panelTabQueue.className = 'smooth-btn flex-1 py-2.5 px-4 rounded-xl bg-gold text-obsidian text-xs sm:text-sm font-bold';
+        panelTabDone.className = 'smooth-btn flex-1 py-2.5 px-4 rounded-xl glass-card border border-white/15 text-ivory/80 text-xs sm:text-sm font-bold hover:border-gold/50';
+      } else {
+        panelTabDone.className = 'smooth-btn flex-1 py-2.5 px-4 rounded-xl bg-gold text-obsidian text-xs sm:text-sm font-bold';
+        panelTabQueue.className = 'smooth-btn flex-1 py-2.5 px-4 rounded-xl glass-card border border-white/15 text-ivory/80 text-xs sm:text-sm font-bold hover:border-gold/50';
+      }
+      renderPanelList();
+    }
+
+    panelTabQueue.addEventListener('click', () => setPanelFilter('Bekliyor'));
+    panelTabDone.addEventListener('click', () => setPanelFilter('Tamamlandı'));
+
+    function updatePanelCounts() {
+      const w = panelCustomers.filter(item => item.durum !== 'Tamamlandı').length;
+      const d = panelCustomers.filter(item => item.durum === 'Tamamlandı').length;
+      panelWaitingCount.textContent = w;
+      panelDoneCount.textContent = d;
+    }
+
+    function escapeHtml(text) {
+      return String(text || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function renderPanelList() {
+      const filtered = panelCustomers.filter(item => {
+        if (panelFilter === 'Tamamlandı') {
+          return item.durum === 'Tamamlandı';
+        }
+        return item.durum !== 'Tamamlandı';
+      });
+
+      panelItemsList.innerHTML = '';
+
+      if (filtered.length === 0) {
+        panelItemsList.classList.add('hidden');
+        panelEmpty.classList.remove('hidden');
+        return;
+      }
+
+      panelEmpty.classList.add('hidden');
+      panelItemsList.classList.remove('hidden');
+
+      filtered.forEach((customer, idx) => {
+        const isDone = customer.durum === 'Tamamlandı';
+        const row = document.createElement('div');
+        row.className = 'glass-card border border-white/15 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3';
+
+        const safeName = escapeHtml(customer.name);
+        const safePhone = escapeHtml(customer.phone);
+        const safeDate = escapeHtml(customer.tarih);
+        const safeId = escapeHtml(customer.id);
+
+        row.innerHTML = `
+          <div class="space-y-1">
+            <div class="flex items-center gap-2.5">
+              <span class="px-2.5 py-0.5 rounded-lg bg-gold/15 border border-gold/40 text-gold text-xs font-bold tabular-nums">#${idx + 1}</span>
+              <span class="text-base font-bold text-ivory">${safeName}</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-3 text-xs text-muted tabular-nums">
+              <a href="tel:${safePhone}" dir="ltr" class="text-gold-light font-semibold hover:underline">${safePhone}</a>
+              <span>•</span>
+              <span dir="ltr">${safeDate}</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 self-end sm:self-center">
+            <a
+              href="tel:${safePhone}"
+              class="smooth-btn px-3.5 py-2 rounded-xl border border-white/20 text-ivory text-xs font-bold hover:border-gold hover:text-gold"
+            >
+              پەیوەندی
+            </a>
+            ${
+              isDone
+                ? `<span class="px-3.5 py-2 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-xs font-bold">تەمام بوو</span>`
+                : `<button
+                    type="button"
+                    data-done-id="${safeId}"
+                    class="smooth-btn px-4 py-2 rounded-xl bg-gold text-obsidian text-xs font-bold hover:bg-gold-light"
+                  >
+                    تەمام بوو
+                  </button>`
+            }
+          </div>
+        `;
+
+        panelItemsList.appendChild(row);
+      });
+
+      document.querySelectorAll('[data-done-id]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const id = btn.getAttribute('data-done-id');
+          await completeCustomer(id, btn);
+        });
+      });
+    }
+
+    async function completeCustomer(id, btnEl) {
+      if (!id) return;
+      btnEl.disabled = true;
+      btnEl.textContent = '...';
+
+      try {
+        const url = `${SCRIPT_URL}?action=complete&id=${encodeURIComponent(id)}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Update failed');
+
+        panelCustomers = panelCustomers.map(item =>
+          item.id === id ? { ...item, durum: 'Tamamlandı' } : item
+        );
+        updatePanelCounts();
+        renderPanelList();
+      } catch (err) {
+        btnEl.disabled = false;
+        btnEl.textContent = 'تەمام بوو';
+        panelStatusMsg.textContent = 'نەهاتە نوێکرن، هێلا ئینتەرنێتێ یان لینکێ Script پشکنین بکە.';
+        panelStatusMsg.classList.remove('hidden');
+      }
+    }
+
+    async function loadPanelQueue() {
+      panelStatusMsg.classList.add('hidden');
+      panelLoading.classList.remove('hidden');
+
+      if (!SCRIPT_URL.startsWith('https://script.google.com/')) {
+        panelLoading.classList.add('hidden');
+        panelStatusMsg.textContent = 'لینکێ Google Apps Script نەهاتیە دانان.';
+        panelStatusMsg.classList.remove('hidden');
+        return;
+      }
+
+      try {
+        const res = await fetch(SCRIPT_URL);
+        if (!res.ok) throw new Error('Fetch failed');
+        const data = await res.json();
+        panelCustomers = Array.isArray(data) ? data : [];
+        updatePanelCounts();
+        panelLoading.classList.add('hidden');
+        renderPanelList();
+      } catch (err) {
+        panelLoading.classList.add('hidden');
+        panelStatusMsg.textContent = 'داتا نەهاتن وەرگرتن. دڵنیابە کو Web App ب شێوەیێ Herkes هاتیە بەلاڤکرن.';
+        panelStatusMsg.classList.remove('hidden');
+      }
+    }
+
+    panelRefreshBtn.addEventListener('click', loadPanelQueue);
+
+    // Rezervasyon Formunu Google Sheets'e Gönderme
+    simpleBookingForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const name = document.getElementById('custName').value.trim();
       const phone = document.getElementById('custPhone').value.trim();
       if (!name || !phone) return;
 
-      runWithBarberLoader(() => {
+      if (!SCRIPT_URL.startsWith('https://script.google.com/')) {
+        formErrorText.textContent = "لینکێ Google Apps Script نەهاتیە دانان!";
+        formErrorText.classList.remove('hidden');
+        return;
+      }
+
+      formErrorText.classList.add('hidden');
+      submitBookingBtn.disabled = true;
+      actionLoader.classList.add('is-visible');
+
+      try {
+        await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ name, phone })
+        });
+
         document.getElementById('resultText').textContent = `${name} — ${phone}`;
         simpleBookingForm.classList.add('hidden');
         reservationHeader.classList.add('hidden');
+        bookingResult.classList.add('is-entering');
         bookingResult.classList.remove('hidden');
-      });
+
+        requestAnimationFrame(() => {
+          actionLoader.classList.remove('is-visible');
+          requestAnimationFrame(() => {
+            bookingResult.classList.remove('is-entering');
+          });
+        });
+      } catch (err) {
+        actionLoader.classList.remove('is-visible');
+        submitBookingBtn.disabled = false;
+        formErrorText.textContent = "کێشەیەک چێبوو د تۆمارکرنێ دا، هیڤیە دووبارە تاقی بکە.";
+        formErrorText.classList.remove('hidden');
+      }
     });
 
     document.getElementById('bookingDoneBtn').addEventListener('click', () => {
