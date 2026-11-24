@@ -8,7 +8,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Noto+Naskh+Arabic:wght@500;600;700&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Noto+Naskh+Arabic:wght@500;600;700&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -57,14 +57,14 @@
       position: relative;
     }
 
-    .fixed-bg-photo {
-      position: fixed;
+    .hero-bg-photo {
+      position: absolute;
       inset: 0;
-      z-index: -2;
+      z-index: 0;
       pointer-events: none;
       background-color: #0B0B0C;
       background-image:
-        linear-gradient(180deg, rgba(11, 11, 12, 0.52) 0%, rgba(11, 11, 12, 0.68) 52%, rgba(11, 11, 12, 0.9) 100%),
+        linear-gradient(180deg, rgba(11, 11, 12, 0.45) 0%, rgba(11, 11, 12, 0.62) 55%, rgba(11, 11, 12, 0.92) 100%),
         url('https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/cover.png');
       background-size: cover;
       background-position: center center;
@@ -72,7 +72,7 @@
     }
 
     .glass-card {
-      background: rgba(19, 19, 22, 0.76);
+      background: rgba(19, 19, 22, 0.84);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
     }
@@ -135,7 +135,6 @@
       100% { transform: rotate(10deg) scale(1.04); }
     }
 
-    /* Köşede kalın kırmızı şerit ve üstünde çapraz VIP yazısı */
     .vip-corner-ribbon {
       position: absolute;
       top: 18px;
@@ -157,9 +156,7 @@
     }
   </style>
 </head>
-<body class="antialiased">
-  <div class="fixed-bg-photo" aria-hidden="true"></div>
-
+<body class="antialiased flex flex-col min-h-screen">
   <div id="actionLoader" class="hidden fixed inset-0 z-50 bg-obsidian/90 backdrop-blur-md flex flex-col items-center justify-center gap-3">
     <div class="barber-pole-loader">
       <div class="barber-pole-inner">
@@ -174,171 +171,327 @@
     <span class="text-xs sm:text-sm font-bold text-gold tracking-wider">چاوەڕێ بە...</span>
   </div>
 
-  <section id="homeHero" class="min-h-screen flex items-center justify-center px-4 relative z-10">
-    <div class="flex flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-md">
-      <button
-        type="button"
-        id="btnReservation"
-        class="flex-1 py-3.5 px-4 rounded-xl bg-gold text-obsidian text-sm sm:text-base font-bold hover:bg-gold-light active:scale-95 transition-all text-center"
-      >
-        تۆمارکرنا ناڤی
-      </button>
+  <div id="menuBackdrop" class="hidden fixed inset-0 z-30 bg-black/50"></div>
 
-      <button
-        type="button"
-        id="btnServices"
-        class="flex-1 py-3.5 px-4 rounded-xl glass-card border border-gold/65 text-gold text-sm sm:text-base font-bold hover:bg-gold hover:text-obsidian active:scale-95 transition-all text-center"
-      >
-        خزمەتگوزاری ببینە
-      </button>
-    </div>
-  </section>
+  <div class="relative min-h-screen flex flex-col">
+    <div class="hero-bg-photo" aria-hidden="true"></div>
 
-  <section id="reservationSection" class="hidden min-h-screen flex items-center justify-center px-4 py-16 relative z-10">
-    <div class="w-full max-w-md glass-card border border-gold/35 rounded-2xl p-6 sm:p-8 space-y-5">
-      <div class="flex items-center justify-between">
-        <h2 class="font-serif text-2xl font-bold text-ivory">تۆمارکرنا ناڤی</h2>
-        <button type="button" id="backFromReservation" class="text-xs font-bold text-gold hover:text-gold-light px-3 py-1.5 rounded-lg border border-gold/40">
-          زڤرین
+    <!-- Üst Bar: Solda 3 Çizgi Menü, Sağda Berber İsmi + Makas İkonu (Beyaz) -->
+    <div class="relative z-40 w-full max-w-5xl mx-auto px-4 sm:px-6 pt-5 pb-3 flex items-center justify-between" dir="ltr">
+      <div class="relative" dir="rtl">
+        <button
+          type="button"
+          id="menuToggleBtn"
+          aria-label="لیستا بەشان"
+          class="w-11 h-11 rounded-xl glass-card border border-white/25 text-white hover:bg-white hover:text-obsidian active:scale-95 transition-all flex items-center justify-center"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" viewBox="0 0 24 24">
+            <line x1="4" y1="7" x2="20" y2="7" />
+            <line x1="4" y1="12" x2="20" y2="12" />
+            <line x1="4" y1="17" x2="20" y2="17" />
+          </svg>
         </button>
+
+        <div id="navDropdown" class="hidden absolute left-0 mt-2.5 w-60 rounded-2xl glass-card border border-white/20 shadow-2xl overflow-hidden py-1.5">
+          <button type="button" data-nav="home" class="w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian transition-colors flex items-center justify-between">
+            <span>دەستپێک</span>
+            <span class="text-xs opacity-75">←</span>
+          </button>
+          <button type="button" data-nav="reservation" class="w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian transition-colors flex items-center justify-between border-t border-white/10">
+            <span>تۆمارکرنا ناڤی</span>
+            <span class="text-xs opacity-75">←</span>
+          </button>
+          <button type="button" data-nav="services" class="w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian transition-colors flex items-center justify-between border-t border-white/10">
+            <span>خزمەتگوزاری و نرخ</span>
+            <span class="text-xs opacity-75">←</span>
+          </button>
+          <button type="button" data-nav="footer" class="w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian transition-colors flex items-center justify-between border-t border-white/10">
+            <span>ناڤونیشان و دەمێن کارکرنێ</span>
+            <span class="text-xs opacity-75">↓</span>
+          </button>
+        </div>
       </div>
 
-      <form id="simpleBookingForm" class="space-y-4">
-        <div>
-          <label for="custName" class="block text-xs font-semibold text-gold mb-1.5">ناڤ و پاشناڤ</label>
-          <input id="custName" type="text" required placeholder="ناڤێ خۆ بنڤیسە..." class="w-full rounded-xl bg-obsidian/70 border border-white/15 focus:border-gold px-3.5 py-3 text-ivory outline-none" />
-        </div>
-        <div>
-          <label for="custPhone" class="block text-xs font-semibold text-gold mb-1.5">ژمارا مۆبایلێ</label>
-          <input id="custPhone" type="tel" dir="ltr" required placeholder="0750 000 0000" class="w-full rounded-xl bg-obsidian/70 border border-white/15 focus:border-gold px-3.5 py-3 text-ivory text-left outline-none" />
-        </div>
-        <button type="submit" class="w-full py-3.5 rounded-xl bg-gold text-obsidian text-sm sm:text-base font-bold hover:bg-gold-light active:scale-95 transition-all">
-          تۆمار بکە
-        </button>
-      </form>
-
-      <div id="bookingResult" class="hidden text-center pt-2 space-y-2">
-        <p class="text-sm font-bold text-gold">ناڤێ تە ب سەرکەفتی هاتە تۆمارکرن</p>
-        <p id="resultText" class="text-sm text-ivory/90"></p>
-      </div>
+      <a href="#" id="brandTitleBtn" dir="rtl" class="inline-flex items-center gap-2 font-serif text-xl sm:text-2xl font-bold text-white tracking-wide hover:opacity-90 transition-opacity">
+        <span>سەرتراشخانا کوچەر</span>
+        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="6" cy="6" r="2.5" />
+          <circle cx="6" cy="18" r="2.5" />
+          <line x1="8.2" y1="8.2" x2="20" y2="20" />
+          <line x1="8.2" y1="15.8" x2="20" y2="4" />
+        </svg>
+      </a>
     </div>
-  </section>
 
-  <section id="servicesSection" class="hidden min-h-screen px-4 sm:px-6 py-14 relative z-10">
+    <main class="flex-1 relative z-10 flex flex-col">
+      <!-- İlk Ekran -->
+      <section id="homeHero" class="flex-1 min-h-[calc(100vh-4.5rem)] flex flex-col justify-end items-center px-4 pb-16 sm:pb-20">
+        <div class="flex flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-md">
+          <button
+            type="button"
+            id="btnReservation"
+            class="flex-1 py-3.5 px-4 rounded-xl bg-gold text-obsidian text-sm sm:text-base font-bold hover:bg-gold-light active:scale-95 transition-all text-center"
+          >
+            تۆمارکرنا ناڤی
+          </button>
+
+          <button
+            type="button"
+            id="btnServices"
+            class="flex-1 py-3.5 px-4 rounded-xl glass-card border border-gold/65 text-gold text-sm sm:text-base font-bold hover:bg-gold hover:text-obsidian active:scale-95 transition-all text-center"
+          >
+            خزمەتگوزاری ببینە
+          </button>
+        </div>
+      </section>
+
+      <!-- Rezervasyon Bölümü -->
+      <section id="reservationSection" class="hidden flex-1 min-h-[calc(100vh-4.5rem)] flex items-center justify-center px-4 py-12">
+        <div class="w-full max-w-md glass-card border border-gold/35 rounded-2xl p-6 sm:p-8 space-y-5">
+          <div id="reservationHeader" class="flex items-center justify-between gap-3">
+            <h2 class="font-serif text-2xl font-bold text-ivory">تۆمارکرنا ناڤی</h2>
+            <button type="button" id="backFromReservation" class="text-sm sm:text-base font-bold text-gold hover:text-gold-light px-5 py-2.5 rounded-xl border border-gold/50 bg-obsidian/60 active:scale-95 transition-all">
+              زڤرین
+            </button>
+          </div>
+
+          <form id="simpleBookingForm" class="space-y-4">
+            <div>
+              <label for="custName" class="block text-xs font-semibold text-gold mb-1.5">ناڤ و پاشناڤ</label>
+              <input id="custName" type="text" required placeholder="ناڤێ خۆ بنڤیسە..." class="w-full rounded-xl bg-obsidian/70 border border-white/15 focus:border-gold px-3.5 py-3 text-ivory outline-none" />
+            </div>
+            <div>
+              <label for="custPhone" class="block text-xs font-semibold text-gold mb-1.5">ژمارا مۆبایلێ</label>
+              <input id="custPhone" type="tel" dir="ltr" required placeholder="0750 000 0000" class="w-full rounded-xl bg-obsidian/70 border border-white/15 focus:border-gold px-3.5 py-3 text-ivory text-left outline-none" />
+            </div>
+            <button type="submit" class="w-full py-3.5 rounded-xl bg-gold text-obsidian text-sm sm:text-base font-bold hover:bg-gold-light active:scale-95 transition-all">
+              تۆمار بکە
+            </button>
+          </form>
+
+          <div id="bookingResult" class="hidden text-center py-4 space-y-4">
+            <div class="w-12 h-12 mx-auto rounded-full bg-gold/15 border border-gold/60 flex items-center justify-center text-gold">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+            </div>
+            <p class="font-serif text-xl sm:text-2xl font-bold text-gold">سوپاس بۆ تە، ناڤێ تە هاتە تۆمارکرن</p>
+            <p id="resultText" class="text-sm text-ivory/90"></p>
+            <button
+              type="button"
+              id="bookingDoneBtn"
+              class="w-full py-3.5 rounded-xl bg-gold text-obsidian text-base font-bold hover:bg-gold-light active:scale-95 transition-all"
+            >
+              تەمام
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hizmetler Bölümü -->
+      <section id="servicesSection" class="hidden flex-1 min-h-[calc(100vh-4.5rem)] px-4 sm:px-6 py-10">
+        <div class="max-w-4xl mx-auto">
+          <div class="flex items-center justify-between gap-3 mb-6">
+            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ivory">خزمەتگوزاری و نرخ</h2>
+            <button type="button" id="backFromServices" class="text-sm sm:text-base font-bold text-gold hover:text-gold-light px-5 py-2.5 rounded-xl glass-card border border-gold/50 active:scale-95 transition-all">
+              زڤرین
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+            <article class="service-tile glass-card border border-red-500/75 relative overflow-hidden flex flex-col justify-between">
+              <div class="vip-corner-ribbon">VIP</div>
+              <img src="https://github.com/ghareebnihad/Bzhar-barber/blob/main/normal.jpg?raw=true" alt="VIP" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
+              <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
+              <div class="relative z-10 p-2.5 flex items-center justify-end">
+                <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#1</span>
+              </div>
+              <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
+                <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">VIP</div>
+                <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">10,000</div>
+              </div>
+            </article>
+
+            <article class="service-tile glass-card border border-white/15 relative overflow-hidden flex flex-col justify-between">
+              <img src="https://github.com/ghareebnihad/Bzhar-barber/blob/main/normal.jpg?raw=true" alt="چێکرنا پرچێ بو مەزنا" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
+              <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
+              <div class="relative z-10 p-2.5 flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#2</span>
+              </div>
+              <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
+                <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">چێکرنا پرچێ بو مەزنا</div>
+                <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">5,000</div>
+              </div>
+            </article>
+
+            <article class="service-tile glass-card border border-white/15 relative overflow-hidden flex flex-col justify-between">
+              <img src="https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/face.png" alt="پاقژکرنا سەروچاڤا بخار" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
+              <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
+              <div class="relative z-10 p-2.5 flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#3</span>
+              </div>
+              <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
+                <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">پاقژکرنا سەروچاڤا بخار</div>
+                <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">5,000</div>
+              </div>
+            </article>
+
+            <article class="service-tile glass-card border border-white/15 relative overflow-hidden flex flex-col justify-between">
+              <img src="https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/cocuk.jpg" alt="چێکرنا پرچێ بو زاروکا" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
+              <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
+              <div class="relative z-10 p-2.5 flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#4</span>
+              </div>
+              <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
+                <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">چێکرنا پرچێ بو زاروکا</div>
+                <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">3,000</div>
+              </div>
+            </article>
+
+            <article class="service-tile glass-card border border-white/15 relative overflow-hidden flex flex-col justify-between">
+              <img src="https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/edit.png" alt="تعدیلات" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
+              <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
+              <div class="relative z-10 p-2.5 flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#5</span>
+              </div>
+              <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
+                <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">تعدیلات</div>
+                <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">3,000</div>
+              </div>
+            </article>
+
+            <article class="service-tile glass-card border border-white/15 relative overflow-hidden flex flex-col justify-between">
+              <img src="https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/fon.jpg" alt="شەکرنا پرچێ" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
+              <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
+              <div class="relative z-10 p-2.5 flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#6</span>
+              </div>
+              <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
+                <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">شەکرنا پرچێ</div>
+                <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">2,000</div>
+              </div>
+            </article>
+
+            <article class="service-tile glass-card border border-white/15 relative overflow-hidden flex flex-col justify-between">
+              <img src="https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/edit.png" alt="قەلەم کرن" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
+              <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
+              <div class="relative z-10 p-2.5 flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#7</span>
+              </div>
+              <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
+                <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">قەلەم کرن</div>
+                <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">2,000</div>
+              </div>
+            </article>
+
+            <article class="service-tile glass-card border border-white/15 relative overflow-hidden flex flex-col justify-between">
+              <img src="https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/mask.png" alt="دانانا ماسکی" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
+              <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
+              <div class="relative z-10 p-2.5 flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#8</span>
+              </div>
+              <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
+                <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">دانانا ماسکی</div>
+                <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">1,000</div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Cetvel Hizalı, Profesyonel Tipografiye Sahip Footer -->
+  <footer id="siteFooter" class="bg-obsidian border-t border-white/15 pt-8 pb-6 px-4 sm:px-6 relative z-20 font-sans">
     <div class="max-w-4xl mx-auto">
-      <div class="flex items-center justify-between mb-6">
-        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ivory">خزمەتگوزاری و نرخ</h2>
-        <button type="button" id="backFromServices" class="text-xs font-bold text-gold hover:text-gold-light px-3.5 py-2 rounded-lg glass-card border border-gold/45">
-          زڤرین
-        </button>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 items-start pb-7">
+        <!-- Sol Sütun: Adres ve Telefon -->
+        <div class="space-y-2.5 text-left" dir="ltr">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-gold">
+            Location &amp; Contact
+          </p>
+          <p class="text-sm font-medium text-ivory/95 leading-relaxed" dir="rtl">
+            سێمێل - جادا ریعایێ بەرامبەری قوتابخانا هایدار
+          </p>
+          <p class="pt-0.5">
+            <a href="tel:07500000000" class="inline-block text-sm font-semibold tracking-wider text-white hover:text-gold transition-colors tabular-nums">
+              0750 000 0000
+            </a>
+          </p>
+        </div>
+
+        <!-- Sağ Sütun: Cetvel Hizalı Günler ve Saatler -->
+        <div class="w-full max-w-xs sm:mr-auto">
+          <p class="text-[11px] font-semibold tracking-wider text-gold mb-2.5 text-right">
+            دەمێن کارکرنێ
+          </p>
+          <div class="divide-y divide-white/10 border-y border-white/10">
+            <div class="py-1.5 flex items-center justify-between gap-4 text-xs sm:text-sm">
+              <span class="font-semibold text-ivory">شەمبی</span>
+              <span class="font-medium text-ivory/90 tracking-wide tabular-nums" dir="ltr">15:00 - 00:00</span>
+            </div>
+            <div class="py-1.5 flex items-center justify-between gap-4 text-xs sm:text-sm">
+              <span class="font-semibold text-ivory">یەکشەم</span>
+              <span class="font-medium text-ivory/90 tracking-wide tabular-nums" dir="ltr">15:00 - 00:00</span>
+            </div>
+            <div class="py-1.5 flex items-center justify-between gap-4 text-xs sm:text-sm">
+              <span class="font-semibold text-ivory">دووشەم</span>
+              <span class="font-medium text-ivory/90 tracking-wide tabular-nums" dir="ltr">15:00 - 00:00</span>
+            </div>
+            <div class="py-1.5 flex items-center justify-between gap-4 text-xs sm:text-sm">
+              <span class="font-semibold text-ivory">سێشەم</span>
+              <span class="font-medium text-ivory/90 tracking-wide tabular-nums" dir="ltr">15:00 - 00:00</span>
+            </div>
+            <div class="py-1.5 flex items-center justify-between gap-4 text-xs sm:text-sm">
+              <span class="font-semibold text-ivory">چوارشەم</span>
+              <span class="font-medium text-ivory/90 tracking-wide tabular-nums" dir="ltr">15:00 - 00:00</span>
+            </div>
+            <div class="py-1.5 flex items-center justify-between gap-4 text-xs sm:text-sm">
+              <span class="font-semibold text-ivory">پێنج شەمب</span>
+              <span class="font-medium text-ivory/90 tracking-wide tabular-nums" dir="ltr">15:00 - 00:00</span>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-        <article class="service-tile glass-card border border-red-500/75 relative overflow-hidden flex flex-col justify-between">
-          <div class="vip-corner-ribbon">VIP</div>
-          <img src="https://github.com/ghareebnihad/Bzhar-barber/blob/main/normal.jpg?raw=true" alt="VIP" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
-          <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
-          <div class="relative z-10 p-2.5 flex items-center justify-end">
-            <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#1</span>
-          </div>
-          <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
-            <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">VIP</div>
-            <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">10,000</div>
-          </div>
-        </article>
-
-        <article class="service-tile glass-card border border-white/15 relative overflow-hidden flex flex-col justify-between">
-          <img src="https://github.com/ghareebnihad/Bzhar-barber/blob/main/normal.jpg?raw=true" alt="چێکرنا پرچێ بو مەزنا" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
-          <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
-          <div class="relative z-10 p-2.5 flex items-center justify-between">
-            <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#2</span>
-          </div>
-          <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
-            <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">چێکرنا پرچێ بو مەزنا</div>
-            <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">5,000</div>
-          </div>
-        </article>
-
-        <article class="service-tile glass-card border border-white/15 relative overflow-hidden flex flex-col justify-between">
-          <img src="https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/face.png" alt="پاقژکرنا سەروچاڤا بخار" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
-          <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
-          <div class="relative z-10 p-2.5 flex items-center justify-between">
-            <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#3</span>
-          </div>
-          <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
-            <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">پاقژکرنا سەروچاڤا بخار</div>
-            <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">5,000</div>
-          </div>
-        </article>
-
-        <article class="service-tile glass-card border border-white/15 relative overflow-hidden flex flex-col justify-between">
-          <img src="https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/cocuk.jpg" alt="چێکرنا پرچێ بو زاروکا" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
-          <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
-          <div class="relative z-10 p-2.5 flex items-center justify-between">
-            <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#4</span>
-          </div>
-          <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
-            <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">چێکرنا پرچێ بو زاروکا</div>
-            <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">3,000</div>
-          </div>
-        </article>
-
-        <article class="service-tile glass-card border border-white/15 relative overflow-hidden flex flex-col justify-between">
-          <img src="https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/edit.png" alt="تعدیلات" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
-          <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
-          <div class="relative z-10 p-2.5 flex items-center justify-between">
-            <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#5</span>
-          </div>
-          <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
-            <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">تعدیلات</div>
-            <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">3,000</div>
-          </div>
-        </article>
-
-        <article class="service-tile glass-card border border-white/15 relative overflow-hidden flex flex-col justify-between">
-          <img src="https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/fon.jpg" alt="شەکرنا پرچێ" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
-          <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
-          <div class="relative z-10 p-2.5 flex items-center justify-between">
-            <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#6</span>
-          </div>
-          <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
-            <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">شەکرنا پرچێ</div>
-            <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">2,000</div>
-          </div>
-        </article>
-
-        <article class="service-tile glass-card border border-white/15 relative overflow-hidden flex flex-col justify-between">
-          <img src="https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/edit.png" alt="قەلەم کرن" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
-          <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
-          <div class="relative z-10 p-2.5 flex items-center justify-between">
-            <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#7</span>
-          </div>
-          <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
-            <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">قەلەم کرن</div>
-            <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">2,000</div>
-          </div>
-        </article>
-
-        <article class="service-tile glass-card border border-white/15 relative overflow-hidden flex flex-col justify-between">
-          <img src="https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/mask.png" alt="دانانا ماسکی" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
-          <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
-          <div class="relative z-10 p-2.5 flex items-center justify-between">
-            <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#8</span>
-          </div>
-          <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
-            <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">دانانا ماسکی</div>
-            <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">1,000</div>
-          </div>
-        </article>
+      <!-- İnce Çizgi ve Sol Köşede Copyright -->
+      <div class="border-t border-white/20 pt-4 flex items-center justify-start" dir="ltr">
+        <p class="not-italic font-sans text-xs sm:text-sm font-bold tracking-wider text-white">
+          © 2026 | by Ghareeb
+        </p>
       </div>
     </div>
-  </section>
+  </footer>
 
   <script>
     const actionLoader = document.getElementById('actionLoader');
     const homeHero = document.getElementById('homeHero');
     const reservationSection = document.getElementById('reservationSection');
     const servicesSection = document.getElementById('servicesSection');
+    const simpleBookingForm = document.getElementById('simpleBookingForm');
+    const bookingResult = document.getElementById('bookingResult');
+    const reservationHeader = document.getElementById('reservationHeader');
+    const menuToggleBtn = document.getElementById('menuToggleBtn');
+    const navDropdown = document.getElementById('navDropdown');
+    const menuBackdrop = document.getElementById('menuBackdrop');
+
+    function closeMenu() {
+      navDropdown.classList.add('hidden');
+      menuBackdrop.classList.add('hidden');
+    }
+
+    function toggleMenu() {
+      const willOpen = navDropdown.classList.contains('hidden');
+      if (willOpen) {
+        navDropdown.classList.remove('hidden');
+        menuBackdrop.classList.remove('hidden');
+      } else {
+        closeMenu();
+      }
+    }
+
+    menuToggleBtn.addEventListener('click', toggleMenu);
+    menuBackdrop.addEventListener('click', closeMenu);
 
     function runWithBarberLoader(onDone) {
       actionLoader.classList.remove('hidden');
@@ -346,6 +499,13 @@
         actionLoader.classList.add('hidden');
         onDone();
       }, 750);
+    }
+
+    function resetBookingView() {
+      simpleBookingForm.reset();
+      simpleBookingForm.classList.remove('hidden');
+      reservationHeader.classList.remove('hidden');
+      bookingResult.classList.add('hidden');
     }
 
     function showSection(target) {
@@ -356,7 +516,33 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    document.getElementById('brandTitleBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      closeMenu();
+      resetBookingView();
+      showSection(homeHero);
+    });
+
+    document.querySelectorAll('[data-nav]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const dest = btn.getAttribute('data-nav');
+        closeMenu();
+        if (dest === 'home') {
+          resetBookingView();
+          showSection(homeHero);
+        } else if (dest === 'reservation') {
+          resetBookingView();
+          runWithBarberLoader(() => showSection(reservationSection));
+        } else if (dest === 'services') {
+          runWithBarberLoader(() => showSection(servicesSection));
+        } else if (dest === 'footer') {
+          document.getElementById('siteFooter').scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
     document.getElementById('btnReservation').addEventListener('click', () => {
+      resetBookingView();
       runWithBarberLoader(() => showSection(reservationSection));
     });
 
@@ -365,6 +551,7 @@
     });
 
     document.getElementById('backFromReservation').addEventListener('click', () => {
+      resetBookingView();
       showSection(homeHero);
     });
 
@@ -372,7 +559,7 @@
       showSection(homeHero);
     });
 
-    document.getElementById('simpleBookingForm').addEventListener('submit', (e) => {
+    simpleBookingForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const name = document.getElementById('custName').value.trim();
       const phone = document.getElementById('custPhone').value.trim();
@@ -380,8 +567,15 @@
 
       runWithBarberLoader(() => {
         document.getElementById('resultText').textContent = `${name} — ${phone}`;
-        document.getElementById('bookingResult').classList.remove('hidden');
+        simpleBookingForm.classList.add('hidden');
+        reservationHeader.classList.add('hidden');
+        bookingResult.classList.remove('hidden');
       });
+    });
+
+    document.getElementById('bookingDoneBtn').addEventListener('click', () => {
+      resetBookingView();
+      showSection(homeHero);
     });
   </script>
 </body>
