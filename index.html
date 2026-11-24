@@ -107,6 +107,61 @@
       pointer-events: none;
     }
 
+    /* Dönen Mavi-Kırmızı Berber Şeritleri ve Berber İkonu */
+    .barber-pole-ring {
+      position: relative;
+      width: 112px;
+      height: 112px;
+      border-radius: 9999px;
+      padding: 6px;
+      background: repeating-linear-gradient(
+        45deg,
+        #2563EB 0px,
+        #2563EB 12px,
+        #F8FAFC 12px,
+        #F8FAFC 22px,
+        #DC2626 22px,
+        #DC2626 34px,
+        #F8FAFC 34px,
+        #F8FAFC 44px
+      );
+      background-size: 62px 62px;
+      animation: barberStripeSpin 1.1s linear infinite;
+      box-shadow: 0 0 36px rgba(37, 99, 235, 0.35), 0 0 36px rgba(220, 38, 38, 0.35);
+    }
+
+    .barber-pole-core {
+      width: 100%;
+      height: 100%;
+      border-radius: 9999px;
+      background: rgba(19, 19, 22, 0.96);
+      border: 1.5px solid rgba(197, 160, 89, 0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: barberIconFloat 0.65s ease-in-out infinite alternate;
+    }
+
+    @keyframes barberStripeSpin {
+      0% {
+        background-position: 0px 0px;
+        transform: rotate(0deg);
+      }
+      100% {
+        background-position: 62px 62px;
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes barberIconFloat {
+      0% {
+        transform: scale(0.96) rotate(-5deg);
+      }
+      100% {
+        transform: scale(1.04) rotate(5deg);
+      }
+    }
+
     .admin-panel-bg {
       background-color: #0B0B0C;
       background-image:
@@ -386,25 +441,42 @@
     <span id="toastMessage"></span>
   </div>
 
-  <!-- Tek Makas Loader (Yalnızca ilk açılış ve rezervasyon yapılırken görünür) -->
+  <!-- Bekleme Animasyonu: Rezervasyonda mavi-kırmızı dönen berber şeritleri + berber ikonu, ilk açılışta makas loader -->
   <div id="scissorsLoaderOverlay" class="fixed inset-0 z-[80] bg-obsidian/92 backdrop-blur-md flex flex-col items-center justify-center gap-4 pointer-events-auto">
-    <div class="relative w-28 h-28 flex items-center justify-center">
-      <div class="orbit-dot absolute inset-0 rounded-full border border-dashed border-gold/40"></div>
-      <div class="scissor-loader-ring w-24 h-24 rounded-full border-2 border-gold/60 bg-charcoal/95 flex items-center justify-center shadow-[0_0_45px_rgba(197,160,89,0.35)] relative overflow-hidden">
-        <svg class="single-scissor-body w-12 h-12 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-          <g class="scissor-blade-a">
-            <circle cx="6" cy="6" r="2.6" />
+    <div id="bookingBarberLoader" class="hidden flex-col items-center justify-center gap-3">
+      <div class="barber-pole-ring">
+        <div class="barber-pole-core">
+          <svg class="w-11 h-11 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="6" cy="6" r="2.5" />
+            <circle cx="6" cy="18" r="2.5" />
             <line x1="8.2" y1="8.2" x2="20" y2="20" />
-          </g>
-          <g class="scissor-blade-b">
-            <circle cx="6" cy="18" r="2.6" />
             <line x1="8.2" y1="15.8" x2="20" y2="4" />
-          </g>
-          <circle cx="12" cy="12" r="1.3" fill="currentColor" />
-        </svg>
+            <circle cx="12" cy="12" r="1.2" fill="currentColor" />
+          </svg>
+        </div>
       </div>
+      <span class="text-xs sm:text-sm font-bold text-gold tracking-wider">ناڤ تۆمار دەکرێت...</span>
     </div>
-    <span class="text-xs sm:text-sm font-semibold text-gold tracking-wider">چاوەڕێ بە...</span>
+
+    <div id="defaultScissorsLoader" class="flex flex-col items-center justify-center gap-3">
+      <div class="relative w-28 h-28 flex items-center justify-center">
+        <div class="orbit-dot absolute inset-0 rounded-full border border-dashed border-gold/40"></div>
+        <div class="scissor-loader-ring w-24 h-24 rounded-full border-2 border-gold/60 bg-charcoal/95 flex items-center justify-center shadow-[0_0_45px_rgba(197,160,89,0.35)] relative overflow-hidden">
+          <svg class="single-scissor-body w-12 h-12 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <g class="scissor-blade-a">
+              <circle cx="6" cy="6" r="2.6" />
+              <line x1="8.2" y1="8.2" x2="20" y2="20" />
+            </g>
+            <g class="scissor-blade-b">
+              <circle cx="6" cy="18" r="2.6" />
+              <line x1="8.2" y1="15.8" x2="20" y2="4" />
+            </g>
+            <circle cx="12" cy="12" r="1.3" fill="currentColor" />
+          </svg>
+        </div>
+      </div>
+      <span class="text-xs sm:text-sm font-semibold text-gold tracking-wider">چاوەڕێ بە...</span>
+    </div>
   </div>
 
   <div id="mobileMenuBackdrop" class="hidden fixed inset-0 z-40 bg-obsidian/65 backdrop-blur-sm transition-opacity duration-300 md:hidden"></div>
@@ -738,50 +810,50 @@
       },
       {
         id: 'چێکرنا پرچێ بو مەزنا',
-        title: 'Normal',
+        title: 'چێکرنا پرچێ بو مەزنا',
         price: 5000,
         image: 'https://github.com/ghareebnihad/Bzhar-barber/blob/main/normal.jpg?raw=true',
         badge: 'NR'
       },
       {
         id: 'پاقژکرنا سەروچاڤا بخار',
-        title: 'Bxar',
+        title: ' پاقژکرنا سەروچاڤا بخار ',
         price: 5000,
         image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/face.png',
         badge: 'BZ'
       },
       {
         id: 'چێکرنا پرچێ بو زاروکا',
-        title: 'Cocuk',
+        title: 'چێکرنا پرچێ بو زاروکا',
         price: 3000,
         image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/cocuk.jpg',
         badge: 'CK'
       },
       {
         id: 'تعدیلات',
-        title: 'Edit',
+        title: 'تعدیلات',
         price: 3000,
         image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/edit.png',
         badge: 'ED'
       },
       {
         id: 'شەکرنا پرچێ',
-        title: 'For',
+        title: ' شەکرنا پرچێ',
         price: 2000,
         image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/fon.jpg',
         badge: 'FR'
       },
       {
         id: 'دانانا ماسکی',
-        title: 'Mask',
+        title: '  دانانا ماسکی',
         price: 1000,
         image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/mask.png',
         badge: 'MK'
       },
       {
         id: 'قەلەم کرن',
-        title: 'Qalam',
-        price: 200,
+        title: 'قەلەم کرن',
+        price: 2000,
         image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/edit.png',
         badge: 'QL'
       }
@@ -791,13 +863,40 @@
       return Number(amount || 0).toLocaleString('en-US');
     }
 
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function escapeAttr(str) {
+      return String(str || '').replace(/'/g, "\\'");
+    }
+
     const scissorsLoaderOverlay = document.getElementById('scissorsLoaderOverlay');
+    const bookingBarberLoader = document.getElementById('bookingBarberLoader');
+    const defaultScissorsLoader = document.getElementById('defaultScissorsLoader');
     let loaderTimer = null;
     let fadeTimer = null;
 
-    function showScissorsLoader() {
+    function showScissorsLoader(mode = 'default') {
       clearTimeout(loaderTimer);
       clearTimeout(fadeTimer);
+
+      if (mode === 'booking') {
+        bookingBarberLoader.classList.remove('hidden');
+        bookingBarberLoader.classList.add('flex');
+        defaultScissorsLoader.classList.add('hidden');
+        defaultScissorsLoader.classList.remove('flex');
+      } else {
+        defaultScissorsLoader.classList.remove('hidden');
+        defaultScissorsLoader.classList.add('flex');
+        bookingBarberLoader.classList.add('hidden');
+        bookingBarberLoader.classList.remove('flex');
+      }
+
       scissorsLoaderOverlay.classList.remove('hidden', 'loader-fade-out');
       void scissorsLoaderOverlay.offsetWidth;
     }
@@ -811,8 +910,8 @@
       }, FADE_OUT_MS);
     }
 
-    function runScissorsLoaderOnce(callback, durationMs = BOOKING_LOADER_MS) {
-      showScissorsLoader();
+    function runScissorsLoaderOnce(callback, durationMs = BOOKING_LOADER_MS, mode = 'default') {
+      showScissorsLoader(mode);
       loaderTimer = setTimeout(() => {
         if (typeof callback === 'function') {
           callback();
@@ -821,13 +920,12 @@
       }, durationMs);
     }
 
-    // Yalnızca sayfa ilk açılırken header hizasında başla ve 1 saniye makas loading göster
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
     window.addEventListener('DOMContentLoaded', () => {
       window.scrollTo(0, 0);
-      runScissorsLoaderOnce(null, INITIAL_LOADER_MS);
+      runScissorsLoaderOnce(null, INITIAL_LOADER_MS, 'default');
     });
 
     const rezervasyonSection = document.getElementById('rezervasyon');
@@ -967,10 +1065,10 @@
 
     renderPricesGrid();
 
-    let allBookings = [];
+    // Kayıtlar süreye bağlı silinmez (5 gün geçse bile kalır); yalnızca deleteBooking çağrıldığında silinir.
     const deletedIds = new Set();
     const checkedIds = new Set(loadCheckedIds());
-    const hasGoogleSheet = GOOGLE_SHEET_URL && GOOGLE_SHEET_URL.startsWith('https://');
+    const hasGoogleSheet = Boolean(GOOGLE_SHEET_URL && GOOGLE_SHEET_URL.startsWith('https://'));
 
     function loadCheckedIds() {
       try {
@@ -987,6 +1085,40 @@
       } catch (e) {}
     }
 
+    function normalizeBookings(rawList) {
+      if (!Array.isArray(rawList)) return [];
+      const seen = new Map();
+      for (const item of rawList) {
+        if (!item || !item.name) continue;
+        const id = String(item.id || `${item.name}-${item.phone || ''}-${item.createdAt || 0}`);
+        if (deletedIds.has(id)) continue;
+        seen.set(id, {
+          id,
+          name: String(item.name).trim(),
+          phone: String(item.phone || '').trim(),
+          createdAt: Number(item.createdAt) || Date.now()
+        });
+      }
+      return Array.from(seen.values()).sort((a, b) => a.createdAt - b.createdAt);
+    }
+
+    function loadLocalBookings() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+        return normalizeBookings(parsed);
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveLocalBookings(list) {
+      try {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(normalizeBookings(list)));
+      } catch (e) {}
+    }
+
+    let allBookings = loadLocalBookings();
+
     const toastBanner = document.getElementById('toastBanner');
     const toastMessage = document.getElementById('toastMessage');
     let toastTimer = null;
@@ -1000,30 +1132,23 @@
       }, 2400);
     }
 
-    function loadLocalBookings() {
-      try {
-        const parsed = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-        return Array.isArray(parsed) ? parsed : [];
-      } catch (e) {
-        return [];
-      }
-    }
-
-    function saveLocalBookings(list) {
-      try {
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(list));
-      } catch (e) {}
-    }
-
-    allBookings = loadLocalBookings();
-
     async function syncFromGoogleSheet() {
       if (!hasGoogleSheet) return;
       try {
-        const res = await fetch(`${GOOGLE_SHEET_URL}?t=${Date.now()}`);
+        const res = await fetch(`${GOOGLE_SHEET_URL}?t=${Date.now()}`, { cache: 'no-store' });
         const data = await res.json();
         if (data && data.status === 'ok' && Array.isArray(data.bookings)) {
-          allBookings = data.bookings.filter(item => item && item.name && !deletedIds.has(String(item.id)));
+          const remoteBookings = normalizeBookings(data.bookings);
+          const mergedMap = new Map();
+          for (const localItem of allBookings) {
+            if (!deletedIds.has(String(localItem.id))) {
+              mergedMap.set(String(localItem.id), localItem);
+            }
+          }
+          for (const remoteItem of remoteBookings) {
+            mergedMap.set(String(remoteItem.id), remoteItem);
+          }
+          allBookings = Array.from(mergedMap.values()).sort((a, b) => a.createdAt - b.createdAt);
           saveLocalBookings(allBookings);
           renderPanelAppointments();
         }
@@ -1064,16 +1189,17 @@
     mobileMenuBackdrop.addEventListener('click', () => toggleMobileMenu(true));
 
     async function createBooking({ name, phone }) {
+      const now = Date.now();
       const newEntry = {
-        id: String(Date.now()),
-        name,
-        phone,
-        createdAt: Date.now()
+        id: `${now}-${Math.random().toString(36).slice(2, 7)}`,
+        name: name.trim(),
+        phone: phone.trim(),
+        createdAt: now
       };
 
-      allBookings.push(newEntry);
+      allBookings = normalizeBookings([...allBookings, newEntry]);
       saveLocalBookings(allBookings);
-      const assignedOrder = allBookings.length;
+      const assignedOrder = allBookings.findIndex(b => b.id === newEntry.id) + 1;
 
       if (hasGoogleSheet) {
         try {
@@ -1083,11 +1209,12 @@
             headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             body: JSON.stringify({ action: 'add', booking: newEntry })
           });
+          await syncFromGoogleSheet();
         } catch (err) {}
       }
 
       renderPanelAppointments();
-      return assignedOrder;
+      return assignedOrder > 0 ? assignedOrder : allBookings.length;
     }
 
     const inlineBookingForm = document.getElementById('inlineBookingForm');
@@ -1118,7 +1245,6 @@
       }
     });
 
-    // Rezervasyon yapılırken makas loading çalışır
     inlineBookingForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const name = inlineNameInput.value.trim();
@@ -1146,6 +1272,7 @@
       }
 
       inlineSubmitBtn.disabled = true;
+      showScissorsLoader('booking');
       const startTime = Date.now();
       const assignedOrder = await createBooking({ name, phone });
       const elapsed = Date.now() - startTime;
@@ -1159,7 +1286,7 @@
         inlineBookingForm.classList.add('hidden');
         inlineBookingConfirmation.classList.remove('hidden');
         showToast('ناڤێ تە ب سەرکەفتی هاتە تۆمارکرن');
-      }, remaining);
+      }, remaining, 'booking');
     });
 
     inlineResetBtn.addEventListener('click', () => {
@@ -1346,18 +1473,6 @@
         </div>
       `;
       }).join('');
-    }
-
-    function escapeHtml(str) {
-      return String(str || '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    }
-
-    function escapeAttr(str) {
-      return String(str || '').replace(/'/g, "\\'");
     }
 
     window.deleteBooking = async function(id) {
