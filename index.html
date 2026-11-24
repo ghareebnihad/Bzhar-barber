@@ -2,16 +2,13 @@
 <html lang="ku" dir="rtl" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0B0B0C" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>سەرتراشخانا کوچەر</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Noto+Naskh+Arabic:wght@500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Noto+Naskh+Arabic:wght@500;600;700&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -31,8 +28,8 @@
             muted: '#94918B',
           },
           fontFamily: {
-            serif: ['"Noto Naskh Arabic"', '"Vazirmatn"', '"Geeza Pro"', 'serif'],
-            sans: ['"Vazirmatn"', '"Noto Sans Arabic"', '"Geeza Pro"', 'sans-serif'],
+            serif: ['"Noto Naskh Arabic"', '"Vazirmatn"', 'serif'],
+            sans: ['"Vazirmatn"', 'sans-serif'],
             signature: ['"Cormorant Garamond"', 'serif'],
           },
         }
@@ -46,25 +43,20 @@
     }
 
     html {
-      -webkit-text-size-adjust: 100%;
       scroll-behavior: smooth;
-      font-family: 'Vazirmatn', 'Noto Sans Arabic', 'Geeza Pro', system-ui, -apple-system, sans-serif;
+      font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
     }
 
     body {
       background-color: #0B0B0C;
       color: #F4F1EA;
-      font-family: 'Vazirmatn', 'Noto Sans Arabic', 'Geeza Pro', system-ui, -apple-system, sans-serif;
+      font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
       overflow-x: hidden;
-      width: 100%;
       min-height: 100vh;
       padding-bottom: env(safe-area-inset-bottom);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
       position: relative;
     }
 
-    /* Kaydırma sırasında her cihazda sabit kalan arka plan fotoğrafı */
     .fixed-bg-photo {
       position: fixed;
       inset: 0;
@@ -72,153 +64,17 @@
       pointer-events: none;
       background-color: #0B0B0C;
       background-image:
-        linear-gradient(180deg, rgba(11, 11, 12, 0.48) 0%, rgba(11, 11, 12, 0.64) 52%, rgba(11, 11, 12, 0.88) 100%),
+        linear-gradient(180deg, rgba(11, 11, 12, 0.52) 0%, rgba(11, 11, 12, 0.68) 52%, rgba(11, 11, 12, 0.9) 100%),
         url('https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/cover.png');
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
-      transform: translate3d(0, 0, 0);
-      will-change: transform, background-image;
-      transition: background-image 0.45s ease;
     }
 
-    body.reservation-bg-active .fixed-bg-photo {
-      background-image:
-        linear-gradient(180deg, rgba(11, 11, 12, 0.45) 0%, rgba(11, 11, 12, 0.60) 52%, rgba(11, 11, 12, 0.84) 100%),
-        url('https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/image_5e38d5.jpg');
-    }
-
-    .fixed-bg-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      backdrop-filter: blur(1.1px);
-      -webkit-backdrop-filter: blur(1.4px);
-      background: radial-gradient(circle at 50% 20%, rgba(197, 160, 89, 0.12) 0%, rgba(11, 11, 12, 0.24) 75%);
-    }
-
-    #scissorsLoaderOverlay {
-      opacity: 1;
-      transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    #scissorsLoaderOverlay.loader-fade-out {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    /* Dönen Mavi-Kırmızı Berber Şeritleri ve Berber İkonu */
-    .barber-pole-ring {
-      position: relative;
-      width: 112px;
-      height: 112px;
-      border-radius: 9999px;
-      padding: 6px;
-      background: repeating-linear-gradient(
-        45deg,
-        #2563EB 0px,
-        #2563EB 12px,
-        #F8FAFC 12px,
-        #F8FAFC 22px,
-        #DC2626 22px,
-        #DC2626 34px,
-        #F8FAFC 34px,
-        #F8FAFC 44px
-      );
-      background-size: 62px 62px;
-      animation: barberStripeSpin 1.1s linear infinite;
-      box-shadow: 0 0 36px rgba(37, 99, 235, 0.35), 0 0 36px rgba(220, 38, 38, 0.35);
-    }
-
-    .barber-pole-core {
-      width: 100%;
-      height: 100%;
-      border-radius: 9999px;
-      background: rgba(19, 19, 22, 0.96);
-      border: 1.5px solid rgba(197, 160, 89, 0.65);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: barberIconFloat 0.65s ease-in-out infinite alternate;
-    }
-
-    @keyframes barberStripeSpin {
-      0% {
-        background-position: 0px 0px;
-        transform: rotate(0deg);
-      }
-      100% {
-        background-position: 62px 62px;
-        transform: rotate(360deg);
-      }
-    }
-
-    @keyframes barberIconFloat {
-      0% {
-        transform: scale(0.96) rotate(-5deg);
-      }
-      100% {
-        transform: scale(1.04) rotate(5deg);
-      }
-    }
-
-    .admin-panel-bg {
-      background-color: #0B0B0C;
-      background-image:
-        radial-gradient(circle at 18% 18%, rgba(197, 160, 89, 0.24) 0%, transparent 45%),
-        radial-gradient(circle at 82% 28%, rgba(56, 189, 248, 0.16) 0%, transparent 48%),
-        radial-gradient(circle at 50% 88%, rgba(168, 85, 247, 0.16) 0%, transparent 52%),
-        linear-gradient(160deg, rgba(11, 11, 12, 0.72) 0%, rgba(19, 19, 28, 0.80) 50%, rgba(11, 11, 12, 0.88) 100%),
-        url('https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/makine.jpg');
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
-    }
-
-    .admin-panel-bg::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      backdrop-filter: blur(1.6px);
-      -webkit-backdrop-filter: blur(2.2px);
-      z-index: 0;
-    }
-
-    .font-serif {
-      font-family: 'Noto Naskh Arabic', 'Vazirmatn', 'Geeza Pro', serif !important;
-    }
-
-    .font-sans {
-      font-family: 'Vazirmatn', 'Noto Sans Arabic', 'Geeza Pro', sans-serif !important;
-    }
-
-    a, button, input, select {
-      touch-action: manipulation;
-      font-family: inherit;
-    }
-
-    input, select, textarea {
-      font-size: 16px !important;
-      font-family: 'Vazirmatn', 'Noto Sans Arabic', sans-serif !important;
-    }
-
-    ::selection {
-      background: #C5A059;
-      color: #0B0B0C;
-    }
-
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #0B0B0C;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #2A2A30;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #C5A059;
+    .glass-card {
+      background: rgba(19, 19, 22, 0.76);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
     .gold-gradient-text {
@@ -227,1276 +83,306 @@
       -webkit-text-fill-color: transparent;
     }
 
-    .hairline-border {
-      border: 1px solid rgba(197, 160, 89, 0.35);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-    }
-
-    .glass-card {
-      background: rgba(19, 19, 22, 0.74);
-      backdrop-filter: blur(11px);
-      -webkit-backdrop-filter: blur(11px);
-    }
-
-    /* Daha şeffaf rezervasyon kutusu */
-    .reservation-transparent-card {
-      background: rgba(19, 19, 22, 0.34);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
-
-    .admin-glass-card {
-      background: linear-gradient(135deg, rgba(24, 24, 32, 0.76) 0%, rgba(16, 16, 22, 0.84) 100%);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(197, 160, 89, 0.28);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    }
-
-    .cta-glow {
-      box-shadow: 0 12px 34px -6px rgba(197, 160, 89, 0.52);
-      transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.22s ease, box-shadow 0.24s ease;
-    }
-    .cta-glow:active {
-      transform: scale3d(0.97, 0.97, 1);
-    }
-    @media (hover: hover) {
-      .cta-glow:hover {
-        box-shadow: 0 18px 44px -6px rgba(197, 160, 89, 0.75);
-        transform: translate3d(0, -2px, 0);
-      }
-    }
-
-    .scissor-loader-ring {
-      will-change: transform;
-      animation: scissorPulse 0.6s cubic-bezier(0.22, 1, 0.36, 1) infinite alternate;
-    }
-
-    .single-scissor-body {
-      transform-origin: center center;
-      will-change: transform;
-      animation: singleScissorTilt 0.42s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
-    }
-
-    .scissor-blade-a {
-      transform-origin: 12px 12px;
-      will-change: transform;
-      animation: snipA 0.18s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
-    }
-    .scissor-blade-b {
-      transform-origin: 12px 12px;
-      will-change: transform;
-      animation: snipB 0.18s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
-    }
-
-    .orbit-dot {
-      will-change: transform;
-      animation: orbitSpin 1.1s linear infinite;
-    }
-
-    @keyframes scissorPulse {
-      0% { transform: scale3d(0.96, 0.96, 1); }
-      100% { transform: scale3d(1.04, 1.04, 1); }
-    }
-    @keyframes singleScissorTilt {
-      0% { transform: translate3d(-2px, -1px, 0) rotate(-10deg); }
-      100% { transform: translate3d(2px, 1px, 0) rotate(10deg); }
-    }
-    @keyframes snipA {
-      0% { transform: rotate(-24deg); }
-      100% { transform: rotate(14deg); }
-    }
-    @keyframes snipB {
-      0% { transform: rotate(24deg); }
-      100% { transform: rotate(-14deg); }
-    }
-    @keyframes orbitSpin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .vip-ribbon-wrap {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      z-index: 25;
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .vip-ribbon-bow {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 3px 10px;
-      border-radius: 9999px;
-      background: linear-gradient(135deg, #E9D5FF 0%, #D8B4FE 50%, #C084FC 100%);
-      color: #2E1065;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      border: 1px solid rgba(250, 245, 255, 0.85);
-      box-shadow: 0 4px 14px rgba(192, 132, 252, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.75);
-    }
-
-    .vip-ribbon-tail {
-      width: 8px;
-      height: 16px;
-      background: linear-gradient(180deg, #D8B4FE 0%, #A855F7 100%);
-      border-bottom-left-radius: 4px;
-      border-bottom-right-radius: 4px;
-      transform: rotate(-18deg);
-      box-shadow: 0 2px 6px rgba(168, 85, 247, 0.45);
-    }
-
     .service-tile {
       aspect-ratio: 1 / 1;
       border-radius: 18px;
-      cursor: pointer;
-      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease, box-shadow 0.28s ease;
-      will-change: transform;
-    }
-    .service-tile.is-selected {
-      border-color: #DFC183 !important;
-      box-shadow: 0 0 0 2px rgba(223, 193, 131, 0.85), 0 14px 28px rgba(0, 0, 0, 0.75) !important;
-      transform: translate3d(0, -3px, 0);
-    }
-    @media (hover: hover) {
-      .service-tile:hover {
-        transform: translate3d(0, -4px, 0) scale3d(1.02, 1.02, 1);
-        border-color: rgba(197, 160, 89, 0.85);
-        box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.85), 0 0 20px rgba(197, 160, 89, 0.18);
-      }
-      .service-tile.is-vip:hover {
-        border-color: rgba(216, 180, 254, 0.95);
-        box-shadow: 0 16px 34px -10px rgba(0, 0, 0, 0.85), 0 0 24px rgba(192, 132, 252, 0.38);
-      }
     }
 
-    .service-tile-img {
-      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-      will-change: transform;
-    }
-    @media (hover: hover) {
-      .service-tile:hover .service-tile-img {
-        transform: scale3d(1.08, 1.08, 1);
-      }
-    }
-
-    .fullscreen-modal-enter {
-      animation: modalFadeScale 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    }
-    @keyframes modalFadeScale {
-      from {
-        opacity: 0;
-        transform: scale3d(0.985, 0.985, 1);
-      }
-      to {
-        opacity: 1;
-        transform: scale3d(1, 1, 1);
-      }
+    .barber-pole-loader {
+      width: 108px;
+      height: 108px;
+      border-radius: 9999px;
+      padding: 6px;
+      background: repeating-linear-gradient(
+        45deg,
+        #2563EB 0px,
+        #2563EB 11px,
+        #F8FAFC 11px,
+        #F8FAFC 21px,
+        #DC2626 21px,
+        #DC2626 32px,
+        #F8FAFC 32px,
+        #F8FAFC 42px
+      );
+      background-size: 60px 60px;
+      animation: barberPoleSpin 1s linear infinite;
+      box-shadow: 0 0 28px rgba(37, 99, 235, 0.3), 0 0 28px rgba(220, 38, 38, 0.3);
     }
 
-    .hero-stagger {
-      animation: heroRise 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-    @keyframes heroRise {
-      from {
-        opacity: 0;
-        transform: translate3d(0, 16px, 0);
-      }
-      to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-      }
-    }
-
-    .mark-square-btn {
-      width: 24px;
-      height: 24px;
-      border-radius: 6px;
-      border: 1.5px solid rgba(197, 160, 89, 0.7);
-      background: rgba(11, 11, 12, 0.85);
-      display: inline-flex;
+    .barber-pole-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 9999px;
+      background: rgba(19, 19, 22, 0.96);
+      border: 1.5px solid rgba(197, 160, 89, 0.65);
+      display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
-      transition: all 0.18s ease;
     }
-    .mark-square-btn.is-checked {
-      background: #C5A059;
-      border-color: #DFC183;
-      color: #0B0B0C;
+
+    .scissor-snip {
+      transform-origin: center center;
+      animation: scissorSnip 0.45s ease-in-out infinite alternate;
+    }
+
+    @keyframes barberPoleSpin {
+      0% { background-position: 0 0; transform: rotate(0deg); }
+      100% { background-position: 60px 60px; transform: rotate(360deg); }
+    }
+
+    @keyframes scissorSnip {
+      0% { transform: rotate(-10deg) scale(0.96); }
+      100% { transform: rotate(10deg) scale(1.04); }
+    }
+
+    /* Köşede kalın kırmızı şerit ve üstünde çapraz VIP yazısı */
+    .vip-corner-ribbon {
+      position: absolute;
+      top: 18px;
+      left: -34px;
+      width: 124px;
+      padding: 5px 0;
+      background: linear-gradient(135deg, #EF4444 0%, #DC2626 60%, #B91C1C 100%);
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.22em;
+      text-align: center;
+      transform: rotate(-45deg);
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.55);
+      border-top: 1px solid rgba(255, 255, 255, 0.35);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+      pointer-events: none;
+      z-index: 15;
     }
   </style>
 </head>
 <body class="antialiased">
   <div class="fixed-bg-photo" aria-hidden="true"></div>
-  <div class="fixed-bg-overlay" aria-hidden="true"></div>
 
-  <div id="toastBanner" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[90] px-5 py-3 bg-charcoal/95 border border-gold/60 text-ivory text-xs sm:text-sm font-semibold shadow-2xl backdrop-blur-md flex items-center gap-2.5">
-    <span class="w-2 h-2 rounded-full bg-gold animate-ping"></span>
-    <span id="toastMessage"></span>
+  <div id="actionLoader" class="hidden fixed inset-0 z-50 bg-obsidian/90 backdrop-blur-md flex flex-col items-center justify-center gap-3">
+    <div class="barber-pole-loader">
+      <div class="barber-pole-inner">
+        <svg class="scissor-snip w-10 h-10 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="6" cy="6" r="2.5" />
+          <circle cx="6" cy="18" r="2.5" />
+          <line x1="8.2" y1="8.2" x2="20" y2="20" />
+          <line x1="8.2" y1="15.8" x2="20" y2="4" />
+        </svg>
+      </div>
+    </div>
+    <span class="text-xs sm:text-sm font-bold text-gold tracking-wider">چاوەڕێ بە...</span>
   </div>
 
-  <!-- Bekleme Animasyonu: Rezervasyonda mavi-kırmızı dönen berber şeritleri + berber ikonu, ilk açılışta makas loader -->
-  <div id="scissorsLoaderOverlay" class="fixed inset-0 z-[80] bg-obsidian/92 backdrop-blur-md flex flex-col items-center justify-center gap-4 pointer-events-auto">
-    <div id="bookingBarberLoader" class="hidden flex-col items-center justify-center gap-3">
-      <div class="barber-pole-ring">
-        <div class="barber-pole-core">
-          <svg class="w-11 h-11 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="6" cy="6" r="2.5" />
-            <circle cx="6" cy="18" r="2.5" />
-            <line x1="8.2" y1="8.2" x2="20" y2="20" />
-            <line x1="8.2" y1="15.8" x2="20" y2="4" />
-            <circle cx="12" cy="12" r="1.2" fill="currentColor" />
-          </svg>
-        </div>
-      </div>
-      <span class="text-xs sm:text-sm font-bold text-gold tracking-wider">ناڤ تۆمار دەکرێت...</span>
-    </div>
-
-    <div id="defaultScissorsLoader" class="flex flex-col items-center justify-center gap-3">
-      <div class="relative w-28 h-28 flex items-center justify-center">
-        <div class="orbit-dot absolute inset-0 rounded-full border border-dashed border-gold/40"></div>
-        <div class="scissor-loader-ring w-24 h-24 rounded-full border-2 border-gold/60 bg-charcoal/95 flex items-center justify-center shadow-[0_0_45px_rgba(197,160,89,0.35)] relative overflow-hidden">
-          <svg class="single-scissor-body w-12 h-12 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-            <g class="scissor-blade-a">
-              <circle cx="6" cy="6" r="2.6" />
-              <line x1="8.2" y1="8.2" x2="20" y2="20" />
-            </g>
-            <g class="scissor-blade-b">
-              <circle cx="6" cy="18" r="2.6" />
-              <line x1="8.2" y1="15.8" x2="20" y2="4" />
-            </g>
-            <circle cx="12" cy="12" r="1.3" fill="currentColor" />
-          </svg>
-        </div>
-      </div>
-      <span class="text-xs sm:text-sm font-semibold text-gold tracking-wider">چاوەڕێ بە...</span>
-    </div>
-  </div>
-
-  <div id="mobileMenuBackdrop" class="hidden fixed inset-0 z-40 bg-obsidian/65 backdrop-blur-sm transition-opacity duration-300 md:hidden"></div>
-
-  <!-- Üst Menü / Admin Panel Butonu -->
-  <header id="navbar" class="fixed top-0 left-0 right-0 z-40 transition-colors duration-300 border-b border-transparent pt-[env(safe-area-inset-top)]">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 h-16 sm:h-20 flex items-center justify-between gap-2 relative z-50">
-      <a href="#" id="brandResetLink" class="flex items-center gap-3 sm:gap-3.5 group shrink-0">
-        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl border border-gold/60 bg-obsidian/80 flex items-center justify-center group-hover:border-gold group-hover:bg-gold/10 group-hover:rotate-6 transition-all duration-300">
-          <svg class="w-6 h-6 sm:w-7 sm:h-7 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="6" cy="6" r="2.7" />
-            <circle cx="6" cy="18" r="2.7" />
-            <line x1="19" y1="5" x2="8" y2="16" />
-            <line x1="14" y1="14" x2="19" y2="19" />
-            <line x1="8" y1="8" x2="11.5" y2="11.5" />
-            <path d="M16.5 3.5l4 4-2.5 2.5-4-4 2.5-2.5z" />
-          </svg>
-        </div>
-        <div class="flex flex-col">
-          <span class="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-ivory leading-none drop-shadow">سەرتراشخانا کوچەر</span>
-          <span class="text-[10px] sm:text-[11px] text-gold mt-0.5 sm:mt-1 font-medium">و ستایلێ زەلامان</span>
-        </div>
-      </a>
-
-      <nav class="hidden md:flex items-center gap-8 text-sm text-ivory/90 font-medium">
-        <button type="button" data-select-view="reservation" class="hover:text-gold transition-colors">تۆمارکرنا ناڤی</button>
-        <button type="button" data-select-view="services" class="hover:text-gold transition-colors">خزمەتگوزاری و نرخ</button>
-        <a href="#iletisim" class="hover:text-gold transition-colors">پەیوەندی و ناڤونیشان</a>
-      </nav>
-
-      <div class="flex items-center gap-2 sm:gap-3.5">
-        <button id="openBarberPanelBtn" type="button" class="px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg border border-gold/55 bg-obsidian/80 text-gold text-xs sm:text-sm font-semibold hover:bg-gold hover:text-obsidian active:scale-95 transition-all duration-200 flex items-center gap-1.5 sm:gap-2">
-          <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-          </svg>
-          <span>ئەدمین</span>
-        </button>
-
-        <button type="button" data-select-view="reservation" class="hidden sm:inline-block px-5 py-2.5 rounded-lg bg-gold text-obsidian text-sm font-bold hover:bg-gold-light transition-colors duration-200">
-          ناڤێ خۆ تۆمار بکە
-        </button>
-
-        <button id="mobileMenuBtn" type="button" aria-label="ڤەکرنا لیستێ" class="md:hidden text-ivory p-2 focus:outline-none active:scale-95">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
-          </svg>
-        </button>
-      </div>
-    </div>
-
-    <div id="mobileMenu" class="hidden md:hidden relative z-50 bg-charcoal/92 backdrop-blur-md border-b border-gold/30 px-6 py-6 space-y-4 shadow-2xl">
-      <button type="button" data-select-view="reservation" class="block w-full text-right py-2 text-base font-semibold text-ivory hover:text-gold transition-colors">تۆمارکرنا ناڤی</button>
-      <button type="button" data-select-view="services" class="block w-full text-right py-2 text-base font-semibold text-ivory hover:text-gold transition-colors">خزمەتگوزاری و نرخ</button>
-      <a href="#iletisim" class="block py-2 text-base font-semibold text-ivory hover:text-gold transition-colors">پەیوەندی و ناڤونیشان</a>
-      <button type="button" data-select-view="reservation" class="block w-full text-center py-3.5 rounded-lg bg-gold text-obsidian text-base font-bold">
-        نوکە ناڤێ خۆ تۆمار بکە
+  <section id="homeHero" class="min-h-screen flex items-center justify-center px-4 relative z-10">
+    <div class="flex flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-md">
+      <button
+        type="button"
+        id="btnReservation"
+        class="flex-1 py-3.5 px-4 rounded-xl bg-gold text-obsidian text-sm sm:text-base font-bold hover:bg-gold-light active:scale-95 transition-all text-center"
+      >
+        تۆمارکرنا ناڤی
       </button>
-    </div>
-  </header>
-
-  <!-- İlk Ekran: Header hizasında açılır, müşteri kaydırır -->
-  <section id="ilkEkran" class="min-h-[85svh] flex items-center justify-center relative z-10 pt-20 pb-10">
-    <div class="hero-stagger max-w-4xl mx-auto px-5 sm:px-6 md:px-10 w-full text-center">
-      <div class="flex flex-wrap items-center justify-center gap-3.5 sm:gap-4">
-        <button
-          type="button"
-          id="btnChooseReservation"
-          data-select-view="reservation"
-          class="cta-glow group px-7 sm:px-10 py-3.5 sm:py-4 rounded-xl bg-gold text-obsidian text-base sm:text-lg font-bold hover:bg-gold-light inline-flex items-center justify-center gap-2.5"
-        >
-          <span>تۆمارکرنا ناڤی</span>
-          <svg class="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
-          </svg>
-        </button>
-
-        <button
-          type="button"
-          id="btnChooseServices"
-          data-select-view="services"
-          class="px-7 sm:px-10 py-3.5 sm:py-4 rounded-xl glass-card border border-gold/60 text-gold text-base sm:text-lg font-bold hover:bg-gold hover:text-obsidian active:scale-[0.98] transition-all duration-200 inline-flex items-center justify-center gap-2.5"
-        >
-          <span>خزمەتگوزاری ببینە</span>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- 1. Rezervasyon Bölümü (Daha şeffaf kutu + buton kutunun dışında ve altında) -->
-  <section id="rezervasyon" class="hidden relative z-10 pt-24 pb-12 scroll-mt-16">
-    <div class="max-w-lg mx-auto px-4 sm:px-6">
-      <div class="reservation-transparent-card hairline-border rounded-2xl p-6 sm:p-8 relative overflow-hidden">
-        <div class="flex items-center justify-end mb-4">
-          <button
-            type="button"
-            data-close-view="true"
-            aria-label="داخستن"
-            class="w-8 h-8 rounded-lg border border-white/15 text-ivory/75 hover:text-ivory hover:border-white/35 flex items-center justify-center text-lg leading-none"
-          >
-            &times;
-          </button>
-        </div>
-
-        <div class="text-center mb-6">
-          <span class="text-xs font-bold text-gold tracking-wider block mb-1">تۆمارکرنا ناڤی</span>
-          <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ivory">ناڤ و ژمارا مۆبایلێ</h2>
-        </div>
-
-        <form id="inlineBookingForm" class="space-y-4" novalidate>
-          <div>
-            <label for="inlineNameInput" class="block text-xs sm:text-sm text-gold font-semibold mb-1.5">
-              ناڤ و پاشناڤ
-            </label>
-            <input
-              type="text"
-              id="inlineNameInput"
-              autocomplete="name"
-              placeholder="ناڤێ خۆ بنڤیسە..."
-              required
-              class="w-full rounded-xl bg-obsidian/55 border border-white/15 focus:border-gold px-3.5 py-3.5 text-ivory placeholder:text-muted/65 outline-none transition-colors"
-            />
-            <p id="inlineNameError" class="hidden text-xs text-red-400 mt-1">هیڤیدارین ناڤی بنڤیسە.</p>
-          </div>
-
-          <div>
-            <label for="inlinePhoneInput" class="block text-xs sm:text-sm text-gold font-semibold mb-1.5">
-              ژمارا مۆبایلێ
-            </label>
-            <input
-              type="tel"
-              id="inlinePhoneInput"
-              inputmode="tel"
-              autocomplete="tel"
-              dir="ltr"
-              placeholder="0750 000 0000"
-              required
-              class="w-full rounded-xl bg-obsidian/55 border border-white/15 focus:border-gold px-3.5 py-3.5 text-ivory placeholder:text-muted/65 outline-none transition-colors text-left"
-            />
-            <p id="inlinePhoneError" class="hidden text-xs text-red-400 mt-1">هیڤیدارین ژمارا مۆبایلێ بنڤیسە.</p>
-          </div>
-
-          <button
-            type="submit"
-            id="inlineSubmitBtn"
-            class="cta-glow w-full py-3.5 sm:py-4 rounded-xl bg-gold text-obsidian text-base font-bold hover:bg-gold-light active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 mt-2"
-          >
-            <span>تۆمار بکە</span>
-          </button>
-        </form>
-
-        <div id="inlineBookingConfirmation" class="hidden text-center py-5 space-y-4">
-          <div class="w-14 h-14 mx-auto rounded-full border border-gold bg-gold/15 flex items-center justify-center text-gold">
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-            </svg>
-          </div>
-
-          <div>
-            <span class="text-xs text-gold font-semibold">ب سەرکەفتی هاتە تۆمارکرن</span>
-            <h3 class="font-serif text-2xl text-ivory font-bold mt-1" id="inlineConfName"></h3>
-            <p class="text-sm text-ivory/85 mt-0.5" dir="ltr" id="inlineConfPhone"></p>
-            <p class="text-sm text-ivory/85 mt-2">
-              ڕێزا تە: <span id="inlineConfOrder" class="text-gold font-bold text-lg"></span>
-            </p>
-          </div>
-
-          <button
-            type="button"
-            id="inlineResetBtn"
-            class="px-6 py-2.5 rounded-xl bg-gold text-obsidian text-sm font-bold hover:bg-gold-light active:scale-95 transition-all"
-          >
-            تۆمارکرنا ناڤەکێ دی
-          </button>
-        </div>
-      </div>
-
-      <!-- Rezervasyon Kutusunun Dışında ve Altında Buton -->
-      <div class="mt-4">
-        <button
-          type="button"
-          data-select-view="services"
-          class="w-full py-3.5 px-5 rounded-xl border border-gold/60 reservation-transparent-card text-gold text-sm sm:text-base font-bold hover:bg-gold hover:text-obsidian active:scale-[0.98] transition-all"
-        >
-          خزمەتگوزاری ببینە
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2. Hizmetler ve Fiyatlar Bölümü -->
-  <section id="fiyatlar" class="hidden relative z-10 pt-24 pb-14 scroll-mt-16">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6">
-      <div class="flex items-center justify-end mb-4">
-        <button
-          type="button"
-          data-close-view="true"
-          aria-label="داخستن"
-          class="w-8 h-8 rounded-lg border border-white/15 glass-card text-ivory/75 hover:text-ivory hover:border-white/35 flex items-center justify-center text-lg leading-none"
-        >
-          &times;
-        </button>
-      </div>
-
-      <div class="text-center max-w-md mx-auto mb-6">
-        <span class="text-xs font-bold text-gold tracking-wider block mb-1">خزمەتگوزاری و لیستا نرخان</span>
-        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ivory">خزمەتگوزاری و نرخێن سەرتراشخانێ</h2>
-      </div>
-
-      <div id="pricesGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4"></div>
-
-      <div class="mt-7 text-center">
-        <button
-          type="button"
-          data-select-view="reservation"
-          class="cta-glow px-8 py-3.5 rounded-xl bg-gold text-obsidian text-sm sm:text-base font-bold hover:bg-gold-light active:scale-[0.98] transition-all"
-        >
-          تۆمارکرنا ناڤی
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3. Sabit Bilgiler / İletişim Footer Bölümü -->
-  <footer id="iletisim" class="glass-card border-t border-white/10 pt-12 pb-8 relative z-10 mt-8">
-    <div class="max-w-6xl mx-auto px-5 sm:px-6 md:px-10">
-      <div class="grid md:grid-cols-2 gap-8 pb-8 border-b border-white/10">
-        <div class="space-y-2.5">
-          <span class="text-xs font-bold text-gold tracking-wider block">پەیوەندی و ناڤونیشان</span>
-          <span class="font-serif text-2xl font-bold text-ivory block">سەرتراشخانا کوچەر</span>
-          <p class="text-sm text-ivory/85">سێمێل - جادا ریعایێ بەرامبەری قوتابخانا هایدار</p>
-          <p>
-            <a href="tel:07500000000" class="text-gold hover:text-gold-light transition-colors tracking-wider inline-block font-medium" dir="ltr">
-              0750 000 0000
-            </a>
-          </p>
-        </div>
-
-        <div class="space-y-1.5 md:text-left">
-          <h4 class="text-sm font-bold text-gold">دەمێن کارکرنێ</h4>
-          <p class="text-sm text-ivory/85">شەمبی - پێنج شەمب</p>
-        </div>
-      </div>
-
-      <div class="pt-6 flex items-center justify-center sm:justify-between">
-        <p dir="ltr" class="font-signature not-italic text-xl sm:text-2xl tracking-[0.14em] gold-gradient-text font-bold">
-          © 2026 - By Ghareeb
-        </p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Admin Panel Modal -->
-  <div id="barberPanelModal" class="hidden fixed inset-0 z-50 w-screen h-[100dvh] admin-panel-bg flex flex-col overflow-hidden">
-    <div class="relative z-10 flex items-center justify-between px-5 sm:px-10 py-4 sm:py-5 border-b border-gold/25 bg-gradient-to-l from-obsidian/85 via-charcoal/80 to-obsidian/85 backdrop-blur-md shrink-0 shadow-lg">
-      <div>
-        <span class="text-xs font-semibold bg-gradient-to-l from-gold-light via-gold to-amber-300 bg-clip-text text-transparent">پەنێلێ ڕێڤەبرنێ — تەمام شاشە</span>
-        <h3 class="font-serif text-xl sm:text-3xl text-ivory font-bold mt-0.5 drop-shadow">لیستا ناڤ و ژمارێن تۆمارکری</h3>
-      </div>
 
       <button
-        id="closeBarberPanelBtn"
         type="button"
-        aria-label="داخستنا پەنێلێ"
-        class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl border border-red-500/45 bg-red-950/60 text-red-300 hover:bg-red-600 hover:text-white active:scale-95 transition-all flex items-center justify-center text-2xl font-bold leading-none shadow-md"
+        id="btnServices"
+        class="flex-1 py-3.5 px-4 rounded-xl glass-card border border-gold/65 text-gold text-sm sm:text-base font-bold hover:bg-gold hover:text-obsidian active:scale-95 transition-all text-center"
       >
-        &times;
+        خزمەتگوزاری ببینە
       </button>
     </div>
+  </section>
 
-    <div class="relative z-10 flex-1 overflow-y-auto px-4 sm:px-8 md:px-12 py-8">
-      <div id="panelLoginBox" class="max-w-sm mx-auto my-10 admin-glass-card hairline-border rounded-2xl p-6 sm:p-8 text-center space-y-5">
-        <p class="text-sm text-ivory/90">بۆ دیتنا لیستەیێ، نهێنیپەیڤا ئەدمینی بنڤیسە:</p>
-        <input
-          type="password"
-          id="panelPassInput"
-          inputmode="text"
-          placeholder="••••"
-          class="w-full rounded-xl bg-obsidian/85 border border-gold/30 focus:border-gold px-4 py-3.5 text-center text-ivory tracking-[0.35em] outline-none"
-        />
-        <p id="panelPassError" class="hidden text-xs text-red-400">نهێنیپەیڤ شاشە، دووبارە هەول بدە.</p>
-        <button id="panelLoginSubmitBtn" type="button" class="cta-glow w-full py-3.5 rounded-xl bg-gold text-obsidian text-sm font-bold hover:bg-gold-light active:scale-[0.98] transition-all">
-          چوونا ژوور
+  <section id="reservationSection" class="hidden min-h-screen flex items-center justify-center px-4 py-16 relative z-10">
+    <div class="w-full max-w-md glass-card border border-gold/35 rounded-2xl p-6 sm:p-8 space-y-5">
+      <div class="flex items-center justify-between">
+        <h2 class="font-serif text-2xl font-bold text-ivory">تۆمارکرنا ناڤی</h2>
+        <button type="button" id="backFromReservation" class="text-xs font-bold text-gold hover:text-gold-light px-3 py-1.5 rounded-lg border border-gold/40">
+          زڤرین
         </button>
       </div>
 
-      <div id="panelContentBox" class="hidden max-w-4xl mx-auto space-y-5">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 admin-glass-card rounded-2xl px-5 py-4">
-          <div class="text-sm text-ivory/90 flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]"></span>
-            <span>کۆما ناڤێن تۆمارکری: <span id="totalBookingsCount" class="text-gold font-bold text-base">0</span></span>
-          </div>
-
-          <div class="flex items-center gap-2.5">
-            <input
-              type="search"
-              id="panelSearchInput"
-              placeholder="لێگەڕان ب ناڤ یان ژمارە..."
-              class="flex-1 sm:w-56 rounded-xl bg-obsidian/80 border border-gold/25 focus:border-gold px-3.5 py-2 text-sm text-ivory placeholder:text-muted/75 outline-none transition-colors"
-            />
-            <button type="button" id="refreshSheetBtn" class="px-4 py-2.5 rounded-xl border border-gold/55 bg-obsidian/85 text-gold text-xs sm:text-sm font-semibold hover:bg-gold hover:text-obsidian active:scale-95 transition-all shrink-0">
-              نویژەنکرن
-            </button>
-          </div>
+      <form id="simpleBookingForm" class="space-y-4">
+        <div>
+          <label for="custName" class="block text-xs font-semibold text-gold mb-1.5">ناڤ و پاشناڤ</label>
+          <input id="custName" type="text" required placeholder="ناڤێ خۆ بنڤیسە..." class="w-full rounded-xl bg-obsidian/70 border border-white/15 focus:border-gold px-3.5 py-3 text-ivory outline-none" />
         </div>
+        <div>
+          <label for="custPhone" class="block text-xs font-semibold text-gold mb-1.5">ژمارا مۆبایلێ</label>
+          <input id="custPhone" type="tel" dir="ltr" required placeholder="0750 000 0000" class="w-full rounded-xl bg-obsidian/70 border border-white/15 focus:border-gold px-3.5 py-3 text-ivory text-left outline-none" />
+        </div>
+        <button type="submit" class="w-full py-3.5 rounded-xl bg-gold text-obsidian text-sm sm:text-base font-bold hover:bg-gold-light active:scale-95 transition-all">
+          تۆمار بکە
+        </button>
+      </form>
 
-        <div id="panelAppointmentsList" class="space-y-3"></div>
+      <div id="bookingResult" class="hidden text-center pt-2 space-y-2">
+        <p class="text-sm font-bold text-gold">ناڤێ تە ب سەرکەفتی هاتە تۆمارکرن</p>
+        <p id="resultText" class="text-sm text-ivory/90"></p>
       </div>
     </div>
-  </div>
+  </section>
 
-  <script type="module">
-    const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbx7WRRWW3iAuhnvYamvFvO0Vim0dijhD9qNmnDQx1MJ4OcsOFIL5CgIMMbEGr8D2Ihe7Q/exec';
-    const BARBER_PASSCODE = '1234';
-    const LOCAL_STORAGE_KEY = 'bzhar_barber_names_phone_list_v12';
-    const CHECKED_STORAGE_KEY = 'bzhar_barber_checked_ids_v1';
-    const INITIAL_LOADER_MS = 1000;
-    const BOOKING_LOADER_MS = 1500;
-    const FADE_OUT_MS = 450;
-    const RESERVATION_BG_URL = 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/image_5e38d5.jpg';
+  <section id="servicesSection" class="hidden min-h-screen px-4 sm:px-6 py-14 relative z-10">
+    <div class="max-w-4xl mx-auto">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ivory">خزمەتگوزاری و نرخ</h2>
+        <button type="button" id="backFromServices" class="text-xs font-bold text-gold hover:text-gold-light px-3.5 py-2 rounded-lg glass-card border border-gold/45">
+          زڤرین
+        </button>
+      </div>
 
-    const preloadReservationBg = new Image();
-    preloadReservationBg.src = RESERVATION_BG_URL;
-
-    const SERVICES_BY_PRICE = [
-      {
-        id: 'vip',
-        title: 'VIP',
-        price: 10000,
-        image: 'https://github.com/ghareebnihad/Bzhar-barber/blob/main/normal.jpg?raw=true',
-        badge: 'VIP'
-      },
-      {
-        id: 'چێکرنا پرچێ بو مەزنا',
-        title: 'چێکرنا پرچێ بو مەزنا',
-        price: 5000,
-        image: 'https://github.com/ghareebnihad/Bzhar-barber/blob/main/normal.jpg?raw=true',
-        badge: 'NR'
-      },
-      {
-        id: 'پاقژکرنا سەروچاڤا بخار',
-        title: ' پاقژکرنا سەروچاڤا بخار ',
-        price: 5000,
-        image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/face.png',
-        badge: 'BZ'
-      },
-      {
-        id: 'چێکرنا پرچێ بو زاروکا',
-        title: 'چێکرنا پرچێ بو زاروکا',
-        price: 3000,
-        image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/cocuk.jpg',
-        badge: 'CK'
-      },
-      {
-        id: 'تعدیلات',
-        title: 'تعدیلات',
-        price: 3000,
-        image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/edit.png',
-        badge: 'ED'
-      },
-      {
-        id: 'شەکرنا پرچێ',
-        title: ' شەکرنا پرچێ',
-        price: 2000,
-        image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/fon.jpg',
-        badge: 'FR'
-      },
-      {
-        id: 'دانانا ماسکی',
-        title: '  دانانا ماسکی',
-        price: 1000,
-        image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/mask.png',
-        badge: 'MK'
-      },
-      {
-        id: 'قەلەم کرن',
-        title: 'قەلەم کرن',
-        price: 2000,
-        image: 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/edit.png',
-        badge: 'QL'
-      }
-    ].sort((a, b) => b.price - a.price);
-
-    function formatPrice(amount) {
-      return Number(amount || 0).toLocaleString('en-US');
-    }
-
-    function escapeHtml(str) {
-      return String(str || '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    }
-
-    function escapeAttr(str) {
-      return String(str || '').replace(/'/g, "\\'");
-    }
-
-    const scissorsLoaderOverlay = document.getElementById('scissorsLoaderOverlay');
-    const bookingBarberLoader = document.getElementById('bookingBarberLoader');
-    const defaultScissorsLoader = document.getElementById('defaultScissorsLoader');
-    let loaderTimer = null;
-    let fadeTimer = null;
-
-    function showScissorsLoader(mode = 'default') {
-      clearTimeout(loaderTimer);
-      clearTimeout(fadeTimer);
-
-      if (mode === 'booking') {
-        bookingBarberLoader.classList.remove('hidden');
-        bookingBarberLoader.classList.add('flex');
-        defaultScissorsLoader.classList.add('hidden');
-        defaultScissorsLoader.classList.remove('flex');
-      } else {
-        defaultScissorsLoader.classList.remove('hidden');
-        defaultScissorsLoader.classList.add('flex');
-        bookingBarberLoader.classList.add('hidden');
-        bookingBarberLoader.classList.remove('flex');
-      }
-
-      scissorsLoaderOverlay.classList.remove('hidden', 'loader-fade-out');
-      void scissorsLoaderOverlay.offsetWidth;
-    }
-
-    function hideScissorsLoaderWithFade() {
-      clearTimeout(loaderTimer);
-      clearTimeout(fadeTimer);
-      scissorsLoaderOverlay.classList.add('loader-fade-out');
-      fadeTimer = setTimeout(() => {
-        scissorsLoaderOverlay.classList.add('hidden');
-      }, FADE_OUT_MS);
-    }
-
-    function runScissorsLoaderOnce(callback, durationMs = BOOKING_LOADER_MS, mode = 'default') {
-      showScissorsLoader(mode);
-      loaderTimer = setTimeout(() => {
-        if (typeof callback === 'function') {
-          callback();
-        }
-        hideScissorsLoaderWithFade();
-      }, durationMs);
-    }
-
-    if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual';
-    }
-    window.addEventListener('DOMContentLoaded', () => {
-      window.scrollTo(0, 0);
-      runScissorsLoaderOnce(null, INITIAL_LOADER_MS, 'default');
-    });
-
-    const rezervasyonSection = document.getElementById('rezervasyon');
-    const fiyatlarSection = document.getElementById('fiyatlar');
-
-    function clearOtherSelections() {
-      document.querySelectorAll('#pricesGrid .service-tile').forEach(tile => {
-        tile.classList.remove('is-selected');
-      });
-    }
-
-    function setActiveCustomerView(viewName) {
-      if (viewName === 'reservation') {
-        document.body.classList.add('reservation-bg-active');
-        rezervasyonSection.classList.remove('hidden');
-        fiyatlarSection.classList.add('hidden');
-        requestAnimationFrame(() => {
-          rezervasyonSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-      } else if (viewName === 'services') {
-        document.body.classList.remove('reservation-bg-active');
-        fiyatlarSection.classList.remove('hidden');
-        rezervasyonSection.classList.add('hidden');
-        requestAnimationFrame(() => {
-          fiyatlarSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-      } else {
-        document.body.classList.remove('reservation-bg-active');
-        rezervasyonSection.classList.add('hidden');
-        fiyatlarSection.classList.add('hidden');
-      }
-    }
-
-    document.querySelectorAll('[data-select-view]').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const view = btn.getAttribute('data-select-view');
-        toggleMobileMenu(true);
-        setActiveCustomerView(view);
-      });
-    });
-
-    document.querySelectorAll('[data-close-view]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        setActiveCustomerView(null);
-      });
-    });
-
-    document.getElementById('brandResetLink')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      setActiveCustomerView(null);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    const pricesGrid = document.getElementById('pricesGrid');
-
-    function renderPricesGrid() {
-      if (!pricesGrid) return;
-
-      pricesGrid.innerHTML = SERVICES_BY_PRICE.map((srv, idx) => {
-        const isVip = srv.id === 'vip';
-        return `
-        <article
-          data-service-id="${escapeAttr(srv.id)}"
-          class="service-tile glass-card ${isVip ? 'is-vip border-2 border-purple-300/80 shadow-[0_0_24px_rgba(216,180,254,0.28)]' : 'border border-white/15'} relative overflow-hidden group flex flex-col justify-between"
-        >
-          ${isVip ? `
-            <div class="vip-ribbon-wrap" aria-label="VIP kurdele">
-              <span class="vip-ribbon-bow">
-                <span>VIP</span>
-              </span>
-              <span class="vip-ribbon-tail"></span>
-            </div>
-          ` : ''}
-
-          <img
-            src="${escapeAttr(srv.image)}"
-            alt="${escapeAttr(srv.title)}"
-            loading="eager"
-            referrerpolicy="no-referrer"
-            class="service-tile-img tile-bg-img absolute inset-0 w-full h-full object-cover"
-          />
-          <div class="tile-fallback hidden absolute inset-0 bg-gradient-to-br from-charcoal via-obsidian to-graphite flex items-center justify-center">
-            <span class="font-signature text-2xl sm:text-3xl font-bold gold-gradient-text tracking-widest opacity-85">
-              ${escapeHtml(srv.badge)}
-            </span>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+        <article class="service-tile glass-card border border-red-500/75 relative overflow-hidden flex flex-col justify-between">
+          <div class="vip-corner-ribbon">VIP</div>
+          <img src="https://github.com/ghareebnihad/Bzhar-barber/blob/main/normal.jpg?raw=true" alt="VIP" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
+          <div class="relative z-10 p-2.5 flex items-center justify-end">
+            <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#1</span>
           </div>
-
-          <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/50 to-obsidian/15 pointer-events-none"></div>
-
-          <div class="relative z-10 p-2.5 flex items-center ${isVip ? 'justify-end' : 'justify-between'}">
-            ${!isVip ? `
-              <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">
-                #${idx + 1}
-              </span>
-              <span class="w-2 h-2 rounded-full bg-gold/80"></span>
-            ` : `
-              <span class="w-2.5 h-2.5 rounded-full bg-purple-300 shadow-[0_0_10px_rgba(216,180,254,0.9)]"></span>
-            `}
-          </div>
-
-          <div class="relative z-10 p-3 text-right ${isVip ? 'bg-purple-950/50 border-t border-purple-300/35' : 'bg-obsidian/45 border-t border-white/10'}">
-            <div class="font-serif text-sm sm:text-base font-bold ${isVip ? 'text-purple-200 group-hover:text-purple-100' : 'text-ivory group-hover:text-gold'} leading-tight transition-colors truncate">
-              ${escapeHtml(srv.title)}
-            </div>
-            <div class="text-sm sm:text-lg font-extrabold ${isVip ? 'text-purple-200' : 'gold-gradient-text'} leading-tight mt-0.5" dir="ltr">
-              ${formatPrice(srv.price)}
-            </div>
+          <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
+            <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">VIP</div>
+            <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">10,000</div>
           </div>
         </article>
-      `;
-      }).join('');
 
-      pricesGrid.querySelectorAll('.service-tile').forEach(card => {
-        card.addEventListener('click', () => {
-          const alreadySelected = card.classList.contains('is-selected');
-          clearOtherSelections();
-          if (!alreadySelected) {
-            card.classList.add('is-selected');
-          }
-        });
+        <article class="service-tile glass-card border border-white/15 relative overflow-hidden flex flex-col justify-between">
+          <img src="https://github.com/ghareebnihad/Bzhar-barber/blob/main/normal.jpg?raw=true" alt="چێکرنا پرچێ بو مەزنا" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
+          <div class="relative z-10 p-2.5 flex items-center justify-between">
+            <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#2</span>
+          </div>
+          <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
+            <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">چێکرنا پرچێ بو مەزنا</div>
+            <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">5,000</div>
+          </div>
+        </article>
 
-        const img = card.querySelector('.tile-bg-img');
-        const fallback = card.querySelector('.tile-fallback');
-        if (img && fallback) {
-          const showFallback = () => {
-            img.classList.add('hidden');
-            fallback.classList.remove('hidden');
-          };
-          img.addEventListener('error', showFallback);
-          if (img.complete && img.naturalWidth === 0) {
-            showFallback();
-          }
-        }
-      });
+        <article class="service-tile glass-card border border-white/15 relative overflow-hidden flex flex-col justify-between">
+          <img src="https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/face.png" alt="پاقژکرنا سەروچاڤا بخار" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
+          <div class="relative z-10 p-2.5 flex items-center justify-between">
+            <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#3</span>
+          </div>
+          <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
+            <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">پاقژکرنا سەروچاڤا بخار</div>
+            <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">5,000</div>
+          </div>
+        </article>
+
+        <article class="service-tile glass-card border border-white/15 relative overflow-hidden flex flex-col justify-between">
+          <img src="https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/cocuk.jpg" alt="چێکرنا پرچێ بو زاروکا" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
+          <div class="relative z-10 p-2.5 flex items-center justify-between">
+            <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#4</span>
+          </div>
+          <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
+            <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">چێکرنا پرچێ بو زاروکا</div>
+            <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">3,000</div>
+          </div>
+        </article>
+
+        <article class="service-tile glass-card border border-white/15 relative overflow-hidden flex flex-col justify-between">
+          <img src="https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/edit.png" alt="تعدیلات" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
+          <div class="relative z-10 p-2.5 flex items-center justify-between">
+            <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#5</span>
+          </div>
+          <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
+            <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">تعدیلات</div>
+            <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">3,000</div>
+          </div>
+        </article>
+
+        <article class="service-tile glass-card border border-white/15 relative overflow-hidden flex flex-col justify-between">
+          <img src="https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/fon.jpg" alt="شەکرنا پرچێ" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
+          <div class="relative z-10 p-2.5 flex items-center justify-between">
+            <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#6</span>
+          </div>
+          <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
+            <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">شەکرنا پرچێ</div>
+            <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">2,000</div>
+          </div>
+        </article>
+
+        <article class="service-tile glass-card border border-white/15 relative overflow-hidden flex flex-col justify-between">
+          <img src="https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/edit.png" alt="قەلەم کرن" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
+          <div class="relative z-10 p-2.5 flex items-center justify-between">
+            <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#7</span>
+          </div>
+          <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
+            <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">قەلەم کرن</div>
+            <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">2,000</div>
+          </div>
+        </article>
+
+        <article class="service-tile glass-card border border-white/15 relative overflow-hidden flex flex-col justify-between">
+          <img src="https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/mask.png" alt="دانانا ماسکی" loading="eager" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/55 to-obsidian/15"></div>
+          <div class="relative z-10 p-2.5 flex items-center justify-between">
+            <span class="px-2 py-0.5 rounded-md bg-obsidian/80 border border-gold/45 text-gold text-[10px] font-bold">#8</span>
+          </div>
+          <div class="relative z-10 p-3 text-right bg-obsidian/55 border-t border-white/10">
+            <div class="font-serif text-sm sm:text-base font-bold text-ivory truncate">دانانا ماسکی</div>
+            <div class="text-sm sm:text-lg font-extrabold gold-gradient-text mt-0.5" dir="ltr">1,000</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const actionLoader = document.getElementById('actionLoader');
+    const homeHero = document.getElementById('homeHero');
+    const reservationSection = document.getElementById('reservationSection');
+    const servicesSection = document.getElementById('servicesSection');
+
+    function runWithBarberLoader(onDone) {
+      actionLoader.classList.remove('hidden');
+      setTimeout(() => {
+        actionLoader.classList.add('hidden');
+        onDone();
+      }, 750);
     }
 
-    renderPricesGrid();
-
-    // Kayıtlar süreye bağlı silinmez (5 gün geçse bile kalır); yalnızca deleteBooking çağrıldığında silinir.
-    const deletedIds = new Set();
-    const checkedIds = new Set(loadCheckedIds());
-    const hasGoogleSheet = Boolean(GOOGLE_SHEET_URL && GOOGLE_SHEET_URL.startsWith('https://'));
-
-    function loadCheckedIds() {
-      try {
-        const parsed = JSON.parse(localStorage.getItem(CHECKED_STORAGE_KEY));
-        return Array.isArray(parsed) ? parsed.map(String) : [];
-      } catch (e) {
-        return [];
-      }
+    function showSection(target) {
+      homeHero.classList.add('hidden');
+      reservationSection.classList.add('hidden');
+      servicesSection.classList.add('hidden');
+      target.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function saveCheckedIds() {
-      try {
-        localStorage.setItem(CHECKED_STORAGE_KEY, JSON.stringify(Array.from(checkedIds)));
-      } catch (e) {}
-    }
-
-    function normalizeBookings(rawList) {
-      if (!Array.isArray(rawList)) return [];
-      const seen = new Map();
-      for (const item of rawList) {
-        if (!item || !item.name) continue;
-        const id = String(item.id || `${item.name}-${item.phone || ''}-${item.createdAt || 0}`);
-        if (deletedIds.has(id)) continue;
-        seen.set(id, {
-          id,
-          name: String(item.name).trim(),
-          phone: String(item.phone || '').trim(),
-          createdAt: Number(item.createdAt) || Date.now()
-        });
-      }
-      return Array.from(seen.values()).sort((a, b) => a.createdAt - b.createdAt);
-    }
-
-    function loadLocalBookings() {
-      try {
-        const parsed = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-        return normalizeBookings(parsed);
-      } catch (e) {
-        return [];
-      }
-    }
-
-    function saveLocalBookings(list) {
-      try {
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(normalizeBookings(list)));
-      } catch (e) {}
-    }
-
-    let allBookings = loadLocalBookings();
-
-    const toastBanner = document.getElementById('toastBanner');
-    const toastMessage = document.getElementById('toastMessage');
-    let toastTimer = null;
-
-    function showToast(msg) {
-      toastMessage.textContent = msg;
-      toastBanner.classList.remove('hidden');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => {
-        toastBanner.classList.add('hidden');
-      }, 2400);
-    }
-
-    async function syncFromGoogleSheet() {
-      if (!hasGoogleSheet) return;
-      try {
-        const res = await fetch(`${GOOGLE_SHEET_URL}?t=${Date.now()}`, { cache: 'no-store' });
-        const data = await res.json();
-        if (data && data.status === 'ok' && Array.isArray(data.bookings)) {
-          const remoteBookings = normalizeBookings(data.bookings);
-          const mergedMap = new Map();
-          for (const localItem of allBookings) {
-            if (!deletedIds.has(String(localItem.id))) {
-              mergedMap.set(String(localItem.id), localItem);
-            }
-          }
-          for (const remoteItem of remoteBookings) {
-            mergedMap.set(String(remoteItem.id), remoteItem);
-          }
-          allBookings = Array.from(mergedMap.values()).sort((a, b) => a.createdAt - b.createdAt);
-          saveLocalBookings(allBookings);
-          renderPanelAppointments();
-        }
-      } catch (err) {}
-    }
-
-    if (hasGoogleSheet) {
-      syncFromGoogleSheet();
-    }
-
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 30) {
-        navbar.classList.add('bg-obsidian/85', 'backdrop-blur-md', 'border-white/10');
-        navbar.classList.remove('border-transparent');
-      } else {
-        navbar.classList.remove('bg-obsidian/85', 'backdrop-blur-md', 'border-white/10');
-        navbar.classList.add('border-transparent');
-      }
-    }, { passive: true });
-
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const mobileMenuBackdrop = document.getElementById('mobileMenuBackdrop');
-
-    function toggleMobileMenu(forceClose = false) {
-      const isHidden = mobileMenu.classList.contains('hidden');
-      if (forceClose || !isHidden) {
-        mobileMenu.classList.add('hidden');
-        mobileMenuBackdrop.classList.add('hidden');
-      } else {
-        mobileMenu.classList.remove('hidden');
-        mobileMenuBackdrop.classList.remove('hidden');
-      }
-    }
-
-    mobileMenuBtn.addEventListener('click', () => toggleMobileMenu());
-    mobileMenuBackdrop.addEventListener('click', () => toggleMobileMenu(true));
-
-    async function createBooking({ name, phone }) {
-      const now = Date.now();
-      const newEntry = {
-        id: `${now}-${Math.random().toString(36).slice(2, 7)}`,
-        name: name.trim(),
-        phone: phone.trim(),
-        createdAt: now
-      };
-
-      allBookings = normalizeBookings([...allBookings, newEntry]);
-      saveLocalBookings(allBookings);
-      const assignedOrder = allBookings.findIndex(b => b.id === newEntry.id) + 1;
-
-      if (hasGoogleSheet) {
-        try {
-          await fetch(GOOGLE_SHEET_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify({ action: 'add', booking: newEntry })
-          });
-          await syncFromGoogleSheet();
-        } catch (err) {}
-      }
-
-      renderPanelAppointments();
-      return assignedOrder > 0 ? assignedOrder : allBookings.length;
-    }
-
-    const inlineBookingForm = document.getElementById('inlineBookingForm');
-    const inlineNameInput = document.getElementById('inlineNameInput');
-    const inlinePhoneInput = document.getElementById('inlinePhoneInput');
-    const inlineNameError = document.getElementById('inlineNameError');
-    const inlinePhoneError = document.getElementById('inlinePhoneError');
-    const inlineSubmitBtn = document.getElementById('inlineSubmitBtn');
-    const inlineBookingConfirmation = document.getElementById('inlineBookingConfirmation');
-    const inlineConfName = document.getElementById('inlineConfName');
-    const inlineConfPhone = document.getElementById('inlineConfPhone');
-    const inlineConfOrder = document.getElementById('inlineConfOrder');
-    const inlineResetBtn = document.getElementById('inlineResetBtn');
-
-    inlineNameInput.addEventListener('input', () => {
-      if (inlineNameInput.value.trim()) {
-        inlineNameError.classList.add('hidden');
-        inlineNameInput.classList.remove('border-red-500');
-        inlineNameInput.classList.add('border-white/15');
-      }
+    document.getElementById('btnReservation').addEventListener('click', () => {
+      runWithBarberLoader(() => showSection(reservationSection));
     });
 
-    inlinePhoneInput.addEventListener('input', () => {
-      if (inlinePhoneInput.value.trim()) {
-        inlinePhoneError.classList.add('hidden');
-        inlinePhoneInput.classList.remove('border-red-500');
-        inlinePhoneInput.classList.add('border-white/15');
-      }
+    document.getElementById('btnServices').addEventListener('click', () => {
+      runWithBarberLoader(() => showSection(servicesSection));
     });
 
-    inlineBookingForm.addEventListener('submit', async (e) => {
+    document.getElementById('backFromReservation').addEventListener('click', () => {
+      showSection(homeHero);
+    });
+
+    document.getElementById('backFromServices').addEventListener('click', () => {
+      showSection(homeHero);
+    });
+
+    document.getElementById('simpleBookingForm').addEventListener('submit', (e) => {
       e.preventDefault();
-      const name = inlineNameInput.value.trim();
-      const phone = inlinePhoneInput.value.trim();
-      let hasError = false;
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      if (!name || !phone) return;
 
-      if (!name) {
-        inlineNameError.classList.remove('hidden');
-        inlineNameInput.classList.remove('border-white/15');
-        inlineNameInput.classList.add('border-red-500');
-        hasError = true;
-      }
-
-      if (!phone) {
-        inlinePhoneError.classList.remove('hidden');
-        inlinePhoneInput.classList.remove('border-white/15');
-        inlinePhoneInput.classList.add('border-red-500');
-        hasError = true;
-      }
-
-      if (hasError) {
-        if (!name) inlineNameInput.focus();
-        else inlinePhoneInput.focus();
-        return;
-      }
-
-      inlineSubmitBtn.disabled = true;
-      showScissorsLoader('booking');
-      const startTime = Date.now();
-      const assignedOrder = await createBooking({ name, phone });
-      const elapsed = Date.now() - startTime;
-      const remaining = Math.max(0, BOOKING_LOADER_MS - elapsed);
-
-      runScissorsLoaderOnce(() => {
-        inlineSubmitBtn.disabled = false;
-        inlineConfName.textContent = name;
-        inlineConfPhone.textContent = phone;
-        inlineConfOrder.textContent = `#${assignedOrder}`;
-        inlineBookingForm.classList.add('hidden');
-        inlineBookingConfirmation.classList.remove('hidden');
-        showToast('ناڤێ تە ب سەرکەفتی هاتە تۆمارکرن');
-      }, remaining, 'booking');
-    });
-
-    inlineResetBtn.addEventListener('click', () => {
-      inlineBookingForm.reset();
-      inlineNameError.classList.add('hidden');
-      inlinePhoneError.classList.add('hidden');
-      inlineBookingConfirmation.classList.add('hidden');
-      inlineBookingForm.classList.remove('hidden');
-      inlineNameInput.focus();
-    });
-
-    const barberPanelModal = document.getElementById('barberPanelModal');
-    const openBarberPanelBtn = document.getElementById('openBarberPanelBtn');
-    const closeBarberPanelBtn = document.getElementById('closeBarberPanelBtn');
-    const panelLoginBox = document.getElementById('panelLoginBox');
-    const panelContentBox = document.getElementById('panelContentBox');
-    const panelPassInput = document.getElementById('panelPassInput');
-    const panelPassError = document.getElementById('panelPassError');
-    const panelLoginSubmitBtn = document.getElementById('panelLoginSubmitBtn');
-    const panelSearchInput = document.getElementById('panelSearchInput');
-    const panelAppointmentsList = document.getElementById('panelAppointmentsList');
-    const totalBookingsCount = document.getElementById('totalBookingsCount');
-    const refreshSheetBtn = document.getElementById('refreshSheetBtn');
-
-    let panelUnlocked = false;
-
-    async function openModal() {
-      toggleMobileMenu(true);
-      barberPanelModal.classList.remove('hidden');
-      barberPanelModal.classList.add('fullscreen-modal-enter');
-      document.body.style.overflow = 'hidden';
-
-      if (panelUnlocked) {
-        panelLoginBox.classList.add('hidden');
-        panelContentBox.classList.remove('hidden');
-        renderPanelAppointments();
-        await syncFromGoogleSheet();
-      } else {
-        panelPassInput.value = '';
-        panelPassError.classList.add('hidden');
-        panelLoginBox.classList.remove('hidden');
-        panelContentBox.classList.add('hidden');
-        setTimeout(() => panelPassInput.focus(), 80);
-      }
-    }
-
-    function closeModal() {
-      barberPanelModal.classList.add('hidden');
-      barberPanelModal.classList.remove('fullscreen-modal-enter');
-      document.body.style.overflow = '';
-    }
-
-    openBarberPanelBtn.addEventListener('click', openModal);
-    closeBarberPanelBtn.addEventListener('click', closeModal);
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !barberPanelModal.classList.contains('hidden')) {
-        closeModal();
-      }
-    });
-
-    async function attemptPanelLogin() {
-      if (panelPassInput.value.trim() === BARBER_PASSCODE) {
-        panelUnlocked = true;
-        panelPassError.classList.add('hidden');
-        panelLoginBox.classList.add('hidden');
-        panelContentBox.classList.remove('hidden');
-        renderPanelAppointments();
-        await syncFromGoogleSheet();
-      } else {
-        panelPassError.classList.remove('hidden');
-      }
-    }
-
-    panelLoginSubmitBtn.addEventListener('click', attemptPanelLogin);
-    panelPassInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') attemptPanelLogin();
-    });
-
-    panelSearchInput.addEventListener('input', renderPanelAppointments);
-
-    refreshSheetBtn.addEventListener('click', async () => {
-      await syncFromGoogleSheet();
-      showToast('لیستە هاتە نویژەنکرن');
-    });
-
-    window.copyPhoneNumber = async function(phone) {
-      if (!phone) return;
-      try {
-        await navigator.clipboard.writeText(phone);
-      } catch (e) {}
-      showToast(`ژمارە هاتە کۆپیکرن: ${phone}`);
-    };
-
-    window.toggleMarkBooking = function(id) {
-      const key = String(id);
-      if (checkedIds.has(key)) {
-        checkedIds.delete(key);
-      } else {
-        checkedIds.add(key);
-      }
-      saveCheckedIds();
-      renderPanelAppointments();
-    };
-
-    function renderPanelAppointments() {
-      totalBookingsCount.textContent = String(allBookings.length);
-
-      if (!panelUnlocked) return;
-
-      const query = (panelSearchInput.value || '').trim().toLowerCase();
-      const numberedItems = allBookings.map((item, idx) => ({
-        item,
-        orderNumber: idx + 1
-      }));
-
-      const filtered = numberedItems.filter(({ item }) => {
-        if (!query) return true;
-        const n = (item.name || '').toLowerCase();
-        const p = (item.phone || '').toLowerCase();
-        return n.includes(query) || p.includes(query);
+      runWithBarberLoader(() => {
+        document.getElementById('resultText').textContent = `${name} — ${phone}`;
+        document.getElementById('bookingResult').classList.remove('hidden');
       });
-
-      if (filtered.length === 0) {
-        panelAppointmentsList.innerHTML = `
-          <div class="text-center py-12 text-sm text-ivory/80 admin-glass-card rounded-2xl">
-            ${query ? 'چ ئەنجام بۆ لێگەڕانێ نەهاتنە دیتن.' : 'هێشتا چ ناڤ نەهاتینە تۆمارکرن.'}
-          </div>
-        `;
-        return;
-      }
-
-      panelAppointmentsList.innerHTML = filtered.map(({ item, orderNumber }) => {
-        const idStr = String(item.id);
-        const isChecked = checkedIds.has(idStr);
-        return `
-        <div class="flex items-center justify-between gap-3 sm:gap-4 admin-glass-card hover:border-gold/55 rounded-xl transition-all px-4 sm:px-6 py-4">
-          <div class="flex items-center gap-3 sm:gap-4 min-w-0">
-            <span class="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-full bg-gradient-to-br from-gold/30 to-amber-500/10 border border-gold/60 text-gold-light font-bold text-sm sm:text-base flex items-center justify-center shadow-inner">
-              ${orderNumber}
-            </span>
-
-            <button
-              type="button"
-              onclick="toggleMarkBooking('${escapeAttr(idStr)}')"
-              aria-label="نیشانکرنا ناڤی"
-              class="mark-square-btn ${isChecked ? 'is-checked' : ''}"
-            >
-              ${isChecked ? `
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                </svg>
-              ` : ''}
-            </button>
-
-            <div class="min-w-0">
-              <div class="font-serif text-lg sm:text-xl font-bold truncate transition-all ${isChecked ? 'line-through text-ivory/50' : 'text-ivory'}">
-                ${escapeHtml(item.name)}
-              </div>
-              ${item.phone ? `
-                <div class="flex items-center gap-2.5 mt-0.5">
-                  <a href="tel:${escapeAttr(item.phone)}" class="text-xs sm:text-sm hover:text-gold-light transition-colors ${isChecked ? 'line-through text-gold/50' : 'text-gold'}" dir="ltr">
-                    ${escapeHtml(item.phone)}
-                  </a>
-                  <button
-                    type="button"
-                    onclick="copyPhoneNumber('${escapeAttr(item.phone)}')"
-                    class="text-[11px] px-2 py-0.5 rounded border border-gold/35 bg-gold/10 text-gold-light hover:bg-gold hover:text-obsidian transition-colors"
-                  >
-                    کۆپی
-                  </button>
-                </div>
-              ` : ''}
-            </div>
-          </div>
-
-          <button
-            type="button"
-            onclick="deleteBooking('${escapeAttr(idStr)}')"
-            class="px-3.5 sm:px-4 py-2 rounded-lg bg-red-950/75 border border-red-500/45 text-red-300 text-xs sm:text-sm font-semibold hover:bg-red-600 hover:text-white active:scale-95 transition-all shrink-0"
-          >
-            ژێبرن
-          </button>
-        </div>
-      `;
-      }).join('');
-    }
-
-    window.deleteBooking = async function(id) {
-      const targetId = String(id);
-      deletedIds.add(targetId);
-      checkedIds.delete(targetId);
-      saveCheckedIds();
-      allBookings = allBookings.filter(b => String(b.id) !== targetId);
-      saveLocalBookings(allBookings);
-      renderPanelAppointments();
-
-      if (hasGoogleSheet) {
-        try {
-          await fetch(GOOGLE_SHEET_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify({ action: 'delete', id: targetId })
-          });
-        } catch (e) {}
-      }
-
-      showToast('ناڤ ژ لیستەیێ هاتە ژێبرن');
-    };
+    });
   </script>
 </body>
 </html>
