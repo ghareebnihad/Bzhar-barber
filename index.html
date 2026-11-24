@@ -84,7 +84,7 @@
 
     body.reservation-bg-active .fixed-bg-photo {
       background-image:
-        linear-gradient(180deg, rgba(11, 11, 12, 0.52) 0%, rgba(11, 11, 12, 0.68) 52%, rgba(11, 11, 12, 0.90) 100%),
+        linear-gradient(180deg, rgba(11, 11, 12, 0.45) 0%, rgba(11, 11, 12, 0.60) 52%, rgba(11, 11, 12, 0.84) 100%),
         url('https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/image_5e38d5.jpg');
     }
 
@@ -173,14 +173,21 @@
     }
 
     .hairline-border {
-      border: 1px solid rgba(197, 160, 89, 0.38);
-      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(197, 160, 89, 0.35);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
     }
 
     .glass-card {
       background: rgba(19, 19, 22, 0.74);
       backdrop-filter: blur(11px);
       -webkit-backdrop-filter: blur(11px);
+    }
+
+    /* Daha şeffaf rezervasyon kutusu */
+    .reservation-transparent-card {
+      background: rgba(19, 19, 22, 0.34);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     .admin-glass-card {
@@ -292,8 +299,14 @@
     .service-tile {
       aspect-ratio: 1 / 1;
       border-radius: 18px;
+      cursor: pointer;
       transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease, box-shadow 0.28s ease;
       will-change: transform;
+    }
+    .service-tile.is-selected {
+      border-color: #DFC183 !important;
+      box-shadow: 0 0 0 2px rgba(223, 193, 131, 0.85), 0 14px 28px rgba(0, 0, 0, 0.75) !important;
+      transform: translate3d(0, -3px, 0);
     }
     @media (hover: hover) {
       .service-tile:hover {
@@ -373,7 +386,7 @@
     <span id="toastMessage"></span>
   </div>
 
-  <!-- Tek Makas Loader -->
+  <!-- Tek Makas Loader (Yalnızca ilk açılış ve rezervasyon yapılırken görünür) -->
   <div id="scissorsLoaderOverlay" class="fixed inset-0 z-[80] bg-obsidian/92 backdrop-blur-md flex flex-col items-center justify-center gap-4 pointer-events-auto">
     <div class="relative w-28 h-28 flex items-center justify-center">
       <div class="orbit-dot absolute inset-0 rounded-full border border-dashed border-gold/40"></div>
@@ -396,7 +409,7 @@
 
   <div id="mobileMenuBackdrop" class="hidden fixed inset-0 z-40 bg-obsidian/65 backdrop-blur-sm transition-opacity duration-300 md:hidden"></div>
 
-  <!-- Sabit Üst Menü / Admin Panel Butonu -->
+  <!-- Üst Menü / Admin Panel Butonu -->
   <header id="navbar" class="fixed top-0 left-0 right-0 z-40 transition-colors duration-300 border-b border-transparent pt-[env(safe-area-inset-top)]">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 h-16 sm:h-20 flex items-center justify-between gap-2 relative z-50">
       <a href="#" id="brandResetLink" class="flex items-center gap-3 sm:gap-3.5 group shrink-0">
@@ -452,8 +465,8 @@
     </div>
   </header>
 
-  <!-- İlk Ekran: Boş, Yazısız, Yalnızca İki Buton -->
-  <section id="ilkEkran" class="min-h-[100svh] flex items-center justify-center relative z-10 pt-20 pb-10">
+  <!-- İlk Ekran: Header hizasında açılır, müşteri kaydırır -->
+  <section id="ilkEkran" class="min-h-[85svh] flex items-center justify-center relative z-10 pt-20 pb-10">
     <div class="hero-stagger max-w-4xl mx-auto px-5 sm:px-6 md:px-10 w-full text-center">
       <div class="flex flex-wrap items-center justify-center gap-3.5 sm:gap-4">
         <button
@@ -480,10 +493,10 @@
     </div>
   </section>
 
-  <!-- 1. Rezervasyon Bölümü -->
+  <!-- 1. Rezervasyon Bölümü (Daha şeffaf kutu + buton kutunun dışında ve altında) -->
   <section id="rezervasyon" class="hidden relative z-10 pt-24 pb-12 scroll-mt-16">
     <div class="max-w-lg mx-auto px-4 sm:px-6">
-      <div class="glass-card hairline-border rounded-2xl p-6 sm:p-8 relative overflow-hidden">
+      <div class="reservation-transparent-card hairline-border rounded-2xl p-6 sm:p-8 relative overflow-hidden">
         <div class="flex items-center justify-end mb-4">
           <button
             type="button"
@@ -511,7 +524,7 @@
               autocomplete="name"
               placeholder="ناڤێ خۆ بنڤیسە..."
               required
-              class="w-full rounded-xl bg-obsidian/85 border border-white/15 focus:border-gold px-3.5 py-3.5 text-ivory placeholder:text-muted/65 outline-none transition-colors"
+              class="w-full rounded-xl bg-obsidian/55 border border-white/15 focus:border-gold px-3.5 py-3.5 text-ivory placeholder:text-muted/65 outline-none transition-colors"
             />
             <p id="inlineNameError" class="hidden text-xs text-red-400 mt-1">هیڤیدارین ناڤی بنڤیسە.</p>
           </div>
@@ -528,7 +541,7 @@
               dir="ltr"
               placeholder="0750 000 0000"
               required
-              class="w-full rounded-xl bg-obsidian/85 border border-white/15 focus:border-gold px-3.5 py-3.5 text-ivory placeholder:text-muted/65 outline-none transition-colors text-left"
+              class="w-full rounded-xl bg-obsidian/55 border border-white/15 focus:border-gold px-3.5 py-3.5 text-ivory placeholder:text-muted/65 outline-none transition-colors text-left"
             />
             <p id="inlinePhoneError" class="hidden text-xs text-red-400 mt-1">هیڤیدارین ژمارا مۆبایلێ بنڤیسە.</p>
           </div>
@@ -539,14 +552,6 @@
             class="cta-glow w-full py-3.5 sm:py-4 rounded-xl bg-gold text-obsidian text-base font-bold hover:bg-gold-light active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 mt-2"
           >
             <span>تۆمار بکە</span>
-          </button>
-
-          <button
-            type="button"
-            data-select-view="services"
-            class="w-full py-3 px-5 rounded-xl border border-gold/55 bg-obsidian/75 text-gold text-sm font-bold hover:bg-gold hover:text-obsidian active:scale-[0.98] transition-all"
-          >
-            خزمەتگوزاری ببینە
           </button>
         </form>
 
@@ -574,6 +579,17 @@
             تۆمارکرنا ناڤەکێ دی
           </button>
         </div>
+      </div>
+
+      <!-- Rezervasyon Kutusunun Dışında ve Altında Buton -->
+      <div class="mt-4">
+        <button
+          type="button"
+          data-select-view="services"
+          class="w-full py-3.5 px-5 rounded-xl border border-gold/60 reservation-transparent-card text-gold text-sm sm:text-base font-bold hover:bg-gold hover:text-obsidian active:scale-[0.98] transition-all"
+        >
+          خزمەتگوزاری ببینە
+        </button>
       </div>
     </div>
   </section>
@@ -640,7 +656,7 @@
     </div>
   </footer>
 
-  <!-- Sabit Admin Panel Modal -->
+  <!-- Admin Panel Modal -->
   <div id="barberPanelModal" class="hidden fixed inset-0 z-50 w-screen h-[100dvh] admin-panel-bg flex flex-col overflow-hidden">
     <div class="relative z-10 flex items-center justify-between px-5 sm:px-10 py-4 sm:py-5 border-b border-gold/25 bg-gradient-to-l from-obsidian/85 via-charcoal/80 to-obsidian/85 backdrop-blur-md shrink-0 shadow-lg">
       <div>
@@ -705,7 +721,7 @@
     const LOCAL_STORAGE_KEY = 'bzhar_barber_names_phone_list_v12';
     const CHECKED_STORAGE_KEY = 'bzhar_barber_checked_ids_v1';
     const INITIAL_LOADER_MS = 1000;
-    const BUTTON_LOADER_MS = 1500;
+    const BOOKING_LOADER_MS = 1500;
     const FADE_OUT_MS = 450;
     const RESERVATION_BG_URL = 'https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/image_5e38d5.jpg';
 
@@ -795,7 +811,7 @@
       }, FADE_OUT_MS);
     }
 
-    function runWithScissorsLoader(callback, durationMs = BUTTON_LOADER_MS) {
+    function runScissorsLoaderOnce(callback, durationMs = BOOKING_LOADER_MS) {
       showScissorsLoader();
       loaderTimer = setTimeout(() => {
         if (typeof callback === 'function') {
@@ -805,13 +821,23 @@
       }, durationMs);
     }
 
-    // Site ilk açılırken 1 saniye intro/makas loading + fade-out
+    // Yalnızca sayfa ilk açılırken header hizasında başla ve 1 saniye makas loading göster
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
     window.addEventListener('DOMContentLoaded', () => {
-      runWithScissorsLoader(null, INITIAL_LOADER_MS);
+      window.scrollTo(0, 0);
+      runScissorsLoaderOnce(null, INITIAL_LOADER_MS);
     });
 
     const rezervasyonSection = document.getElementById('rezervasyon');
     const fiyatlarSection = document.getElementById('fiyatlar');
+
+    function clearOtherSelections() {
+      document.querySelectorAll('#pricesGrid .service-tile').forEach(tile => {
+        tile.classList.remove('is-selected');
+      });
+    }
 
     function setActiveCustomerView(viewName) {
       if (viewName === 'reservation') {
@@ -840,26 +866,20 @@
         e.preventDefault();
         const view = btn.getAttribute('data-select-view');
         toggleMobileMenu(true);
-        runWithScissorsLoader(() => {
-          setActiveCustomerView(view);
-        }, BUTTON_LOADER_MS);
+        setActiveCustomerView(view);
       });
     });
 
     document.querySelectorAll('[data-close-view]').forEach(btn => {
       btn.addEventListener('click', () => {
-        runWithScissorsLoader(() => {
-          setActiveCustomerView(null);
-        }, BUTTON_LOADER_MS);
+        setActiveCustomerView(null);
       });
     });
 
     document.getElementById('brandResetLink')?.addEventListener('click', (e) => {
       e.preventDefault();
-      runWithScissorsLoader(() => {
-        setActiveCustomerView(null);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, BUTTON_LOADER_MS);
+      setActiveCustomerView(null);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
     const pricesGrid = document.getElementById('pricesGrid');
@@ -871,6 +891,7 @@
         const isVip = srv.id === 'vip';
         return `
         <article
+          data-service-id="${escapeAttr(srv.id)}"
           class="service-tile glass-card ${isVip ? 'is-vip border-2 border-purple-300/80 shadow-[0_0_24px_rgba(216,180,254,0.28)]' : 'border border-white/15'} relative overflow-hidden group flex flex-col justify-between"
         >
           ${isVip ? `
@@ -921,6 +942,14 @@
       }).join('');
 
       pricesGrid.querySelectorAll('.service-tile').forEach(card => {
+        card.addEventListener('click', () => {
+          const alreadySelected = card.classList.contains('is-selected');
+          clearOtherSelections();
+          if (!alreadySelected) {
+            card.classList.add('is-selected');
+          }
+        });
+
         const img = card.querySelector('.tile-bg-img');
         const fallback = card.querySelector('.tile-fallback');
         if (img && fallback) {
@@ -1031,9 +1060,7 @@
       }
     }
 
-    mobileMenuBtn.addEventListener('click', () => {
-      runWithScissorsLoader(() => toggleMobileMenu(), BUTTON_LOADER_MS);
-    });
+    mobileMenuBtn.addEventListener('click', () => toggleMobileMenu());
     mobileMenuBackdrop.addEventListener('click', () => toggleMobileMenu(true));
 
     async function createBooking({ name, phone }) {
@@ -1091,6 +1118,7 @@
       }
     });
 
+    // Rezervasyon yapılırken makas loading çalışır
     inlineBookingForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const name = inlineNameInput.value.trim();
@@ -1121,9 +1149,9 @@
       const startTime = Date.now();
       const assignedOrder = await createBooking({ name, phone });
       const elapsed = Date.now() - startTime;
-      const remaining = Math.max(0, BUTTON_LOADER_MS - elapsed);
+      const remaining = Math.max(0, BOOKING_LOADER_MS - elapsed);
 
-      runWithScissorsLoader(() => {
+      runScissorsLoaderOnce(() => {
         inlineSubmitBtn.disabled = false;
         inlineConfName.textContent = name;
         inlineConfPhone.textContent = phone;
@@ -1135,14 +1163,12 @@
     });
 
     inlineResetBtn.addEventListener('click', () => {
-      runWithScissorsLoader(() => {
-        inlineBookingForm.reset();
-        inlineNameError.classList.add('hidden');
-        inlinePhoneError.classList.add('hidden');
-        inlineBookingConfirmation.classList.add('hidden');
-        inlineBookingForm.classList.remove('hidden');
-        inlineNameInput.focus();
-      }, BUTTON_LOADER_MS);
+      inlineBookingForm.reset();
+      inlineNameError.classList.add('hidden');
+      inlinePhoneError.classList.add('hidden');
+      inlineBookingConfirmation.classList.add('hidden');
+      inlineBookingForm.classList.remove('hidden');
+      inlineNameInput.focus();
     });
 
     const barberPanelModal = document.getElementById('barberPanelModal');
@@ -1162,37 +1188,28 @@
 
     async function openModal() {
       toggleMobileMenu(true);
-      const startTime = Date.now();
+      barberPanelModal.classList.remove('hidden');
+      barberPanelModal.classList.add('fullscreen-modal-enter');
+      document.body.style.overflow = 'hidden';
+
       if (panelUnlocked) {
+        panelLoginBox.classList.add('hidden');
+        panelContentBox.classList.remove('hidden');
+        renderPanelAppointments();
         await syncFromGoogleSheet();
+      } else {
+        panelPassInput.value = '';
+        panelPassError.classList.add('hidden');
+        panelLoginBox.classList.remove('hidden');
+        panelContentBox.classList.add('hidden');
+        setTimeout(() => panelPassInput.focus(), 80);
       }
-      const remaining = Math.max(0, BUTTON_LOADER_MS - (Date.now() - startTime));
-
-      runWithScissorsLoader(() => {
-        barberPanelModal.classList.remove('hidden');
-        barberPanelModal.classList.add('fullscreen-modal-enter');
-        document.body.style.overflow = 'hidden';
-
-        if (panelUnlocked) {
-          panelLoginBox.classList.add('hidden');
-          panelContentBox.classList.remove('hidden');
-          renderPanelAppointments();
-        } else {
-          panelPassInput.value = '';
-          panelPassError.classList.add('hidden');
-          panelLoginBox.classList.remove('hidden');
-          panelContentBox.classList.add('hidden');
-          setTimeout(() => panelPassInput.focus(), 80);
-        }
-      }, remaining);
     }
 
     function closeModal() {
-      runWithScissorsLoader(() => {
-        barberPanelModal.classList.add('hidden');
-        barberPanelModal.classList.remove('fullscreen-modal-enter');
-        document.body.style.overflow = '';
-      }, BUTTON_LOADER_MS);
+      barberPanelModal.classList.add('hidden');
+      barberPanelModal.classList.remove('fullscreen-modal-enter');
+      document.body.style.overflow = '';
     }
 
     openBarberPanelBtn.addEventListener('click', openModal);
@@ -1206,21 +1223,14 @@
 
     async function attemptPanelLogin() {
       if (panelPassInput.value.trim() === BARBER_PASSCODE) {
-        const startTime = Date.now();
+        panelUnlocked = true;
+        panelPassError.classList.add('hidden');
+        panelLoginBox.classList.add('hidden');
+        panelContentBox.classList.remove('hidden');
+        renderPanelAppointments();
         await syncFromGoogleSheet();
-        const remaining = Math.max(0, BUTTON_LOADER_MS - (Date.now() - startTime));
-
-        runWithScissorsLoader(() => {
-          panelUnlocked = true;
-          panelPassError.classList.add('hidden');
-          panelLoginBox.classList.add('hidden');
-          panelContentBox.classList.remove('hidden');
-          renderPanelAppointments();
-        }, remaining);
       } else {
-        runWithScissorsLoader(() => {
-          panelPassError.classList.remove('hidden');
-        }, BUTTON_LOADER_MS);
+        panelPassError.classList.remove('hidden');
       }
     }
 
@@ -1232,12 +1242,8 @@
     panelSearchInput.addEventListener('input', renderPanelAppointments);
 
     refreshSheetBtn.addEventListener('click', async () => {
-      const startTime = Date.now();
       await syncFromGoogleSheet();
-      const remaining = Math.max(0, BUTTON_LOADER_MS - (Date.now() - startTime));
-      runWithScissorsLoader(() => {
-        showToast('لیستە هاتە نویژەنکرن');
-      }, remaining);
+      showToast('لیستە هاتە نویژەنکرن');
     });
 
     window.copyPhoneNumber = async function(phone) {
@@ -1245,9 +1251,7 @@
       try {
         await navigator.clipboard.writeText(phone);
       } catch (e) {}
-      runWithScissorsLoader(() => {
-        showToast(`ژمارە هاتە کۆپیکرن: ${phone}`);
-      }, BUTTON_LOADER_MS);
+      showToast(`ژمارە هاتە کۆپیکرن: ${phone}`);
     };
 
     window.toggleMarkBooking = function(id) {
@@ -1376,33 +1380,8 @@
         } catch (e) {}
       }
 
-      runWithScissorsLoader(() => {
-        showToast('ناڤ ژ لیستەیێ هاتە ژێبرن');
-      }, BUTTON_LOADER_MS);
+      showToast('ناڤ ژ لیستەیێ هاتە ژێبرن');
     };
-
-    // Sayfadaki diğer tüm buton ve bağlantılara tıklamada 1.5 saniye makas loading + fade-out
-    document.addEventListener('click', (e) => {
-      if (e.defaultPrevented) return;
-      const target = e.target.closest('button, a[href]');
-      if (!target) return;
-      if (
-        target.hasAttribute('data-select-view') ||
-        target.hasAttribute('data-close-view') ||
-        target.id === 'brandResetLink' ||
-        target.id === 'inlineSubmitBtn' ||
-        target.id === 'inlineResetBtn' ||
-        target.id === 'openBarberPanelBtn' ||
-        target.id === 'closeBarberPanelBtn' ||
-        target.id === 'panelLoginSubmitBtn' ||
-        target.id === 'refreshSheetBtn' ||
-        target.id === 'mobileMenuBtn' ||
-        target.classList.contains('mark-square-btn')
-      ) {
-        return;
-      }
-      runWithScissorsLoader(null, BUTTON_LOADER_MS);
-    }, true);
   </script>
 </body>
 </html>
