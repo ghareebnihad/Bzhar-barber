@@ -57,17 +57,30 @@
       position: relative;
     }
 
-    /* Mobil Zoom Sorunu Düzeltilmiş Sabit Arka Plan Görseli */
+    /* Rezervasyon ekranındayken header ve footer gizlenir */
+    body.is-booking-mode #siteHeader,
+    body.is-booking-mode #siteFooter {
+      display: none !important;
+    }
+
+    .content-stage {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: clip;
+    }
+
     .hero-bg-photo {
-      position: fixed;
+      position: absolute;
       inset: 0;
       width: 100%;
-      height: 100dvh;
+      height: 100%;
       z-index: 0;
       pointer-events: none;
       background-color: #0B0B0C;
       background-image:
-        linear-gradient(180deg, rgba(11, 11, 12, 0.42) 0%, rgba(11, 11, 12, 0.6) 55%, rgba(11, 11, 12, 0.92) 100%),
+        linear-gradient(180deg, rgba(11, 11, 12, 0.48) 0%, rgba(11, 11, 12, 0.65) 55%, rgba(11, 11, 12, 0.94) 100%),
         url('https://raw.githubusercontent.com/ghareebnihad/Bzhar-barber/refs/heads/main/cover.png');
       background-size: cover;
       background-position: center center;
@@ -75,15 +88,13 @@
       transition: filter 0.38s cubic-bezier(0.22, 1, 0.36, 1), transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    /* Hizmetler açılınca arka plan blur */
     .hero-bg-photo.is-services-blur {
       filter: blur(12px);
-      transform: scale(1.06);
+      transform: scale(1.04);
     }
 
-    /* Admin Panel açılınca %80 siyah katman */
     .panel-blackout-layer {
-      position: fixed;
+      position: absolute;
       inset: 0;
       z-index: 5;
       pointer-events: none;
@@ -100,6 +111,12 @@
       background: rgba(19, 19, 22, 0.88);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
+    }
+
+    .booking-glass-card {
+      background: rgba(19, 19, 22, 0.56);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
     }
 
     .gold-gradient-text {
@@ -234,9 +251,6 @@
   </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen">
-  <!-- Sabit Arka Plan Görseli -->
-  <div id="heroBgPhoto" class="hero-bg-photo" aria-hidden="true"></div>
-
   <!-- Yükleme Ekranı -->
   <div id="actionLoader" class="smooth-overlay fixed inset-0 z-50 bg-obsidian/90 backdrop-blur-md flex flex-col items-center justify-center gap-3">
     <div class="barber-pole-loader">
@@ -252,51 +266,17 @@
     <span class="text-xs sm:text-sm font-bold text-gold tracking-wider">چاوەڕێ بە...</span>
   </div>
 
-  <!-- Admin Panel %80 Siyah Arka Plan Katmanı -->
-  <div id="panelBlackout" class="panel-blackout-layer" aria-hidden="true"></div>
-
   <!-- Menü Arka Planı -->
   <div id="menuBackdrop" class="smooth-overlay fixed inset-0 z-30 bg-black/50"></div>
 
-  <div class="relative min-h-screen flex flex-col overflow-hidden">
-    <!-- Üst Bar (Biraz Aşağı İndirildi) + Altında Çalışma Saatleri -->
-    <header class="relative z-40 w-full max-w-5xl mx-auto px-4 sm:px-6 pt-9 sm:pt-11 pb-2 space-y-3">
-      <div class="flex items-center justify-between" dir="ltr">
-        <div class="flex items-center gap-2.5" dir="rtl">
-          <div class="relative">
-            <button
-              type="button"
-              id="menuToggleBtn"
-              aria-label="لیستا بەشان"
-              class="smooth-btn w-11 h-11 rounded-xl glass-card border border-white/25 text-white hover:bg-white hover:text-obsidian flex items-center justify-center"
-            >
-              <svg class="w-6 h-6 transition-transform duration-300" id="menuIconSvg" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" viewBox="0 0 24 24">
-                <line x1="4" y1="7" x2="20" y2="7" />
-                <line x1="4" y1="12" x2="20" y2="12" />
-                <line x1="4" y1="17" x2="20" y2="17" />
-              </svg>
-            </button>
+  <div class="content-stage">
+    <div id="heroBgPhoto" class="hero-bg-photo" aria-hidden="true"></div>
+    <div id="panelBlackout" class="panel-blackout-layer" aria-hidden="true"></div>
 
-            <div id="navDropdown" class="smooth-dropdown absolute left-0 mt-2.5 w-60 rounded-2xl glass-card border border-white/20 shadow-2xl overflow-hidden py-1.5">
-              <button type="button" data-nav="home" class="smooth-btn w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian flex items-center justify-between">
-                <span>دەستپێک</span>
-                <span class="text-xs opacity-75">←</span>
-              </button>
-              <button type="button" data-nav="reservation" class="smooth-btn w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian flex items-center justify-between border-t border-white/10">
-                <span>تۆمارکرنا ناڤی</span>
-                <span class="text-xs opacity-75">←</span>
-              </button>
-              <button type="button" data-nav="services" class="smooth-btn w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian flex items-center justify-between border-t border-white/10">
-                <span>خزمەتگوزاری و نرخ</span>
-                <span class="text-xs opacity-75">←</span>
-              </button>
-              <button type="button" data-nav="footer" class="smooth-btn w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian flex items-center justify-between border-t border-white/10">
-                <span>ناڤونیشان و پەیوەندی</span>
-                <span class="text-xs opacity-75">↓</span>
-              </button>
-            </div>
-          </div>
-
+    <!-- Sabit olmayan Üst Nav Bar -->
+    <header id="siteHeader" class="relative z-40 w-full bg-obsidian/80 backdrop-blur-md border-b border-white/10">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3.5">
+        <div class="flex items-center justify-between" dir="ltr">
           <button
             type="button"
             id="btnPanelHeader"
@@ -305,58 +285,92 @@
           >
             P A N E L
           </button>
-        </div>
 
-        <a href="#" id="brandTitleBtn" dir="rtl" class="smooth-btn inline-flex items-center gap-2 font-serif text-xl sm:text-2xl font-bold text-white tracking-wide hover:opacity-85">
-          <span>سەرتراشخانا کوچەر</span>
-          <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="6" cy="6" r="2.5" />
-            <circle cx="6" cy="18" r="2.5" />
-            <line x1="8.2" y1="8.2" x2="20" y2="20" />
-            <line x1="8.2" y1="15.8" x2="20" y2="4" />
-          </svg>
-        </a>
-      </div>
+          <div class="flex items-center gap-2.5 sm:gap-3" dir="rtl">
+            <div class="relative">
+              <button
+                type="button"
+                id="menuToggleBtn"
+                aria-label="لیستا بەشان"
+                class="smooth-btn w-11 h-11 rounded-xl glass-card border border-white/25 text-white hover:bg-white hover:text-obsidian flex items-center justify-center"
+              >
+                <svg class="w-6 h-6 transition-transform duration-300" id="menuIconSvg" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" viewBox="0 0 24 24">
+                  <line x1="4" y1="7" x2="20" y2="7" />
+                  <line x1="4" y1="12" x2="20" y2="12" />
+                  <line x1="4" y1="17" x2="20" y2="17" />
+                </svg>
+              </button>
 
-      <!-- Header Altı Çalışma Günleri ve Saatleri (Cumartesi - Perşembe 15:00 - 00:00) -->
-      <div class="flex justify-center">
-        <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full glass-card border border-gold/40 text-xs sm:text-sm font-semibold text-ivory/95 shadow-md">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>
-          <span>شەمبی - پێنج شەمب</span>
-          <span class="text-gold/70">|</span>
-          <span class="text-gold font-bold tracking-wider tabular-nums" dir="ltr">15:00 - 00:00</span>
+              <div id="navDropdown" class="smooth-dropdown absolute right-0 mt-2.5 w-60 rounded-2xl glass-card border border-white/20 shadow-2xl overflow-hidden py-1.5">
+                <button type="button" data-nav="home" class="smooth-btn w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian flex items-center justify-between">
+                  <span>دەستپێک</span>
+                  <span class="text-xs opacity-75">←</span>
+                </button>
+                <button type="button" data-nav="reservation" class="smooth-btn w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian flex items-center justify-between border-t border-white/10">
+                  <span>تۆمارکرنا ناڤی</span>
+                  <span class="text-xs opacity-75">←</span>
+                </button>
+                <button type="button" data-nav="services" class="smooth-btn w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian flex items-center justify-between border-t border-white/10">
+                  <span>خزمەتگوزاری و نرخ</span>
+                  <span class="text-xs opacity-75">←</span>
+                </button>
+                <button type="button" data-nav="footer" class="smooth-btn w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian flex items-center justify-between border-t border-white/10">
+                  <span>ناڤونیشان و پەیوەندی</span>
+                  <span class="text-xs opacity-75">↓</span>
+                </button>
+              </div>
+            </div>
+
+            <a href="#" id="brandTitleBtn" dir="rtl" class="smooth-btn inline-flex items-center gap-2 font-serif text-lg sm:text-2xl font-bold text-white tracking-wide hover:opacity-85">
+              <span>سەرتراشخانا کوچەر</span>
+              <svg class="w-5 h-5 sm:w-6 sm:h-6 text-gold shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="6" cy="6" r="2.5" />
+                <circle cx="6" cy="18" r="2.5" />
+                <line x1="8.2" y1="8.2" x2="20" y2="20" />
+                <line x1="8.2" y1="15.8" x2="20" y2="4" />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
     </header>
 
     <main class="flex-1 relative z-10 flex flex-col">
-      <!-- Ana Ekran (Rezervasyon ve Hizmet Butonları) -->
-      <section id="homeHero" class="smooth-view flex-1 min-h-[calc(100vh-8.5rem)] flex flex-col justify-end items-center px-4 pb-16 sm:pb-20">
-        <div class="flex flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-md">
-          <button
-            type="button"
-            id="btnReservation"
-            class="smooth-btn flex-1 py-3.5 px-4 rounded-xl bg-gold text-obsidian text-sm sm:text-base font-bold hover:bg-gold-light hover:shadow-lg hover:shadow-gold/20 text-center"
-          >
-            تۆمارکرنا ناڤی
-          </button>
+      <!-- Ana Ekran (Gün/Saat normal yazı olarak ekranda) -->
+      <section id="homeHero" class="smooth-view flex-1 min-h-[calc(100vh-4.5rem)] flex flex-col justify-end items-center px-4 pb-16 sm:pb-20">
+        <div class="w-full max-w-md space-y-4">
+          <p class="text-center text-sm sm:text-base font-medium text-ivory/95 tracking-wide">
+            <span>شەمبی - پێنج شەمب</span>
+            <span class="mx-2 text-gold/75">|</span>
+            <span class="text-gold font-semibold tabular-nums" dir="ltr">00:00 - 15:00</span>
+          </p>
 
-          <button
-            type="button"
-            id="btnServices"
-            class="smooth-btn flex-1 py-3.5 px-4 rounded-xl glass-card border border-gold/65 text-gold text-sm sm:text-base font-bold hover:bg-gold hover:text-obsidian hover:shadow-lg hover:shadow-gold/20 text-center"
-          >
-            خزمەتگوزاری ببینە
-          </button>
+          <div class="flex flex-row items-center justify-center gap-3 sm:gap-4 w-full">
+            <button
+              type="button"
+              id="btnReservation"
+              class="smooth-btn flex-1 py-3.5 px-4 rounded-xl bg-gold text-obsidian text-sm sm:text-base font-bold hover:bg-gold-light hover:shadow-lg hover:shadow-gold/20 text-center"
+            >
+              تۆمارکرنا ناڤی
+            </button>
+
+            <button
+              type="button"
+              id="btnServices"
+              class="smooth-btn flex-1 py-3.5 px-4 rounded-xl glass-card border border-gold/65 text-gold text-sm sm:text-base font-bold hover:bg-gold hover:text-obsidian hover:shadow-lg hover:shadow-gold/20 text-center"
+            >
+              خزمەتگوزاری ببینە
+            </button>
+          </div>
         </div>
       </section>
 
       <!-- Rezervasyon Bölümü -->
-      <section id="reservationSection" class="hidden smooth-view flex-1 min-h-[calc(100vh-8.5rem)] flex items-center justify-center px-4 py-10">
-        <div class="w-full max-w-md glass-card border border-gold/35 rounded-2xl p-6 sm:p-8 space-y-5">
+      <section id="reservationSection" class="hidden smooth-view flex-1 min-h-screen flex items-center justify-center px-4 py-10">
+        <div class="w-full max-w-md booking-glass-card border border-gold/35 rounded-2xl p-6 sm:p-8 space-y-5 shadow-2xl">
           <div id="reservationHeader" class="flex items-center justify-between gap-3">
             <h2 class="font-serif text-2xl font-bold text-ivory">تۆمارکرنا ناڤی</h2>
-            <button type="button" id="backFromReservation" class="smooth-btn text-sm sm:text-base font-bold text-gold hover:text-gold-light px-5 py-2.5 rounded-xl border border-gold/50 bg-obsidian/60">
+            <button type="button" id="backFromReservation" class="smooth-btn text-sm sm:text-base font-bold text-gold hover:text-gold-light px-5 py-2.5 rounded-xl border border-gold/50 bg-obsidian/45">
               زڤرین
             </button>
           </div>
@@ -364,11 +378,11 @@
           <form id="simpleBookingForm" class="space-y-4">
             <div>
               <label for="custName" class="block text-xs font-semibold text-gold mb-1.5">ناڤ و پاشناڤ</label>
-              <input id="custName" type="text" required placeholder="ناڤێ خۆ بنڤیسە..." class="w-full rounded-xl bg-obsidian/70 border border-white/15 focus:border-gold px-3.5 py-3 text-ivory outline-none transition-colors duration-300" />
+              <input id="custName" type="text" required placeholder="ناڤێ خۆ بنڤیسە..." class="w-full rounded-xl bg-obsidian/45 border border-white/15 focus:border-gold px-3.5 py-3 text-ivory outline-none transition-colors duration-300" />
             </div>
             <div>
               <label for="custPhone" class="block text-xs font-semibold text-gold mb-1.5">ژمارا مۆبایلێ</label>
-              <input id="custPhone" type="tel" dir="ltr" required placeholder="0750 000 0000" class="w-full rounded-xl bg-obsidian/70 border border-white/15 focus:border-gold px-3.5 py-3 text-ivory text-left outline-none transition-colors duration-300" />
+              <input id="custPhone" type="tel" dir="ltr" required placeholder="0750 000 0000" class="w-full rounded-xl bg-obsidian/45 border border-white/15 focus:border-gold px-3.5 py-3 text-ivory text-left outline-none transition-colors duration-300" />
             </div>
             <p id="formErrorText" class="hidden text-xs font-semibold text-red-400 text-center">
               کێشەیەک چێبوو د تۆمارکرنێ دا، هیڤیە دووبارە تاقی بکە.
@@ -398,7 +412,7 @@
       </section>
 
       <!-- Hizmetler Bölümü -->
-      <section id="servicesSection" class="hidden smooth-view flex-1 min-h-[calc(100vh-8.5rem)] px-4 sm:px-6 py-8">
+      <section id="servicesSection" class="hidden smooth-view flex-1 min-h-[calc(100vh-4.5rem)] px-4 sm:px-6 py-8">
         <div class="max-w-4xl mx-auto">
           <div class="flex items-center justify-between gap-3 mb-6">
             <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ivory">خزمەتگوزاری و نرخ</h2>
@@ -508,8 +522,8 @@
         </div>
       </section>
 
-      <!-- P A N E L Bölümü (Şifreli 12345 + Sıralama + Done Listesi) -->
-      <section id="panelSection" class="hidden smooth-view flex-1 min-h-[calc(100vh-8.5rem)] px-4 sm:px-6 py-8">
+      <!-- P A N E L Bölümü -->
+      <section id="panelSection" class="hidden smooth-view flex-1 min-h-[calc(100vh-4.5rem)] px-4 sm:px-6 py-8">
         <div class="max-w-3xl mx-auto space-y-6">
           <div class="flex items-center justify-between gap-3">
             <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ivory">P A N E L</h2>
@@ -518,7 +532,6 @@
             </button>
           </div>
 
-          <!-- Şifre Ekranı (12345) -->
           <div id="panelPinBox" class="max-w-md mx-auto glass-card border border-gold/35 rounded-2xl p-6 sm:p-8 space-y-5">
             <div class="text-center space-y-1">
               <p class="text-xs font-extrabold tracking-[0.22em] text-gold" dir="ltr">P A N E L</p>
@@ -550,7 +563,6 @@
             </form>
           </div>
 
-          <!-- Şifre Doğrulandıktan Sonra Sıra ve Done Listesi -->
           <div id="panelContentBox" class="hidden space-y-5">
             <div class="flex items-center justify-between gap-2 glass-card border border-white/15 rounded-2xl p-3.5">
               <div class="flex items-center gap-4 text-xs sm:text-sm font-bold tabular-nums">
@@ -606,18 +618,22 @@
     </main>
   </div>
 
-  <!-- Sadeleştirilmiş Footer (Çalışma Saatleri Kaldırıldı) -->
-  <footer id="siteFooter" class="bg-obsidian border-t border-white/15 pt-8 pb-6 px-4 sm:px-6 relative z-20 font-sans">
-    <div class="max-w-4xl mx-auto">
-      <div class="pb-7">
-        <div class="space-y-2.5 text-left" dir="ltr">
+  <!-- Footer: Location & Contact en sağ köşede, Copyright ortada -->
+  <footer id="siteFooter" class="bg-obsidian border-t border-white/15 pt-8 pb-6 px-4 sm:px-6 relative z-20 font-sans" dir="ltr">
+    <div class="max-w-5xl mx-auto">
+      <div class="pb-7 flex justify-end">
+        <div class="space-y-2 text-right">
           <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-gold">
-            Location &amp; Contact
-          </p>
+ناڤ و نیشان          </p>
           <p class="text-sm font-medium text-ivory/95 leading-relaxed" dir="rtl">
             سێمێل - جادا ریعایێ بەرامبەری قوتابخانا هایدار
           </p>
-          <p class="pt-0.5">
+         <br>
+ <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-gold">
+             پەیوەندی
+          </p>
+
+         <p class="pt-0.5">
             <a href="tel:07500000000" class="smooth-btn inline-block text-sm font-semibold tracking-wider text-white hover:text-gold tabular-nums">
               0750 000 0000
             </a>
@@ -625,7 +641,7 @@
         </div>
       </div>
 
-      <div class="border-t border-white/20 pt-4 flex items-center justify-start" dir="ltr">
+      <div class="border-t border-white/20 pt-4 flex items-center justify-center text-center">
         <p class="not-italic font-sans text-xs sm:text-sm font-bold tracking-wider text-white">
           © 2026 | by Ghareeb
         </p>
@@ -634,7 +650,6 @@
   </footer>
 
   <script>
-    // GOOGLE APPS SCRIPT WEB APP URL'NİZİ BURAYA YAPIŞTIRIN:
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby1Oo1D1Q9aIttjO4lIYzu7BIF5iAdCEasvtPd3rqg0raf8fk19on2lmIactiOHsyJo/exec";
     const PANEL_PIN = "12345";
 
@@ -679,6 +694,12 @@
     let panelUnlocked = false;
 
     function syncBackgroundState(targetSection) {
+      if (targetSection === reservationSection) {
+        document.body.classList.add('is-booking-mode');
+      } else {
+        document.body.classList.remove('is-booking-mode');
+      }
+
       if (targetSection === servicesSection) {
         heroBgPhoto.classList.add('is-services-blur');
       } else {
@@ -987,7 +1008,6 @@
 
     panelRefreshBtn.addEventListener('click', loadPanelQueue);
 
-    // Rezervasyon Formunu Google Sheets'e Gönderme
     simpleBookingForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const name = document.getElementById('custName').value.trim();
