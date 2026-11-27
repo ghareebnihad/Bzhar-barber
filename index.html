@@ -304,19 +304,19 @@
               <div id="navDropdown" class="smooth-dropdown absolute right-0 mt-2.5 w-60 rounded-2xl glass-card border border-white/20 shadow-2xl overflow-hidden py-1.5">
                 <button type="button" data-nav="home" class="smooth-btn w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian flex items-center justify-between">
                   <span>دەستپێک</span>
-                  <span class="text-xs opacity-75">←</span>
+               
                 </button>
                 <button type="button" data-nav="reservation" class="smooth-btn w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian flex items-center justify-between border-t border-white/10">
                   <span>تۆمارکرنا ناڤی</span>
-                  <span class="text-xs opacity-75">←</span>
+                  
                 </button>
                 <button type="button" data-nav="services" class="smooth-btn w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian flex items-center justify-between border-t border-white/10">
                   <span>خزمەتگوزاری و نرخ</span>
-                  <span class="text-xs opacity-75">←</span>
+                
                 </button>
                 <button type="button" data-nav="footer" class="smooth-btn w-full text-right px-4 py-3 text-sm font-bold text-white hover:bg-white hover:text-obsidian flex items-center justify-between border-t border-white/10">
                   <span>ناڤونیشان و پەیوەندی</span>
-                  <span class="text-xs opacity-75">↓</span>
+                 
                 </button>
               </div>
             </div>
@@ -723,40 +723,56 @@
       }
     }
 
-    menuToggleBtn.addEventListener('click', toggleMenu);
-    menuBackdrop.addEventListener('click', closeMenu);
+    if (menuToggleBtn) {
+      menuToggleBtn.addEventListener('click', toggleMenu);
+    }
+    if (menuBackdrop) {
+      menuBackdrop.addEventListener('click', closeMenu);
+    }
 
     function runWithBarberLoader(onDone) {
-      actionLoader.classList.add('is-visible');
+      if (actionLoader) {
+        actionLoader.classList.add('is-visible');
+      }
       setTimeout(() => {
         onDone();
         requestAnimationFrame(() => {
-          actionLoader.classList.remove('is-visible');
+          if (actionLoader) {
+            actionLoader.classList.remove('is-visible');
+          }
         });
       }, 650);
     }
 
     function resetBookingView() {
-      simpleBookingForm.reset();
-      simpleBookingForm.classList.remove('hidden');
-      reservationHeader.classList.remove('hidden');
-      bookingResult.classList.add('hidden');
-      formErrorText.classList.add('hidden');
-      submitBookingBtn.disabled = false;
+      if (actionLoader) actionLoader.classList.remove('is-visible');
+      if (simpleBookingForm) {
+        simpleBookingForm.reset();
+        simpleBookingForm.classList.remove('hidden');
+      }
+      if (reservationHeader) reservationHeader.classList.remove('hidden');
+      if (bookingResult) {
+        bookingResult.classList.add('hidden');
+        bookingResult.classList.remove('is-entering');
+      }
+      if (formErrorText) formErrorText.classList.add('hidden');
+      if (submitBookingBtn) submitBookingBtn.disabled = false;
     }
 
     function showSection(target) {
       [homeHero, reservationSection, servicesSection, panelSection].forEach(sec => {
-        if (sec !== target) sec.classList.add('hidden');
+        if (sec && sec !== target) sec.classList.add('hidden');
       });
       syncBackgroundState(target);
-      target.classList.add('is-entering');
-      target.classList.remove('hidden');
-      requestAnimationFrame(() => {
+      if (target) {
+        target.classList.add('is-entering');
+        target.classList.remove('hidden');
         requestAnimationFrame(() => {
-          target.classList.remove('is-entering');
+          requestAnimationFrame(() => {
+            target.classList.remove('is-entering');
+          });
         });
-      });
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -764,26 +780,33 @@
       closeMenu();
       showSection(panelSection);
       if (panelUnlocked) {
-        panelPinBox.classList.add('hidden');
-        panelContentBox.classList.remove('hidden');
+        if (panelPinBox) panelPinBox.classList.add('hidden');
+        if (panelContentBox) panelContentBox.classList.remove('hidden');
         loadPanelQueue();
       } else {
-        panelPinBox.classList.remove('hidden');
-        panelContentBox.classList.add('hidden');
-        panelPinError.classList.add('hidden');
-        panelPinInput.value = '';
-        setTimeout(() => panelPinInput.focus(), 100);
+        if (panelPinBox) panelPinBox.classList.remove('hidden');
+        if (panelContentBox) panelContentBox.classList.add('hidden');
+        if (panelPinError) panelPinError.classList.add('hidden');
+        if (panelPinInput) {
+          panelPinInput.value = '';
+          setTimeout(() => panelPinInput.focus(), 100);
+        }
       }
     }
 
-    btnPanelHeader.addEventListener('click', openPanelView);
+    if (btnPanelHeader) {
+      btnPanelHeader.addEventListener('click', openPanelView);
+    }
 
-    document.getElementById('brandTitleBtn').addEventListener('click', (e) => {
-      e.preventDefault();
-      closeMenu();
-      resetBookingView();
-      showSection(homeHero);
-    });
+    const brandTitleBtn = document.getElementById('brandTitleBtn');
+    if (brandTitleBtn) {
+      brandTitleBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeMenu();
+        resetBookingView();
+        showSection(homeHero);
+      });
+    }
 
     document.querySelectorAll('[data-nav]').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -798,76 +821,102 @@
         } else if (dest === 'services') {
           runWithBarberLoader(() => showSection(servicesSection));
         } else if (dest === 'footer') {
-          document.getElementById('siteFooter').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          const footerEl = document.getElementById('siteFooter');
+          if (footerEl) {
+            footerEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
         }
       });
     });
 
-    document.getElementById('btnReservation').addEventListener('click', () => {
-      resetBookingView();
-      runWithBarberLoader(() => showSection(reservationSection));
-    });
+    const btnReservation = document.getElementById('btnReservation');
+    if (btnReservation) {
+      btnReservation.addEventListener('click', () => {
+        resetBookingView();
+        runWithBarberLoader(() => showSection(reservationSection));
+      });
+    }
 
-    document.getElementById('btnServices').addEventListener('click', () => {
-      runWithBarberLoader(() => showSection(servicesSection));
-    });
+    const btnServices = document.getElementById('btnServices');
+    if (btnServices) {
+      btnServices.addEventListener('click', () => {
+        runWithBarberLoader(() => showSection(servicesSection));
+      });
+    }
 
-    document.getElementById('backFromReservation').addEventListener('click', () => {
-      resetBookingView();
-      showSection(homeHero);
-    });
+    const backFromReservation = document.getElementById('backFromReservation');
+    if (backFromReservation) {
+      backFromReservation.addEventListener('click', () => {
+        resetBookingView();
+        showSection(homeHero);
+      });
+    }
 
-    document.getElementById('backFromServices').addEventListener('click', () => {
-      showSection(homeHero);
-    });
+    const backFromServices = document.getElementById('backFromServices');
+    if (backFromServices) {
+      backFromServices.addEventListener('click', () => {
+        showSection(homeHero);
+      });
+    }
 
-    document.getElementById('backFromPanel').addEventListener('click', () => {
-      showSection(homeHero);
-    });
+    const backFromPanel = document.getElementById('backFromPanel');
+    if (backFromPanel) {
+      backFromPanel.addEventListener('click', () => {
+        showSection(homeHero);
+      });
+    }
 
-    panelPinForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (panelPinInput.value.trim() === PANEL_PIN) {
-        panelUnlocked = true;
-        panelPinError.classList.add('hidden');
-        panelPinInput.value = '';
-        panelPinBox.classList.add('hidden');
-        panelContentBox.classList.remove('hidden');
-        loadPanelQueue();
-      } else {
-        panelPinError.classList.remove('hidden');
-        panelPinInput.select();
-      }
-    });
+    if (panelPinForm) {
+      panelPinForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (panelPinInput && panelPinInput.value.trim() === PANEL_PIN) {
+          panelUnlocked = true;
+          if (panelPinError) panelPinError.classList.add('hidden');
+          panelPinInput.value = '';
+          if (panelPinBox) panelPinBox.classList.add('hidden');
+          if (panelContentBox) panelContentBox.classList.remove('hidden');
+          loadPanelQueue();
+        } else {
+          if (panelPinError) panelPinError.classList.remove('hidden');
+          if (panelPinInput) panelPinInput.select();
+        }
+      });
+    }
 
-    panelLockBtn.addEventListener('click', () => {
-      panelUnlocked = false;
-      panelContentBox.classList.add('hidden');
-      panelPinBox.classList.remove('hidden');
-      panelPinInput.value = '';
-      panelPinError.classList.add('hidden');
-    });
+    if (panelLockBtn) {
+      panelLockBtn.addEventListener('click', () => {
+        panelUnlocked = false;
+        if (panelContentBox) panelContentBox.classList.add('hidden');
+        if (panelPinBox) panelPinBox.classList.remove('hidden');
+        if (panelPinInput) panelPinInput.value = '';
+        if (panelPinError) panelPinError.classList.add('hidden');
+      });
+    }
 
     function setPanelFilter(filterName) {
       panelFilter = filterName;
       if (filterName === 'Bekliyor') {
-        panelTabQueue.className = 'smooth-btn flex-1 py-2.5 px-4 rounded-xl bg-gold text-obsidian text-xs sm:text-sm font-bold';
-        panelTabDone.className = 'smooth-btn flex-1 py-2.5 px-4 rounded-xl glass-card border border-white/15 text-ivory/80 text-xs sm:text-sm font-bold hover:border-gold/50';
+        if (panelTabQueue) panelTabQueue.className = 'smooth-btn flex-1 py-2.5 px-4 rounded-xl bg-gold text-obsidian text-xs sm:text-sm font-bold';
+        if (panelTabDone) panelTabDone.className = 'smooth-btn flex-1 py-2.5 px-4 rounded-xl glass-card border border-white/15 text-ivory/80 text-xs sm:text-sm font-bold hover:border-gold/50';
       } else {
-        panelTabDone.className = 'smooth-btn flex-1 py-2.5 px-4 rounded-xl bg-gold text-obsidian text-xs sm:text-sm font-bold';
-        panelTabQueue.className = 'smooth-btn flex-1 py-2.5 px-4 rounded-xl glass-card border border-white/15 text-ivory/80 text-xs sm:text-sm font-bold hover:border-gold/50';
+        if (panelTabDone) panelTabDone.className = 'smooth-btn flex-1 py-2.5 px-4 rounded-xl bg-gold text-obsidian text-xs sm:text-sm font-bold';
+        if (panelTabQueue) panelTabQueue.className = 'smooth-btn flex-1 py-2.5 px-4 rounded-xl glass-card border border-white/15 text-ivory/80 text-xs sm:text-sm font-bold hover:border-gold/50';
       }
       renderPanelList();
     }
 
-    panelTabQueue.addEventListener('click', () => setPanelFilter('Bekliyor'));
-    panelTabDone.addEventListener('click', () => setPanelFilter('Tamamlandı'));
+    if (panelTabQueue) {
+      panelTabQueue.addEventListener('click', () => setPanelFilter('Bekliyor'));
+    }
+    if (panelTabDone) {
+      panelTabDone.addEventListener('click', () => setPanelFilter('Tamamlandı'));
+    }
 
     function updatePanelCounts() {
       const w = panelCustomers.filter(item => item.durum !== 'Tamamlandı').length;
       const d = panelCustomers.filter(item => item.durum === 'Tamamlandı').length;
-      panelWaitingCount.textContent = w;
-      panelDoneCount.textContent = d;
+      if (panelWaitingCount) panelWaitingCount.textContent = w;
+      if (panelDoneCount) panelDoneCount.textContent = d;
     }
 
     function escapeHtml(text) {
@@ -879,6 +928,8 @@
     }
 
     function renderPanelList() {
+      if (!panelItemsList || !panelEmpty) return;
+
       const filtered = panelCustomers.filter(item => {
         if (panelFilter === 'Tamamlandı') {
           return item.durum === 'Tamamlandı';
@@ -963,94 +1014,123 @@
         if (!res.ok) throw new Error('Update failed');
 
         panelCustomers = panelCustomers.map(item =>
-          item.id === id ? { ...item, durum: 'Tamamlandı' } : item
+          String(item.id) === String(id) ? { ...item, durum: 'Tamamlandı' } : item
         );
         updatePanelCounts();
         renderPanelList();
       } catch (err) {
         btnEl.disabled = false;
         btnEl.textContent = 'تەمام بوو';
-        panelStatusMsg.textContent = 'نەهاتە نوێکرن، هێلا ئینتەرنێتێ یان لینکێ Script پشکنین بکە.';
-        panelStatusMsg.classList.remove('hidden');
+        if (panelStatusMsg) {
+          panelStatusMsg.textContent = 'نەهاتە نوێکرن، هێلا ئینتەرنێتێ یان لینکێ Script پشکنین بکە.';
+          panelStatusMsg.classList.remove('hidden');
+        }
       }
     }
 
     async function loadPanelQueue() {
-      panelStatusMsg.classList.add('hidden');
-      panelLoading.classList.remove('hidden');
+      if (panelStatusMsg) panelStatusMsg.classList.add('hidden');
+      if (panelItemsList) panelItemsList.classList.add('hidden');
+      if (panelEmpty) panelEmpty.classList.add('hidden');
+      if (panelLoading) panelLoading.classList.remove('hidden');
+      if (panelRefreshBtn) panelRefreshBtn.disabled = true;
 
       if (!SCRIPT_URL.startsWith('https://script.google.com/')) {
-        panelLoading.classList.add('hidden');
-        panelStatusMsg.textContent = 'لینکێ Google Apps Script نەهاتیە دانان.';
-        panelStatusMsg.classList.remove('hidden');
+        if (panelLoading) panelLoading.classList.add('hidden');
+        if (panelRefreshBtn) panelRefreshBtn.disabled = false;
+        if (panelStatusMsg) {
+          panelStatusMsg.textContent = 'لینکێ Google Apps Script نەهاتیە دانان.';
+          panelStatusMsg.classList.remove('hidden');
+        }
         return;
       }
 
       try {
-        const res = await fetch(SCRIPT_URL);
+        const cacheBusterUrl = `${SCRIPT_URL}${SCRIPT_URL.includes('?') ? '&' : '?'}t=${Date.now()}`;
+        const res = await fetch(cacheBusterUrl);
         if (!res.ok) throw new Error('Fetch failed');
         const data = await res.json();
         panelCustomers = Array.isArray(data) ? data : [];
         updatePanelCounts();
-        panelLoading.classList.add('hidden');
+        if (panelLoading) panelLoading.classList.add('hidden');
         renderPanelList();
       } catch (err) {
-        panelLoading.classList.add('hidden');
-        panelStatusMsg.textContent = 'داتا نەهاتن وەرگرتن. دڵنیابە کو Web App ب شێوەیێ Herkes هاتیە بەلاڤکرن.';
-        panelStatusMsg.classList.remove('hidden');
+        if (panelLoading) panelLoading.classList.add('hidden');
+        if (panelStatusMsg) {
+          panelStatusMsg.textContent = 'داتا نەهاتن وەرگرتن. دڵنیابە کو Web App ب شێوەیێ Herkes هاتیە بەلاڤکرن.';
+          panelStatusMsg.classList.remove('hidden');
+        }
+      } finally {
+        if (panelRefreshBtn) panelRefreshBtn.disabled = false;
       }
     }
 
-    panelRefreshBtn.addEventListener('click', loadPanelQueue);
+    if (panelRefreshBtn) {
+      panelRefreshBtn.addEventListener('click', loadPanelQueue);
+    }
 
-    simpleBookingForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const name = document.getElementById('custName').value.trim();
-      const phone = document.getElementById('custPhone').value.trim();
-      if (!name || !phone) return;
+    if (simpleBookingForm) {
+      simpleBookingForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const nameInput = document.getElementById('custName');
+        const phoneInput = document.getElementById('custPhone');
+        const name = nameInput ? nameInput.value.trim() : '';
+        const phone = phoneInput ? phoneInput.value.trim() : '';
+        if (!name || !phone) return;
 
-      if (!SCRIPT_URL.startsWith('https://script.google.com/')) {
-        formErrorText.textContent = "لینکێ Google Apps Script نەهاتیە دانان!";
-        formErrorText.classList.remove('hidden');
-        return;
-      }
+        if (!SCRIPT_URL.startsWith('https://script.google.com/')) {
+          if (formErrorText) {
+            formErrorText.textContent = "لینکێ Google Apps Script نەهاتیە دانان!";
+            formErrorText.classList.remove('hidden');
+          }
+          return;
+        }
 
-      formErrorText.classList.add('hidden');
-      submitBookingBtn.disabled = true;
-      actionLoader.classList.add('is-visible');
+        if (formErrorText) formErrorText.classList.add('hidden');
+        if (submitBookingBtn) submitBookingBtn.disabled = true;
+        if (actionLoader) actionLoader.classList.add('is-visible');
 
-      try {
-        await fetch(SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({ name, phone })
-        });
-
-        document.getElementById('resultText').textContent = `${name} — ${phone}`;
-        simpleBookingForm.classList.add('hidden');
-        reservationHeader.classList.add('hidden');
-        bookingResult.classList.add('is-entering');
-        bookingResult.classList.remove('hidden');
-
-        requestAnimationFrame(() => {
-          actionLoader.classList.remove('is-visible');
-          requestAnimationFrame(() => {
-            bookingResult.classList.remove('is-entering');
+        try {
+          await fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ name, phone })
           });
-        });
-      } catch (err) {
-        actionLoader.classList.remove('is-visible');
-        submitBookingBtn.disabled = false;
-        formErrorText.textContent = "کێشەیەک چێبوو د تۆمارکرنێ دا، هیڤیە دووبارە تاقی بکە.";
-        formErrorText.classList.remove('hidden');
-      }
-    });
 
-    document.getElementById('bookingDoneBtn').addEventListener('click', () => {
-      resetBookingView();
-      showSection(homeHero);
-    });
+          const resultTextEl = document.getElementById('resultText');
+          if (resultTextEl) resultTextEl.textContent = `${name} — ${phone}`;
+          simpleBookingForm.classList.add('hidden');
+          if (reservationHeader) reservationHeader.classList.add('hidden');
+          if (bookingResult) {
+            bookingResult.classList.add('is-entering');
+            bookingResult.classList.remove('hidden');
+          }
+
+          requestAnimationFrame(() => {
+            if (actionLoader) actionLoader.classList.remove('is-visible');
+            requestAnimationFrame(() => {
+              if (bookingResult) bookingResult.classList.remove('is-entering');
+            });
+          });
+        } catch (err) {
+          if (actionLoader) actionLoader.classList.remove('is-visible');
+          if (submitBookingBtn) submitBookingBtn.disabled = false;
+          if (formErrorText) {
+            formErrorText.textContent = "کێشەیەک چێبوو د تۆمارکرنێ دا، هیڤیە دووبارە تاقی بکە.";
+            formErrorText.classList.remove('hidden');
+          }
+        }
+      });
+    }
+
+    const bookingDoneBtn = document.getElementById('bookingDoneBtn');
+    if (bookingDoneBtn) {
+      bookingDoneBtn.addEventListener('click', () => {
+        resetBookingView();
+        showSection(homeHero);
+      });
+    }
   </script>
 </body>
 </html>
